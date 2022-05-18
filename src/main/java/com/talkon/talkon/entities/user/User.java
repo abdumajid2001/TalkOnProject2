@@ -41,10 +41,10 @@ public class User extends Auditable {
     private Role role;
 
     @Column(nullable = false)
-    private TimeZone timeZone;
+    private Integer timeZone;
 
     @Builder(builderMethodName = "childBuilder")
-    public User(String id, LocalDateTime createdAt, LocalDateTime updatedAt, boolean deleted, short status, String firstName, String lastName, String phoneNumber, String email, String username, String password, LocalDate dataOfBirth, Role role, TimeZone timeZone) {
+    public User(String id, LocalDateTime createdAt, LocalDateTime updatedAt, boolean deleted, short status, String firstName, String lastName, String phoneNumber, String email, String username, String password, LocalDate dataOfBirth, Role role, Integer timeZone) {
         super(id, createdAt, updatedAt, deleted, status);
         this.firstName = firstName;
         this.lastName = lastName;
