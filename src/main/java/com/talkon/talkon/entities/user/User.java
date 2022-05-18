@@ -48,6 +48,7 @@ public class User extends Auditable {
     @OneToMany(mappedBy = "from")
     List<Message> chatMessages = new ArrayList<>();
 
+
     @Builder(builderMethodName = "childBuilder")
     public User(String id, LocalDateTime createdAt, LocalDateTime updatedAt, boolean deleted, short status, String firstName, String lastName, String phoneNumber, String email, String username, String password, LocalDate dataOfBirth, Role role, Integer timeZone) {
         super(id, createdAt, updatedAt, deleted, status);
