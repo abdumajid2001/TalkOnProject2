@@ -1,0 +1,8 @@
+package com.talkon.talkon.enums;
+
+public enum ScheduleStatus {
+    PENDING,
+    ACCEPTED,
+    REJECTED,
+    COMPLETED
+}

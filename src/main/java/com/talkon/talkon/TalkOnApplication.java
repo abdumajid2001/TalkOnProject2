@@ -9,6 +9,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
@@ -29,24 +30,23 @@ public class TalkOnApplication {
         SpringApplication.run(TalkOnApplication.class, args);
     }
 
-    //    @Bean
-    CommandLineRunner runner() {
-        User user = User.childBuilder()
-                .id(UUID.randomUUID().toString())
-                .firstName("abdumajid")
-                .lastName("abdullatipov")
-                .phoneNumber("+998900032869")
-                .email("abdumajidabdullatipov1@gmail.com")
-                .username("admin")
-                .password(passwordEncoder.encode("123"))
-                .dataOfBirth(LocalDate.now())
-                .role(Role.ADMIN)
-                .timeZone(TimeZone.getDefault()).build();
-        return (args -> {
-            repository.save(user);
-        });
+//        @Bean
+//    CommandLineRunner runner() {
+//        User user = User.childBuilder()
+//                .id(UUID.randomUUID().toString())
+//                .firstName("abdumajid")
+//                .lastName("abdullatipov")
+//                .phoneNumber("+998900032869")
+//                .email("abdumajidabdullatipov1@gmail.com")
+//                .username("admin")
+//                .password(passwordEncoder.encode("123"))
+//                .dataOfBirth(LocalDate.now())
+//                .role(Role.ADMIN)
+//                .timeZone(300);
+//        return (args -> {
+//            repository.save(user);
+//        });
 
-
-    }
+//    }
 
 }
