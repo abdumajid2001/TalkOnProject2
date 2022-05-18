@@ -11,15 +11,20 @@ import com.talkon.talkon.exceptions.user.UserNotFoundException;
 import com.talkon.talkon.mappers.user.UserMapper;
 import com.talkon.talkon.services.base.AbstractService;
 import com.talkon.talkon.validators.user.UserValidator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class UserServiceImp extends AbstractService<UserRepository, UserMapper, UserValidator> implements UserService, UserDetailsService {
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     protected UserServiceImp(UserMapper mapper, UserValidator validator, UserRepository repository) {
         super(mapper, validator, repository);
@@ -29,6 +34,7 @@ public class UserServiceImp extends AbstractService<UserRepository, UserMapper, 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = repository.
                 findByUsername(username).orElseThrow(() -> new UserNotFoundException("User Not found"));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return new com.talkon.talkon.dtos.user.UserDetails(user);
     }
 

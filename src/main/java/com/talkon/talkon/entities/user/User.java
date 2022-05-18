@@ -1,5 +1,6 @@
 package com.talkon.talkon.entities.user;
 
+import com.talkon.talkon.entities.conversation.chat.message.Message;
 import com.talkon.talkon.enums.Role;
 import com.talkon.talkon.entities.base.Auditable;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -9,13 +10,14 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.TimeZone;
 
-@Entity
+@Entity(name = "users")
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "users")
 @Schema(name = "users")
 @AllArgsConstructor
 public class User extends Auditable {
@@ -42,6 +44,10 @@ public class User extends Auditable {
 
     @Column(nullable = false)
     private Integer timeZone;
+
+    @OneToMany(mappedBy = "from")
+    List<Message> chatMessages = new ArrayList<>();
+
 
     @Builder(builderMethodName = "childBuilder")
     public User(String id, LocalDateTime createdAt, LocalDateTime updatedAt, boolean deleted, short status, String firstName, String lastName, String phoneNumber, String email, String username, String password, LocalDate dataOfBirth, Role role, Integer timeZone) {
