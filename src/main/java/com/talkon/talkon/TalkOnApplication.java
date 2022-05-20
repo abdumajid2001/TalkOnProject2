@@ -1,6 +1,7 @@
 package com.talkon.talkon;
 
 import com.talkon.talkon.enums.Role;
+import com.talkon.talkon.properties.ServerProperties;
 import com.talkon.talkon.repositories.user.UserRepository;
 import com.talkon.talkon.entities.user.User;
 import com.talkon.talkon.properties.OpenApiProperties;
@@ -18,7 +19,8 @@ import java.util.UUID;
 
 @SpringBootApplication
 @EnableConfigurationProperties({
-        OpenApiProperties.class
+        OpenApiProperties.class,
+        ServerProperties.class
 })
 @RequiredArgsConstructor
 public class TalkOnApplication {
@@ -31,22 +33,22 @@ public class TalkOnApplication {
     }
 
 //        @Bean
-//    CommandLineRunner runner() {
-//        User user = User.childBuilder()
-//                .id(UUID.randomUUID().toString())
-//                .firstName("abdumajid")
-//                .lastName("abdullatipov")
-//                .phoneNumber("+998900032869")
-//                .email("abdumajidabdullatipov1@gmail.com")
-//                .username("admin")
-//                .password(passwordEncoder.encode("123"))
-//                .dataOfBirth(LocalDate.now())
-//                .role(Role.ADMIN)
-//                .timeZone(300);
-//        return (args -> {
-//            repository.save(user);
-//        });
+    CommandLineRunner runner() {
+        User user = User.childBuilder()
+                .id(UUID.randomUUID().toString())
+                .firstName("abdumajid")
+                .lastName("abdullatipov")
+                .phoneNumber("+998900032869")
+                .email("abdumajidabdullatipov1@gmail.com")
+                .username("admin")
+                .password(passwordEncoder.encode("123"))
+                .dataOfBirth(LocalDate.now())
+                .role(Role.ADMIN)
+                .timeZone(300).build();
+        return (args -> {
+            repository.save(user);
+        });
 
-//    }
+    }
 
 }

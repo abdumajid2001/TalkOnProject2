@@ -8,7 +8,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 
 public class JWTUtils {
-    public static Integer expiry = 1800000000;
+    public static Integer expiry = 1_800_000_000;
     public static String secret = "SD784SRTED34JNBNJ@@*&p45kbNBKRIIHB@456#$%&f%&t#sxyASX345";
 
     public static Date getExpiry() {
