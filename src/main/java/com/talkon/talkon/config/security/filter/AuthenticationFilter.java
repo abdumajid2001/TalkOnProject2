@@ -82,5 +82,4 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         mapper.writeValue(response.getOutputStream(), new DataDto<SessionDto>(sessionDto));
     }
-
 }

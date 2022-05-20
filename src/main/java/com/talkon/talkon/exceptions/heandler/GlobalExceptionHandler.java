@@ -13,7 +13,6 @@ import org.springframework.web.context.request.WebRequest;
 @RestController
 @ControllerAdvice
 public class GlobalExceptionHandler {
-
     @ExceptionHandler(value = {UserNotFoundException.class})
     public ResponseEntity<DataDto<AppErrorDto>> handlerUserNotFoundException(UserNotFoundException exception, WebRequest request) {
         return new ResponseEntity<>(

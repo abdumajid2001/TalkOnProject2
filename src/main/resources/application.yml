@@ -2,32 +2,22 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/talk_on
     username: postgres
-    password: root
+    password: 123
     driver-class-name: org.postgresql.Driver
 
   jpa:
     show-sql: true
-#    defer-datasource-initialization: true
+    defer-datasource-initialization: true
     hibernate:
-#      ddl-auto: create
-        ddl-auto: update
-
-
-#  sql:
-#    init:
-#      mode: always
-#      mode: never
-
-
-
-
+      ddl-auto: update
+  #      ddl-auto: update
 
 server:
   port: 9090
 
 api:
   info:
-    title: Online Pharma
+    title: TalkOn
     description: Online queue
     version: 1.0
     terms-of-service: https://unicorn.pdp.uz
@@ -42,3 +32,10 @@ springdoc:
     path: /ui
   api-docs:
     path: /docs
+
+service:
+  prop:
+    protocol: http
+    ip: localhost
+    port: 9090
+    url: boom.uz

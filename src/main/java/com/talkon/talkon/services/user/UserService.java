@@ -1,12 +1,11 @@
 package com.talkon.talkon.services.user;
 
 
-import com.talkon.talkon.dtos.user.LoginDto;
-import com.talkon.talkon.dtos.user.UserCreateDto;
-import com.talkon.talkon.dtos.user.UserUpdateDto;
+import com.talkon.talkon.dtos.responce.DataDto;
+import com.talkon.talkon.dtos.user.*;
 import com.talkon.talkon.criteria.base.BaseGenericCriteria;
-import com.talkon.talkon.dtos.user.UserDto;
 import com.talkon.talkon.services.base.GenericCrudService;
+import org.springframework.http.ResponseEntity;
 
 public interface UserService extends GenericCrudService<
         UserDto,
@@ -16,5 +15,7 @@ public interface UserService extends GenericCrudService<
         BaseGenericCriteria
         > {
 
-    String login(LoginDto dto);
+    ResponseEntity<DataDto<SessionDto>>  getToken(LoginDto dto);
+
+    void getCode(String phoneNumber);
 }

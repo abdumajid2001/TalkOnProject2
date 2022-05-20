@@ -34,9 +34,6 @@ public class User extends Auditable {
     private String email;
     @Column(unique = true)
     private String username;
-
-    private String password;
-
     private LocalDate dataOfBirth;
 
     @Enumerated(EnumType.STRING)
@@ -50,7 +47,7 @@ public class User extends Auditable {
 
 
     @Builder(builderMethodName = "childBuilder")
-    public User(String id, LocalDateTime createdAt, LocalDateTime updatedAt, boolean deleted, short status, String firstName, String lastName, String phoneNumber, String email, String username, String password, LocalDate dataOfBirth, Role role, Integer timeZone) {
+    public User(String id, LocalDateTime createdAt, LocalDateTime updatedAt, boolean deleted, short status, String firstName, String lastName, String phoneNumber, String email, String username, String password, LocalDate dataOfBirth, Role role, Integer timeZone, List<Message> chatMessages) {
         super(id, createdAt, updatedAt, deleted, status);
         this.firstName = firstName;
         this.lastName = lastName;
@@ -61,5 +58,6 @@ public class User extends Auditable {
         this.dataOfBirth = dataOfBirth;
         this.role = role;
         this.timeZone = timeZone;
+        this.chatMessages = chatMessages;
     }
 }
