@@ -7,7 +7,7 @@ import com.talkon.talkon.entities.user.members.Mentee;
 import com.vladmihalcea.hibernate.type.array.IntArrayType;
 import com.vladmihalcea.hibernate.type.array.StringArrayType;
 import com.vladmihalcea.hibernate.type.json.JsonType;
-import io.swagger.v3.oas.annotations.media.Schema;
+import javax.persistence.Table;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.Type;
@@ -22,7 +22,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(name = "users")
+@Table(schema = "users")
 @Entity(name = "favourite_lists")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 

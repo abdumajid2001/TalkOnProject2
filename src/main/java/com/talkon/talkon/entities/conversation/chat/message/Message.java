@@ -5,7 +5,6 @@ import javax.persistence.*;
 
 import com.talkon.talkon.entities.conversation.chat.Chat;
 import com.talkon.talkon.entities.user.User;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -14,8 +13,8 @@ import lombok.experimental.FieldDefaults;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(name = "conversation")
 @Entity(name = "messages")
+@Table(schema = "conversation")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Message extends Auditable {
 

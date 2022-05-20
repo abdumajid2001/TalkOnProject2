@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 import com.talkon.talkon.entities.user.members.Mentee;
 import com.talkon.talkon.entities.user.members.Mentor;
-import io.swagger.v3.oas.annotations.media.Schema;
+import javax.persistence.Table;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -15,7 +15,7 @@ import lombok.experimental.FieldDefaults;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(name = "users")
+@Table(schema = "users")
 @Entity(name = "reviews")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Review extends Auditable {

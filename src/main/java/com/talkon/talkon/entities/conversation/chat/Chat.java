@@ -7,7 +7,7 @@ import javax.persistence.*;
 import com.talkon.talkon.entities.conversation.chat.message.Message;
 import com.talkon.talkon.entities.user.members.Mentee;
 import com.talkon.talkon.entities.user.members.Mentor;
-import io.swagger.v3.oas.annotations.media.Schema;
+import javax.persistence.Table;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -20,9 +20,8 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(name = "conversation")
 @Entity(name = "chats")
-@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "mentor_id", "mentee_id" }) })
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "mentor_id", "mentee_id" }) },schema = "conversation")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Chat extends Auditable {
 

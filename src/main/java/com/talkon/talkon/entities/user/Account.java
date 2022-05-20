@@ -1,20 +1,21 @@
 package com.talkon.talkon.entities.user;
 
 import com.talkon.talkon.entities.base.Auditable;
-import io.swagger.v3.oas.annotations.media.Schema;
+import javax.persistence.Table;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(name = "users")
+@Table(schema = "users")
 @Entity(name = "account")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Account extends Auditable {
