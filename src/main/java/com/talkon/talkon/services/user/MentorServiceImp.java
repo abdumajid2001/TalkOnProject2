@@ -8,13 +8,14 @@ import com.talkon.talkon.mappers.mentor.MentorMapper;
 import com.talkon.talkon.repositories.mentor.MentorRepository;
 import com.talkon.talkon.services.base.AbstractService;
 import com.talkon.talkon.validators.mentor.MentorValidation;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class MentorServiceImp extends AbstractService<MentorRepository, MentorMapper,MentorValidation> implements MentorService {
-    protected MentorServiceImp(MentorMapper mapper, MentorValidation validator, MentorRepository repository) {
+    protected MentorServiceImp( MentorMapper mapper, MentorValidation validator, MentorRepository repository) {
         super(mapper, validator, repository);
     }
 

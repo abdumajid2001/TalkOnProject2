@@ -8,7 +8,7 @@ import com.talkon.talkon.mappers.base.AbstractMapper;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 
-@Component
+
 @Mapper(componentModel = "spring")
 public interface MentorMapper extends AbstractMapper<Mentor, MentorDto, MentorCreateDto, MentorUpdateDto> {
 }
