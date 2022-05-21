@@ -8,7 +8,7 @@ import com.talkon.talkon.dtos.user.UserDto;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 
-@Component
+
 @Mapper(componentModel = "spring")
 public interface UserMapper extends AbstractMapper<User, UserDto, UserCreateDto, UserUpdateDto> {
 }
