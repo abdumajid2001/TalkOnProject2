@@ -26,6 +26,8 @@ public class User extends Auditable {
 
     private String lastName;
 
+    private String password;
+
     @Column(nullable = false)
     private String phoneNumber;
     // TODO: 18/05/22  /*regex yoz*/
