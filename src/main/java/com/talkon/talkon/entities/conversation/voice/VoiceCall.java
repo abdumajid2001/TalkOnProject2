@@ -2,7 +2,7 @@ package com.talkon.talkon.entities.conversation.voice;
 
 import com.talkon.talkon.entities.base.Auditable;
 import com.talkon.talkon.entities.user.members.Mentee;
-import io.swagger.v3.oas.annotations.media.Schema;
+import javax.persistence.Table;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -15,7 +15,7 @@ import javax.persistence.ManyToOne;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(name = "conversation")
+@Table(schema = "conversation")
 @Entity(name = "voice_calls")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class VoiceCall extends Auditable {

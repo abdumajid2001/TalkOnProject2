@@ -2,7 +2,7 @@ package com.talkon.talkon.entities.user.members;
 import com.talkon.talkon.entities.base.Auditable;
 import com.talkon.talkon.entities.schedule.Schedule;
 import com.talkon.talkon.entities.user.User;
-import io.swagger.v3.oas.annotations.media.Schema;
+import javax.persistence.Table;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -15,7 +15,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(name = "users")
+@Table(schema = "users")
 @Entity(name = "mentors")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Mentor extends Auditable {

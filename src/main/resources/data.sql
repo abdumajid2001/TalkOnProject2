@@ -1,2 +1,0 @@
-insert into users(id, created_at, is_deleted, status, updated_at, data_of_birth, email, first_name, last_name, password, phone_number, role, time_zone, username)
-VALUES('facfa5a7-b3bb-4235-be0d-44cfa0cbb751', now(), 120, 10, now(), now(), 'abdumajidabdullatipov1@gmail.com', 'Abdumajid', 'Abdulatipov', '123', '+998900032869','SUPER_ADMIN', 300,null);

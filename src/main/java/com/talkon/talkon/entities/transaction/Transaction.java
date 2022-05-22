@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 import com.talkon.talkon.entities.user.Account;
 import com.talkon.talkon.enums.PayType;
-import io.swagger.v3.oas.annotations.media.Schema;
+import javax.persistence.Table;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -15,7 +15,7 @@ import lombok.experimental.FieldDefaults;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(name = "transaction")
+@Table(schema = "transaction")
 @Entity(name = "transactions")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Transaction extends Auditable {

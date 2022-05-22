@@ -6,7 +6,7 @@ import com.talkon.talkon.entities.base.Auditable;
 import com.talkon.talkon.entities.user.members.Mentee;
 import com.talkon.talkon.entities.user.members.Mentor;
 import com.talkon.talkon.enums.ScheduleStatus;
-import io.swagger.v3.oas.annotations.media.Schema;
+import javax.persistence.Table;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(name = "schedule")
+@Table(schema = "schedule")
 @Entity(name = "schedules")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Schedule extends Auditable {

@@ -3,7 +3,7 @@ package com.talkon.talkon.entities.user;
 import com.talkon.talkon.entities.conversation.chat.message.Message;
 import com.talkon.talkon.enums.Role;
 import com.talkon.talkon.entities.base.Auditable;
-import io.swagger.v3.oas.annotations.media.Schema;
+import javax.persistence.Table;
 import lombok.*;
 
 import javax.persistence.*;
@@ -17,7 +17,8 @@ import java.util.TimeZone;
 @Entity(name = "users")
 @Getter
 @Setter
-@Schema(name = "users")
+@NoArgsConstructor
+@Table(schema = "users")
 @AllArgsConstructor
 public class User extends Auditable {
 
@@ -28,6 +29,8 @@ public class User extends Auditable {
     private String firstName;
 
     private String lastName;
+
+    private String password;
 
     @Column(nullable = false)
     private String phoneNumber;
@@ -62,6 +65,7 @@ public class User extends Auditable {
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.username = username;
+        this.password = password;
         this.dataOfBirth = dataOfBirth;
         this.role = role;
         this.timeZone = timeZone;

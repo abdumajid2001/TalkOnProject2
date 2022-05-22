@@ -6,7 +6,7 @@ import com.talkon.talkon.entities.user.User;
 import javax.persistence.*;
 
 import com.talkon.talkon.enums.Level;
-import io.swagger.v3.oas.annotations.media.Schema;
+import javax.persistence.Table;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -18,7 +18,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(name = "users")
+@Table(schema = "users")
 @Entity(name = "mentees")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Mentee extends Auditable {
