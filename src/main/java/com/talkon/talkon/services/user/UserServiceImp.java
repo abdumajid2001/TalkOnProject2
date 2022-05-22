@@ -58,6 +58,8 @@ public class UserServiceImp extends AbstractService<UserRepository, UserMapper, 
 
     public static int EXPIRY_TIME_SECOND = 3600;
 
+    private final MenteeARepository menteeRepository;
+
 
     public UserServiceImp(UserMapper mapper, UserValidator validator, UserRepository repository, PasswordEncoder passwordEncoder, ObjectMapper objectMapper, ServerProperties serverProperties, UserSession userSession) {
         super(mapper, validator, repository);
@@ -86,6 +88,7 @@ public class UserServiceImp extends AbstractService<UserRepository, UserMapper, 
 
     @Override
     public String create(UserCreateDto dto) {
+
         return null;
     }
 

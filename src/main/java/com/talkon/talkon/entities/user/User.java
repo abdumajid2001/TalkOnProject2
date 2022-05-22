@@ -10,6 +10,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -33,7 +34,6 @@ public class User extends Auditable {
 
     private String password;
 
-    @Column(nullable = false)
     private String phoneNumber;
     // TODO: 18/05/22  /*regex yoz*/
 

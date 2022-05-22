@@ -16,9 +16,6 @@ public interface UserRepository extends AbstractRepository<User, String> {
     @Query(value = "select u.* from users u where u.delete = 0 and u.id = ?1", nativeQuery = true)
     Optional<User> findById(String id);
 
-    @Query(value = "select u.* from users u where u.is_deleted = 0 and u.username = ?1", nativeQuery = true)
-    Optional<User> findByUsername(String username);
-
     Optional<User> findByPhoneNumberAndDeletedFalse(String phoneNumber);
 
     @Modifying
@@ -27,9 +24,4 @@ public interface UserRepository extends AbstractRepository<User, String> {
             """)
     void deleteByIdMy(String id);
 
-
-    @Query(value = """
-            select name, status from users
-            """, nativeQuery = true)
-    List<Map<String, Object>> getUsersWithProjection();
 }

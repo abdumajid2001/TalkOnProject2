@@ -21,6 +21,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -91,9 +92,17 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
         User changeUser = repository.findByPhoneNumberAndDeletedFalse(user.getUsername()).get();
         changeUser.setTryCount(0);
-        repository.save(changeUser);
 
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        if (changeUser.isFirstTime())
+            response.setStatus(222);
+
+        else {
+            changeUser.setFirstTime(true);
+            response.setStatus(223);
+        }
+
+        repository.save(changeUser);
         mapper.writeValue(response.getOutputStream(), new DataDto<SessionDto>(sessionDto));
     }
 
