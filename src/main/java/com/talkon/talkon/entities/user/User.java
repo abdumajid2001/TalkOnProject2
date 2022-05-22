@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TimeZone;
+import java.util.UUID;
 
 @Entity(name = "users")
 @Getter
@@ -44,13 +44,17 @@ public class User extends Auditable {
     @Column(nullable = false)
     private Integer timeZone;
 
+    private boolean isOnline;
+
+    private LocalDateTime lastSeen;
+
     @OneToMany(mappedBy = "from")
     List<Message> chatMessages = new ArrayList<>();
 
 
     @Builder(builderMethodName = "childBuilder")
-    public User(String id, LocalDateTime createdAt, LocalDateTime updatedAt, boolean deleted, short status, String firstName, String lastName, String phoneNumber, String email, String username, String password, LocalDate dataOfBirth, Role role, Integer timeZone, List<Message> chatMessages) {
-        super(id, createdAt, updatedAt, deleted, status);
+    public User(String id, LocalDateTime createdAt, LocalDateTime updatedAt, boolean deleted, short status, String firstName, String lastName, String phoneNumber, String email, String username, String password, LocalDate dataOfBirth, Role role, Integer timeZone, List<Message> chatMessages, UUID createdBy, boolean isOnline, LocalDateTime lastSeen) {
+        super(id, createdAt, updatedAt, createdBy, deleted, status);
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
@@ -61,5 +65,7 @@ public class User extends Auditable {
         this.role = role;
         this.timeZone = timeZone;
         this.chatMessages = chatMessages;
+        this.isOnline = isOnline;
+        this.lastSeen = lastSeen;
     }
 }
