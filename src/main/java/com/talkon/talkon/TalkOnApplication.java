@@ -41,7 +41,6 @@ public class TalkOnApplication {
                 .phoneNumber("+998900032869")
                 .email("abdumajidabdullatipov1@gmail.com")
                 .username("admin")
-                .password(passwordEncoder.encode("123"))
                 .dataOfBirth(LocalDate.now())
                 .role(Role.ADMIN)
                 .timeZone(300).build();

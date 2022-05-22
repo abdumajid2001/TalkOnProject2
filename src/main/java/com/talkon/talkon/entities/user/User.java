@@ -17,10 +17,13 @@ import java.util.TimeZone;
 @Entity(name = "users")
 @Getter
 @Setter
-@NoArgsConstructor
 @Schema(name = "users")
 @AllArgsConstructor
 public class User extends Auditable {
+
+    public User() {
+        this.timeZone = -1;
+    }
 
     private String firstName;
 
@@ -42,22 +45,30 @@ public class User extends Auditable {
     @Column(nullable = false)
     private Integer timeZone;
 
-    @OneToMany(mappedBy = "from")
+    private String code;
+    private int tryCount;
+    private boolean firstTime;
+    @Column(nullable = false)
+    private LocalDateTime expiry;
+
+    @OneToMany(mappedBy = "from",cascade = CascadeType.ALL)
     List<Message> chatMessages = new ArrayList<>();
 
-
     @Builder(builderMethodName = "childBuilder")
-    public User(String id, LocalDateTime createdAt, LocalDateTime updatedAt, boolean deleted, short status, String firstName, String lastName, String phoneNumber, String email, String username, String password, LocalDate dataOfBirth, Role role, Integer timeZone, List<Message> chatMessages) {
+    public User(String id, LocalDateTime createdAt, LocalDateTime updatedAt, boolean deleted, short status, String firstName, String lastName, String phoneNumber, String email, String username, LocalDate dataOfBirth, Role role, Integer timeZone, String code, int tryCount, boolean firstTime, LocalDateTime expiry, List<Message> chatMessages) {
         super(id, createdAt, updatedAt, deleted, status);
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.username = username;
-        this.password = password;
         this.dataOfBirth = dataOfBirth;
         this.role = role;
         this.timeZone = timeZone;
+        this.code = code;
+        this.tryCount = tryCount;
+        this.firstTime = firstTime;
+        this.expiry = expiry;
         this.chatMessages = chatMessages;
     }
 }

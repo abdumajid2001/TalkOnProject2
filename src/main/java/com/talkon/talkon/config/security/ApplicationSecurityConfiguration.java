@@ -2,10 +2,14 @@ package com.talkon.talkon.config.security;
 
 import com.talkon.talkon.config.security.filter.AuthenticationFilter;
 import com.talkon.talkon.config.security.filter.AuthorizationFilter;
+import com.talkon.talkon.repositories.user.UserRepository;
 import com.talkon.talkon.services.user.UserServiceImp;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -24,6 +28,7 @@ import java.util.List;
 
 @EnableWebSecurity
 @RequiredArgsConstructor
+@Configuration
 @EnableGlobalMethodSecurity(jsr250Enabled = true, securedEnabled = true, prePostEnabled = true)
 public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapter {
     public final static String[] WHITE_LIST = {
@@ -44,10 +49,15 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
 
     private final AuthorizationFilter authorizationFilter;
 
+    private final UserRepository repository;
+
+
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(service).passwordEncoder(passwordEncoder);
     }
+
 
     @Bean
     @Override
@@ -79,7 +89,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                         .anyRequest()
                         .authenticated());
 
-        http.addFilter(new AuthenticationFilter(authenticationManager(), mapper));
+        http.addFilter(new AuthenticationFilter(authenticationManager(),mapper,repository));
         http.addFilterBefore(authorizationFilter, UsernamePasswordAuthenticationFilter.class);
     }
 }

@@ -24,10 +24,13 @@ public class UserController extends AbstractController<UserService> {
         return service.getToken(dto);
     }
 
-    @RequestMapping(value = PATH + "/auth/register")
+    @RequestMapping(value = PATH + "/auth/register",method = RequestMethod.POST)
     public ResponseEntity<Void> getCode(String phoneNumber){
         service.getCode(phoneNumber);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    
+
+
 
 }

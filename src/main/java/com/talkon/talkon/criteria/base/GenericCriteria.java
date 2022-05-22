@@ -21,7 +21,6 @@ public class GenericCriteria implements BaseGenericCriteria, Serializable {
     protected Integer perPage;
 
     protected String sortBy;
-
     protected String sortDirection;
 
     public String getSortDirection() {

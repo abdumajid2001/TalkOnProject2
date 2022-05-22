@@ -1,6 +1,7 @@
 package com.talkon.talkon.config.security.filter;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.talkon.talkon.entities.user.User;
 import com.talkon.talkon.exceptions.user.UserNotFoundException;
 import com.talkon.talkon.repositories.user.UserRepository;
 import com.talkon.talkon.config.security.utils.JWTUtils;
@@ -47,10 +48,10 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                 DecodedJWT decodedJWT = JWTUtils.getVerifier().verify(token);
 
                 String id = decodedJWT.getSubject();
+                User user = repository.findById(id).orElseThrow(() -> new UserNotFoundException("User Not found"));
+                UserDetails userDetails = new UserDetails(user);
 
-                UserDetails user = new UserDetails(repository.findById(id).orElseThrow(() -> new UserNotFoundException("User Not found")));
-
-                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             } catch (Exception exception) {
