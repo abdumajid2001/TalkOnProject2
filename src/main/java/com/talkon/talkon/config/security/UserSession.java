@@ -1,7 +1,7 @@
 package com.talkon.talkon.config.security;
 
 
-import com.talkon.talkon.dtos.user.UserDetails;
+import com.talkon.talkon.dtos.user.user.UserDetails;
 import com.talkon.talkon.enums.Headers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;

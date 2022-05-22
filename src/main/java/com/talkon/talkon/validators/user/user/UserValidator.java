@@ -1,7 +1,7 @@
-package com.talkon.talkon.validators.user;
+package com.talkon.talkon.validators.user.user;
 
-import com.talkon.talkon.dtos.user.UserCreateDto;
-import com.talkon.talkon.dtos.user.UserUpdateDto;
+import com.talkon.talkon.dtos.user.user.UserCreateDto;
+import com.talkon.talkon.dtos.user.user.UserUpdateDto;
 import com.talkon.talkon.exceptions.ValidationException;
 import com.talkon.talkon.validators.base.AbstractValidator;
 import org.springframework.stereotype.Component;

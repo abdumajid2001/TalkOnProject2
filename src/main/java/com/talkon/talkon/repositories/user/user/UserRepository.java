@@ -1,4 +1,4 @@
-package com.talkon.talkon.repositories.user;
+package com.talkon.talkon.repositories.user.user;
 
 import com.talkon.talkon.entities.user.User;
 import com.talkon.talkon.repositories.base.AbstractRepository;

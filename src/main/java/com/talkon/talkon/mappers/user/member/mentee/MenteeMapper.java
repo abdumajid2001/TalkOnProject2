@@ -1,8 +1,8 @@
-package com.talkon.talkon.mappers.mentee;
+package com.talkon.talkon.mappers.user.member.mentee;
 
 import com.talkon.talkon.dtos.base.BaseGenericDto;
-import com.talkon.talkon.dtos.mentee.MenteeDto;
-import com.talkon.talkon.dtos.mentee.MenteeUpdateDto;
+import com.talkon.talkon.dtos.user.member.mentee.MenteeDto;
+import com.talkon.talkon.dtos.user.member.mentee.MenteeUpdateDto;
 import com.talkon.talkon.entities.user.members.Mentee;
 import com.talkon.talkon.mappers.base.AbstractMapper;
 import org.mapstruct.Mapper;

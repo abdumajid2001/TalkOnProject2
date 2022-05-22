@@ -1,11 +1,10 @@
 package com.talkon.talkon.controllers.user;
 
 import com.talkon.talkon.dtos.responce.DataDto;
-import com.talkon.talkon.dtos.user.LoginDto;
-import com.talkon.talkon.dtos.user.SessionDto;
-import com.talkon.talkon.services.user.UserService;
+import com.talkon.talkon.dtos.user.user.LoginDto;
+import com.talkon.talkon.dtos.user.user.SessionDto;
+import com.talkon.talkon.services.user.user.UserService;
 import com.talkon.talkon.controllers.AbstractController;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;

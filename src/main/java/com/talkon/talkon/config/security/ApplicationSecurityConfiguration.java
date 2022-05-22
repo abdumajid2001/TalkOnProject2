@@ -2,14 +2,12 @@ package com.talkon.talkon.config.security;
 
 import com.talkon.talkon.config.security.filter.AuthenticationFilter;
 import com.talkon.talkon.config.security.filter.AuthorizationFilter;
-import com.talkon.talkon.repositories.user.UserRepository;
-import com.talkon.talkon.services.user.UserServiceImp;
+import com.talkon.talkon.repositories.user.user.UserRepository;
+import com.talkon.talkon.services.user.user.UserServiceImp;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;

@@ -1,4 +1,4 @@
-package com.talkon.talkon.dtos.user;
+package com.talkon.talkon.dtos.user.user;
 
 import com.talkon.talkon.entities.user.User;
 import org.springframework.security.core.GrantedAuthority;

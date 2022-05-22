@@ -1,4 +1,4 @@
-package com.talkon.talkon.dtos.user;
+package com.talkon.talkon.dtos.user.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

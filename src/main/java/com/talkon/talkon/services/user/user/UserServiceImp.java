@@ -1,21 +1,21 @@
-package com.talkon.talkon.services.user;
+package com.talkon.talkon.services.user.user;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.talkon.talkon.config.security.UserSession;
 import com.talkon.talkon.dtos.responce.AppErrorDto;
 import com.talkon.talkon.dtos.responce.DataDto;
-import com.talkon.talkon.dtos.user.*;
+import com.talkon.talkon.dtos.user.user.*;
 import com.talkon.talkon.entities.user.User;
 import com.talkon.talkon.exceptions.user.PhoneNumberAlready;
 import com.talkon.talkon.exceptions.user.UserBlockedException;
 import com.talkon.talkon.properties.ServerProperties;
-import com.talkon.talkon.repositories.user.UserRepository;
+import com.talkon.talkon.repositories.user.user.UserRepository;
 import com.talkon.talkon.criteria.base.BaseGenericCriteria;
 import com.talkon.talkon.exceptions.user.UserNotFoundException;
-import com.talkon.talkon.mappers.user.UserMapper;
+import com.talkon.talkon.mappers.user.user.UserMapper;
 import com.talkon.talkon.services.base.AbstractService;
-import com.talkon.talkon.validators.user.UserValidator;
+import com.talkon.talkon.validators.user.user.UserValidator;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
@@ -25,7 +25,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -58,8 +57,6 @@ public class UserServiceImp extends AbstractService<UserRepository, UserMapper, 
 
     public static int EXPIRY_TIME_SECOND = 3600;
 
-    private final MenteeARepository menteeRepository;
-
 
     public UserServiceImp(UserMapper mapper, UserValidator validator, UserRepository repository, PasswordEncoder passwordEncoder, ObjectMapper objectMapper, ServerProperties serverProperties, UserSession userSession) {
         super(mapper, validator, repository);
@@ -83,7 +80,7 @@ public class UserServiceImp extends AbstractService<UserRepository, UserMapper, 
             repository.save(user);
             throw new UserNotFoundException("user Not found");
         });
-        return new com.talkon.talkon.dtos.user.UserDetails(findUser);
+        return new com.talkon.talkon.dtos.user.user.UserDetails(findUser);
     }
 
     @Override

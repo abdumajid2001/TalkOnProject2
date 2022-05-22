@@ -1,4 +1,4 @@
-package com.talkon.talkon.dtos.mentee;
+package com.talkon.talkon.dtos.user.member.mentee;
 
 import com.talkon.talkon.dtos.base.GenericDto;
 

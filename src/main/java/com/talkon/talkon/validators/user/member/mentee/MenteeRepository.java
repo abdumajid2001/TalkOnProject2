@@ -1,9 +1,8 @@
-package com.talkon.talkon.validators.mentee;
+package com.talkon.talkon.validators.user.member.mentee;
 
 import com.talkon.talkon.dtos.base.BaseGenericDto;
-import com.talkon.talkon.dtos.mentee.MenteeUpdateDto;
+import com.talkon.talkon.dtos.user.member.mentee.MenteeUpdateDto;
 import com.talkon.talkon.exceptions.ValidationException;
-import com.talkon.talkon.repositories.base.AbstractRepository;
 import com.talkon.talkon.validators.base.AbstractValidator;
 
 public class MenteeRepository extends AbstractValidator<

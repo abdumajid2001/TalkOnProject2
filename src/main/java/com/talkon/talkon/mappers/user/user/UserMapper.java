@@ -1,15 +1,13 @@
-package com.talkon.talkon.mappers.user;
+package com.talkon.talkon.mappers.user.user;
 
-import com.talkon.talkon.dtos.user.UserCreateDto;
-import com.talkon.talkon.dtos.user.UserUpdateDto;
+import com.talkon.talkon.dtos.user.user.UserCreateDto;
+import com.talkon.talkon.dtos.user.user.UserUpdateDto;
 import com.talkon.talkon.entities.user.User;
 import com.talkon.talkon.mappers.base.AbstractMapper;
-import com.talkon.talkon.dtos.user.UserDto;
-import org.hibernate.annotations.Target;
+import com.talkon.talkon.dtos.user.user.UserDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
-import org.springframework.stereotype.Component;
 
 
 @Mapper(componentModel = "spring",nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)

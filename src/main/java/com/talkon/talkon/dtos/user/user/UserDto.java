@@ -1,4 +1,4 @@
-package com.talkon.talkon.dtos.user;
+package com.talkon.talkon.dtos.user.user;
 
 import com.talkon.talkon.dtos.base.GenericDto;
 import com.talkon.talkon.enums.Role;
