@@ -24,4 +24,9 @@ public interface UserRepository extends AbstractRepository<User, String> {
             """)
     void deleteByIdMy(String id);
 
+    boolean existsByUsernameAndDeletedFalse(String username);
+    boolean existsByEmailAndDeletedFalse(String email);
+
+    boolean existsByIdAndDeletedFalse(String id);
+
 }

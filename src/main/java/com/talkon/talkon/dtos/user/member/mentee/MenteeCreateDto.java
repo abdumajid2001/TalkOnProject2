@@ -1,15 +1,17 @@
 package com.talkon.talkon.dtos.user.member.mentee;
 
-import com.talkon.talkon.dtos.base.GenericDto;
-import com.talkon.talkon.entities.user.User;
+import com.talkon.talkon.dtos.base.BaseGenericDto;
 import com.talkon.talkon.enums.Level;
 import com.talkon.talkon.enums.Role;
+import lombok.Getter;
+import lombok.Setter;
 
-import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
-
-public class MenteeDto extends GenericDto {
+@Getter
+@Setter
+public class MenteeCreateDto implements BaseGenericDto {
+    Level level;
 
     private String firstName;
 
@@ -23,8 +25,4 @@ public class MenteeDto extends GenericDto {
 
     @NotBlank
     private Integer timeZone;
-
-    Level level;
-
-    Integer conversationCount;
 }

@@ -85,28 +85,15 @@ public class UserServiceImp extends AbstractService<UserRepository, UserMapper, 
 
     @Override
     public String create(UserCreateDto dto) {
-
         return null;
     }
 
     @Override
     public void delete(String id) {
-        repository.deleteByIdMy(id);
     }
 
     @Override
     public void update(UserUpdateDto dto) {
-//        validator.validOnUpdate(dto);
-        User user = repository.findById(dto.getId()).orElseThrow(() -> {
-            throw new UserNotFoundException("User not found");
-        });
-        if (dto.getPhoneNumber() != null) {
-            repository.findByPhoneNumberAndDeletedFalse(dto.getPhoneNumber()).ifPresent((userByPhoneNumber) -> {
-                throw new PhoneNumberAlready("Phone Number Already");
-            });
-        }
-        User updateUser = mapper.fromUpdateDto(dto, user);
-        repository.save(updateUser);
     }
 
     @Override
@@ -156,7 +143,20 @@ public class UserServiceImp extends AbstractService<UserRepository, UserMapper, 
         int code = new Random().nextInt(100000, 999999);
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
         Optional<User> userOptional = repository.findByPhoneNumberAndDeletedFalse(phoneNumber);
-        User user = null;
+        User user = checkUserToBlock(userOptional);
+
+        sendSmstoPhone(phoneNumber, code);
+
+        user.setTryCount(user.getTryCount() + 1);
+        user.setPhoneNumber(phoneNumber);
+        user.setCode(passwordEncoder.encode(code + ""));
+        user.setExpiry(LocalDateTime.now().plusSeconds(EXPIRY_TIME_SECOND));
+        repository.save(user);
+
+    }
+
+    private User checkUserToBlock(Optional<User> userOptional) {
+        User user;
         if (userOptional.isPresent()) {
             user = userOptional.get();
             if (user.getStatus() == 1) {
@@ -172,7 +172,10 @@ public class UserServiceImp extends AbstractService<UserRepository, UserMapper, 
                 throw new UserBlockedException("User blokcked");
             }
         } else user = new User();
+        return user;
+    }
 
+    private void sendSmstoPhone(String phoneNumber, int code) {
         Runnable runnable = () -> {
             Message message = Message.creator(
                             new PhoneNumber(phoneNumber),
@@ -182,12 +185,5 @@ public class UserServiceImp extends AbstractService<UserRepository, UserMapper, 
             System.out.println(message.getSid());
         };
         new Thread(runnable).start();
-
-        user.setTryCount(user.getTryCount() + 1);
-        user.setPhoneNumber(phoneNumber);
-        user.setCode(passwordEncoder.encode(code + ""));
-        user.setExpiry(LocalDateTime.now().plusSeconds(EXPIRY_TIME_SECOND));
-        repository.save(user);
-
     }
 }

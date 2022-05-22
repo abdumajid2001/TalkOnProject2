@@ -28,8 +28,5 @@ public class UserController extends AbstractController<UserService> {
         service.getCode(phoneNumber);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    
-
-
 
 }
