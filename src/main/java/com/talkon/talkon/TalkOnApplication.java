@@ -32,22 +32,5 @@ public class TalkOnApplication {
         SpringApplication.run(TalkOnApplication.class, args);
     }
 
-//        @Bean
-    CommandLineRunner runner() {
-        User user = User.childBuilder()
-                .id(UUID.randomUUID().toString())
-                .firstName("abdumajid")
-                .lastName("abdullatipov")
-                .phoneNumber("+998900032869")
-                .email("abdumajidabdullatipov1@gmail.com")
-                .username("admin")
-                .dataOfBirth(LocalDate.now())
-                .role(Role.ADMIN)
-                .timeZone(300).build();
-        return (args -> {
-            repository.save(user);
-        });
-
-    }
 
 }

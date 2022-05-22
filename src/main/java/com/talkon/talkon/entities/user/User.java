@@ -3,7 +3,9 @@ package com.talkon.talkon.entities.user;
 import com.talkon.talkon.entities.conversation.chat.message.Message;
 import com.talkon.talkon.enums.Role;
 import com.talkon.talkon.entities.base.Auditable;
+
 import javax.persistence.Table;
+
 import lombok.*;
 
 import javax.persistence.*;
@@ -17,7 +19,6 @@ import java.util.TimeZone;
 @Entity(name = "users")
 @Getter
 @Setter
-@NoArgsConstructor
 @Table(schema = "users")
 @AllArgsConstructor
 public class User extends Auditable {
@@ -54,18 +55,18 @@ public class User extends Auditable {
     @Column(nullable = false)
     private LocalDateTime expiry;
 
-    @OneToMany(mappedBy = "from",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "from", cascade = CascadeType.ALL)
     List<Message> chatMessages = new ArrayList<>();
 
     @Builder(builderMethodName = "childBuilder")
-    public User(String id, LocalDateTime createdAt, LocalDateTime updatedAt, boolean deleted, short status, String firstName, String lastName, String phoneNumber, String email, String username, LocalDate dataOfBirth, Role role, Integer timeZone, String code, int tryCount, boolean firstTime, LocalDateTime expiry, List<Message> chatMessages) {
+    public User(String id, LocalDateTime createdAt, LocalDateTime updatedAt, boolean deleted, short status, String firstName, String lastName, String password, String phoneNumber, String email, String username, LocalDate dataOfBirth, Role role, Integer timeZone, String code, int tryCount, boolean firstTime, LocalDateTime expiry, List<Message> chatMessages) {
         super(id, createdAt, updatedAt, deleted, status);
         this.firstName = firstName;
         this.lastName = lastName;
+        this.password = password;
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.username = username;
-        this.password = password;
         this.dataOfBirth = dataOfBirth;
         this.role = role;
         this.timeZone = timeZone;
