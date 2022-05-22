@@ -11,8 +11,8 @@ import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.springframework.stereotype.Component;
 
-@Component
-@Mapper(componentModel = "spring")
+
+@Mapper(componentModel = "spring",nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface UserMapper extends AbstractMapper<User, UserDto, UserCreateDto, UserUpdateDto> {
 
     User fromUpdateDto(UserUpdateDto dto,@MappingTarget User user);

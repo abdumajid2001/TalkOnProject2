@@ -2,10 +2,9 @@ package com.talkon.talkon.validators.user;
 
 import com.talkon.talkon.dtos.user.UserCreateDto;
 import com.talkon.talkon.dtos.user.UserUpdateDto;
+import com.talkon.talkon.exceptions.ValidationException;
 import com.talkon.talkon.validators.base.AbstractValidator;
 import org.springframework.stereotype.Component;
-
-import javax.xml.bind.ValidationException;
 
 @Component
 public class UserValidator extends AbstractValidator<UserCreateDto, UserUpdateDto, String> {

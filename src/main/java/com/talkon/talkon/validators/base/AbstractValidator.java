@@ -2,8 +2,8 @@ package com.talkon.talkon.validators.base;
 
 import com.talkon.talkon.dtos.base.BaseGenericDto;
 import com.talkon.talkon.dtos.base.GenericDto;
+import com.talkon.talkon.exceptions.ValidationException;
 
-import javax.xml.bind.ValidationException;
 import java.io.Serializable;
 
 public abstract class AbstractValidator<CD extends BaseGenericDto, UD extends GenericDto, K extends Serializable> implements BaseGenericValidator {
