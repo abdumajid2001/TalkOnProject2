@@ -8,7 +8,6 @@ import com.talkon.talkon.mappers.mentor.MentorMapper;
 import com.talkon.talkon.repositories.mentor.MentorRepository;
 import com.talkon.talkon.services.base.AbstractService;
 import com.talkon.talkon.validators.mentor.MentorValidation;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

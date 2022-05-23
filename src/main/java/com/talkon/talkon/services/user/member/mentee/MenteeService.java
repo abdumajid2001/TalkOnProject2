@@ -1,6 +1,7 @@
 package com.talkon.talkon.services.user.member.mentee;
 
 import com.talkon.talkon.criteria.base.BaseGenericCriteria;
+import com.talkon.talkon.criteria.base.GenericCriteria;
 import com.talkon.talkon.dtos.base.BaseGenericDto;
 import com.talkon.talkon.dtos.user.member.mentee.MenteeCreateDto;
 import com.talkon.talkon.dtos.user.member.mentee.MenteeDto;
@@ -13,6 +14,6 @@ public interface MenteeService extends GenericCrudService<
         MenteeCreateDto,
         MenteeUpdateDto,
         String,
-        BaseGenericCriteria
+        GenericCriteria
         > {
 }

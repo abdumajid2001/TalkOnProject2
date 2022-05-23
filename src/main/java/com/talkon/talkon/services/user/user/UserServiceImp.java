@@ -144,9 +144,7 @@ public class UserServiceImp extends AbstractService<UserRepository, UserMapper, 
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
         Optional<User> userOptional = repository.findByPhoneNumberAndDeletedFalse(phoneNumber);
         User user = checkUserToBlock(userOptional);
-
         sendSmstoPhone(phoneNumber, code);
-
         user.setTryCount(user.getTryCount() + 1);
         user.setPhoneNumber(phoneNumber);
         user.setCode(passwordEncoder.encode(code + ""));

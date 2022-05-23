@@ -1,11 +1,13 @@
 package com.talkon.talkon.services.user.member.mentee;
 
 import com.talkon.talkon.criteria.base.BaseGenericCriteria;
+import com.talkon.talkon.criteria.base.GenericCriteria;
 import com.talkon.talkon.dtos.user.member.mentee.MenteeCreateDto;
 import com.talkon.talkon.dtos.user.member.mentee.MenteeDto;
 import com.talkon.talkon.dtos.user.member.mentee.MenteeUpdateDto;
 import com.talkon.talkon.entities.user.User;
 import com.talkon.talkon.entities.user.members.Mentee;
+import com.talkon.talkon.exceptions.user.UserNotFoundException;
 import com.talkon.talkon.mappers.user.member.mentee.MenteeMapper;
 import com.talkon.talkon.mappers.user.user.UserMapper;
 import com.talkon.talkon.repositories.user.member.mentee.MenteeRepository;
@@ -25,7 +27,7 @@ public class MenteeServiceImpl extends AbstractService<
         MenteeRepository,
         MenteeMapper,
         MenteeValidator
-        > implements MenteeService{
+        > implements MenteeService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
@@ -64,12 +66,13 @@ public class MenteeServiceImpl extends AbstractService<
 
     @Override
     public MenteeDto get(String id) {
-//        repository
+//        return repository.getMenteeById(id).orElseThrow(() -> new UserNotFoundException("User no found"));
         return null;
     }
 
     @Override
-    public List<MenteeDto> getAll(BaseGenericCriteria criteria) {
+    public List<MenteeDto> getAll(GenericCriteria criteria) {
+
         return null;
     }
 }

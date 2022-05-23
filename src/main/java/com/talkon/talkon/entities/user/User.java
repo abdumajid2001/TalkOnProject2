@@ -17,11 +17,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
 
-@Entity(name = "users")
+
 @Getter
 @Setter
 @Table(schema = "users")
 @AllArgsConstructor
+@Entity(name = "users")
 public class User extends Auditable {
 
     public User() {
@@ -55,11 +56,17 @@ public class User extends Auditable {
     @Column(nullable = false)
     private LocalDateTime expiry;
 
-    @OneToMany(mappedBy = "from", cascade = CascadeType.ALL)
+    private double longitude;
+
+    private double latitude;
+
+    private boolean online;
+
+    @OneToMany(mappedBy = "from", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     List<Message> chatMessages = new ArrayList<>();
 
     @Builder(builderMethodName = "childBuilder")
-    public User(String id, LocalDateTime createdAt, LocalDateTime updatedAt, boolean deleted, short status, String firstName, String lastName, String password, String phoneNumber, String email, String username, LocalDate dataOfBirth, Role role, Integer timeZone, String code, int tryCount, boolean firstTime, LocalDateTime expiry, List<Message> chatMessages) {
+    public User(String id, LocalDateTime createdAt, LocalDateTime updatedAt, boolean deleted, short status, String firstName, String lastName, String password, String phoneNumber, String email, String username, LocalDate dataOfBirth, Role role, Integer timeZone, String code, int tryCount, boolean firstTime, LocalDateTime expiry, double longitude, double latitude, boolean online, List<Message> chatMessages) {
         super(id, createdAt, updatedAt, deleted, status);
         this.firstName = firstName;
         this.lastName = lastName;
@@ -74,6 +81,9 @@ public class User extends Auditable {
         this.tryCount = tryCount;
         this.firstTime = firstTime;
         this.expiry = expiry;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.online = online;
         this.chatMessages = chatMessages;
     }
 }
