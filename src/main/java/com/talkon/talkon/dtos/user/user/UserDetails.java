@@ -1,9 +1,10 @@
-package com.talkon.talkon.dtos.user;
+package com.talkon.talkon.dtos.user.user;
 
 import com.talkon.talkon.entities.user.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,23 +23,23 @@ public class UserDetails implements org.springframework.security.core.userdetail
     @Override
     public List<? extends GrantedAuthority> getAuthorities() {
         ArrayList<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + user.getRole()));
+        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_"+user.getRole()));
         return grantedAuthorities;
     }
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return user.getCode();
     }
 
     @Override
     public String getUsername() {
-        return user.getUsername();
+        return user.getPhoneNumber();
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return user.getExpiry().isAfter(LocalDateTime.now());
     }
 
     @Override

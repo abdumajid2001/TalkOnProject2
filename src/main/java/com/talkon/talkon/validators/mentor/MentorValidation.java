@@ -2,10 +2,10 @@ package com.talkon.talkon.validators.mentor;
 
 import com.talkon.talkon.dtos.mentor.MentorCreateDto;
 import com.talkon.talkon.dtos.mentor.MentorUpdateDto;
+import com.talkon.talkon.exceptions.ValidationException;
 import com.talkon.talkon.validators.base.AbstractValidator;
 import org.springframework.stereotype.Component;
 
-import javax.xml.bind.ValidationException;
 @Component
 public class MentorValidation extends AbstractValidator<MentorCreateDto, MentorUpdateDto, String> {
     @Override

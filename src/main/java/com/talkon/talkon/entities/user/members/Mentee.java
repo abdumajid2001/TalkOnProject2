@@ -28,7 +28,7 @@ public class Mentee extends Auditable {
 
     Integer conversationCount;
 
-    @OneToOne
+    @OneToOne(optional = false)
     User user;
 
     @OneToMany(mappedBy = "mentee")

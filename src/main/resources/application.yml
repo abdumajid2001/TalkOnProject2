@@ -9,8 +9,15 @@ spring:
     show-sql: true
     defer-datasource-initialization: true
     hibernate:
-      ddl-auto: create
-#        ddl-auto: update
+#      ddl-auto: create
+        ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+  sql:
+    init:
+      mode: never
+#      mode: always
 
 server:
   port: 9090

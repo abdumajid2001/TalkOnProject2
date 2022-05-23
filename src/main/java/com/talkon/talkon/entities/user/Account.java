@@ -22,7 +22,6 @@ public class Account extends Auditable {
    @OneToOne
    User user;
    Integer talkCoins;
-
 }
 
 

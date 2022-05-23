@@ -1,9 +1,9 @@
-package com.talkon.talkon.services.user;
+package com.talkon.talkon.services.user.user;
 
 
 import com.talkon.talkon.dtos.responce.DataDto;
-import com.talkon.talkon.dtos.user.*;
 import com.talkon.talkon.criteria.base.BaseGenericCriteria;
+import com.talkon.talkon.dtos.user.user.*;
 import com.talkon.talkon.services.base.GenericCrudService;
 import org.springframework.http.ResponseEntity;
 

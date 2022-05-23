@@ -22,16 +22,19 @@ public class Mentor extends Auditable {
 
     @OneToOne(optional = false)
     User user;
+
     @Column(nullable = false)
     Integer experience;
+
     @Column(unique = true, nullable = false)
     String aboutMediaLink;
+
     @Column(nullable = false)
     String aboutText;
 
     Integer ratingCount;
-    Integer ratingValue;
 
+    Integer ratingValue;
 
     @OneToMany(mappedBy = "mentor")
     List<Schedule> schedules = new ArrayList<>();
