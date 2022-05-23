@@ -17,12 +17,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
 
-
+@Entity(name = "users")
 @Getter
 @Setter
 @Table(schema = "users")
 @AllArgsConstructor
-@Entity(name = "users")
 public class User extends Auditable {
 
     public User() {
@@ -50,6 +49,11 @@ public class User extends Auditable {
     @Column(nullable = false)
     private Integer timeZone;
 
+    private boolean isOnline;
+
+    private LocalDateTime lastSeen;
+
+
     private String code;
     private int tryCount;
     private boolean firstTime;
@@ -66,6 +70,10 @@ public class User extends Auditable {
     List<Message> chatMessages = new ArrayList<>();
 
     @Builder(builderMethodName = "childBuilder")
+
+    public User(String id, LocalDateTime createdAt, LocalDateTime updatedAt, boolean deleted, short status, String firstName, String lastName, String password, String phoneNumber, String email, String username, LocalDate dataOfBirth, Role role, Integer timeZone,String createdBy, boolean isOnline, LocalDateTime lastSeen, String code, int tryCount, boolean firstTime, LocalDateTime expiry, List<Message> chatMessages) {
+        super(id, createdAt, updatedAt,createdBy, deleted, status);
+
     public User(String id, LocalDateTime createdAt, LocalDateTime updatedAt, boolean deleted, short status, String firstName, String lastName, String password, String phoneNumber, String email, String username, LocalDate dataOfBirth, Role role, Integer timeZone, String code, int tryCount, boolean firstTime, LocalDateTime expiry, double longitude, double latitude, boolean online, List<Message> chatMessages) {
         super(id, createdAt, updatedAt, deleted, status);
         this.firstName = firstName;
@@ -85,5 +93,7 @@ public class User extends Auditable {
         this.latitude = latitude;
         this.online = online;
         this.chatMessages = chatMessages;
+        this.isOnline = isOnline;
+        this.lastSeen = lastSeen;
     }
 }
