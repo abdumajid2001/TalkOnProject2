@@ -8,10 +8,12 @@ import com.talkon.talkon.mappers.mentor.MentorMapper;
 import com.talkon.talkon.repositories.mentor.MentorRepository;
 import com.talkon.talkon.services.base.AbstractService;
 import com.talkon.talkon.validators.mentor.MentorValidation;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 public class MentorServiceImp extends AbstractService<MentorRepository, MentorMapper,MentorValidation> implements MentorService {
@@ -24,6 +26,7 @@ public class MentorServiceImp extends AbstractService<MentorRepository, MentorMa
 
         return null;
     }
+
 
     @Override
     public void delete(String id) {

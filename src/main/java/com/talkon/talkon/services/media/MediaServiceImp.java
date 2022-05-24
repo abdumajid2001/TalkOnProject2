@@ -8,6 +8,7 @@ import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 import com.talkon.talkon.config.security.utils.MediaUtils;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -20,7 +21,9 @@ import java.nio.file.Files;
 import java.util.UUID;
 import static com.talkon.talkon.config.security.utils.MediaUtils.*;
 
-public class MediaServiceImp {
+@Service
+public class MediaServiceImp implements MediaService {
+    @Override
     public Object upload(MultipartFile multipartFile) {
         try {
             String fileName = multipartFile.getOriginalFilename();
@@ -34,6 +37,7 @@ public class MediaServiceImp {
             return ResponseEntity.status(500).body(e);
         }
     }
+    @Override
     public Object delete(String path) {
 
         try {
