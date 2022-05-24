@@ -34,7 +34,7 @@ public class Mentee extends Auditable {
     @Enumerated(EnumType.STRING)
     Level level;
 
-    Integer conversationCount;
+    int conversationCount;
 
     @OneToOne(optional = false)
     User user;

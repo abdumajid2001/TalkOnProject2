@@ -8,10 +8,14 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
+
 @Getter
 @Setter
 public class MenteeCreateDto implements BaseGenericDto {
-    Level level;
+
+    private String id;
+
+    private Level level;
 
     private String firstName;
 
@@ -26,7 +30,4 @@ public class MenteeCreateDto implements BaseGenericDto {
     private double longitude;
 
     private double latitude;
-
-    @NotBlank
-    private Integer timeZone;
 }

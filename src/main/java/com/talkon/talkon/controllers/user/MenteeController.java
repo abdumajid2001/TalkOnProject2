@@ -37,18 +37,32 @@ public class MenteeController extends AbstractController<MenteeService> {
         return new ResponseEntity<>(new DataDto<>(service.get(id)), HttpStatus.OK);
     }
 
-    @PreAuthorize(value = "hasAnyRole('ADMIN', 'SUPER_ADMIN', 'MANAGER')")
+    @PreAuthorize(value = "hasAnyRole('ADMIN', 'SUPER_ADMIN')")
     @RequestMapping(value = PATH + "/mentee/getAll", method = RequestMethod.GET)
     public ResponseEntity<DataDto<List<MenteeDto>>> getAll() {
         return new ResponseEntity<>(new DataDto<>(service.getAll(new GenericCriteria())), HttpStatus.OK);
     }
 
 
-    @PreAuthorize(value = "hasAnyRole('ADMIN', 'SUPER_ADMIN', 'MANAGER')")
-    @RequestMapping(value = PATH + "/mentee/update", method = RequestMethod.PUT)
+    @RequestMapping(value = PATH + "/mentee", method = RequestMethod.PUT)
     public ResponseEntity<Void> update(@RequestBody MenteeUpdateDto updateDto) {
         service.update(updateDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PreAuthorize(value = "hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+    @RequestMapping(value = PATH + "/mentee/blocked/{id}")
+    public ResponseEntity<Void> block(@PathVariable String id) {
+        service.block(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PreAuthorize(value = "hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+    @RequestMapping(value = PATH + "/mentee/blocked/{id}")
+    public ResponseEntity<Void> unBlock(@PathVariable String id) {
+        service.unBlock(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
 }

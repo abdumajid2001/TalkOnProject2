@@ -6,7 +6,7 @@ import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
-import com.talkon.talkon.config.security.utils.MediaUtils;
+import com.talkon.talkon.utils.MediaUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,7 +19,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.UUID;
-import static com.talkon.talkon.config.security.utils.MediaUtils.*;
+import static com.talkon.talkon.utils.MediaUtils.*;
 
 @Service
 public class MediaServiceImp implements MediaService {

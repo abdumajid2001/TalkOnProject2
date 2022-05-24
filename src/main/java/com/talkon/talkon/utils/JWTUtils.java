@@ -1,4 +1,4 @@
-package com.talkon.talkon.config.security.utils;
+package com.talkon.talkon.utils;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;

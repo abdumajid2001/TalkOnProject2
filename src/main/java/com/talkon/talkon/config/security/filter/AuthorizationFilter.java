@@ -4,7 +4,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.talkon.talkon.entities.user.User;
 import com.talkon.talkon.exceptions.user.UserNotFoundException;
 import com.talkon.talkon.repositories.user.user.UserRepository;
-import com.talkon.talkon.config.security.utils.JWTUtils;
+import com.talkon.talkon.utils.JWTUtils;
 import com.talkon.talkon.dtos.responce.AppErrorDto;
 import com.talkon.talkon.dtos.responce.DataDto;
 import com.talkon.talkon.dtos.user.user.UserDetails;

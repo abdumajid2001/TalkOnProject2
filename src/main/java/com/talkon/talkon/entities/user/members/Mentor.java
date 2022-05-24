@@ -9,6 +9,7 @@ import lombok.experimental.FieldDefaults;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 @Getter
@@ -27,7 +28,7 @@ public class Mentor extends Auditable {
     User user;
 
     @Column(nullable = false)
-    Integer experience;
+    int experience;
 
     @Column(unique = true, nullable = false)
     String aboutMediaLink;
@@ -35,11 +36,15 @@ public class Mentor extends Auditable {
     @Column(nullable = false)
     String aboutText;
 
-    Integer ratingCount;
+    int ratingCount;
 
-    Integer ratingValue;
+    int ratingValue;
 
     @OneToMany(mappedBy = "mentor")
     List<Schedule> schedules = new ArrayList<>();
 
+    public Mentor(int experience) {
+        this.setId(UUID.randomUUID().toString());
+        this.experience = experience;
+    }
 }

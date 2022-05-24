@@ -1,4 +1,4 @@
-package com.talkon.talkon.config.security.utils;
+package com.talkon.talkon.utils;
 
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.GoogleCredentials;

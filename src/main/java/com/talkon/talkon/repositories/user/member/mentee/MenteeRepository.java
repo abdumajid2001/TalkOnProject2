@@ -21,10 +21,19 @@ public interface MenteeRepository extends AbstractRepository<Mentee, String> {
             ",u.email" +
             ",u.username" +
             ",u.dataOfBirth" +
-            ",u.timeZone" +
+            ",u.longitude" +
+            ",u.latitude" +
             ",m.level" +
             ",m.conversationCount" +
-            ") from mentees m inner join users u on m.user.id = u.id where not m.deleted  and m.user.id = ?1"
+            ") from mentees m inner join users u on m.user.id = u.id where  m.deleted = false  and m.user.id = ?1"
     )
     MenteeDto getMenteeById(String id);
+
+    @Modifying
+    @Query("update users  u set u.status = 221 where u.id = ?1")
+    void block(String id);
+
+    @Modifying
+    @Query("update users  u set u.status = 0 where u.id = ?1")
+    void unBlock(String id);
 }

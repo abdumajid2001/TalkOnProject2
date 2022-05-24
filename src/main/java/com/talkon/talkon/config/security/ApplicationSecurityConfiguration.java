@@ -82,7 +82,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeRequests(expressionInterceptUrlRegistry -> expressionInterceptUrlRegistry
-                        .antMatchers(WHITE_LIST)
+                        .antMatchers("/**")
                         .permitAll()
                         .anyRequest()
                         .authenticated());

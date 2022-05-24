@@ -13,8 +13,7 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends AbstractRepository<User, String> {
 
-    @Query(value = "select u.* from users u where u.is_deleted = 0 and u.id = ?1", nativeQuery = true)
-    Optional<User> findById(String id);
+    Optional<User> findByIdAndDeletedFalse(String id);
 
     Optional<User> findByPhoneNumberAndDeletedFalse(String phoneNumber);
 

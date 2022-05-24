@@ -2,6 +2,7 @@ package com.talkon.talkon.mappers.user.user;
 
 import com.talkon.talkon.dtos.user.member.mentee.MenteeCreateDto;
 import com.talkon.talkon.dtos.user.member.mentee.MenteeUpdateDto;
+import com.talkon.talkon.dtos.user.member.mentor.MentorUpdateDto;
 import com.talkon.talkon.dtos.user.user.UserCreateDto;
 import com.talkon.talkon.dtos.user.user.UserUpdateDto;
 import com.talkon.talkon.entities.user.User;
@@ -17,7 +18,9 @@ public interface UserMapper extends AbstractMapper<User, UserDto, UserCreateDto,
 
     User fromUpdateDto(UserUpdateDto dto,@MappingTarget User user);
 
-    User fromCreateDto(MenteeCreateDto dto);
+    User fromCreateDto(MenteeCreateDto dto,@MappingTarget User user);
 
     User fromUpdateDto(MenteeUpdateDto dto);
+
+    User fromUpdateDto(MentorUpdateDto dto);
 }

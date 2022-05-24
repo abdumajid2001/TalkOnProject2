@@ -7,6 +7,7 @@ import com.talkon.talkon.dtos.user.member.mentee.MenteeDto;
 import com.talkon.talkon.dtos.user.member.mentee.MenteeUpdateDto;
 import com.talkon.talkon.entities.user.User;
 import com.talkon.talkon.entities.user.members.Mentee;
+import com.talkon.talkon.exceptions.user.NotFoundUserIdException;
 import com.talkon.talkon.exceptions.user.UserNotFoundException;
 import com.talkon.talkon.mappers.user.member.mentee.MenteeMapper;
 import com.talkon.talkon.mappers.user.user.UserMapper;
@@ -40,7 +41,9 @@ public class MenteeServiceImpl extends AbstractService<
     @Override
     public String create(MenteeCreateDto dto) {
         validator.validOnCreate(dto);
-        User user = userMapper.fromCreateDto(dto);
+        User user = userMapper.fromCreateDto(dto, userRepository.findById(dto.getId()).orElseThrow(() -> {
+            throw new UserNotFoundException("User no found");
+        }));
         User savedUser = userRepository.save(user);
 
         Mentee mentee = new Mentee(dto.getLevel());
@@ -65,13 +68,21 @@ public class MenteeServiceImpl extends AbstractService<
 
     @Override
     public MenteeDto get(String id) {
-//        return repository.getMenteeById(id).orElseThrow(() -> new UserNotFoundException("User no found"));
-        return null;
+        return repository.getMenteeById(id);
     }
 
     @Override
     public List<MenteeDto> getAll(GenericCriteria criteria) {
 
         return null;
+    }
+
+    public void block(String id){
+        repository.block(id);
+    }
+
+    @Override
+    public void unBlock(String id) {
+        repository.unBlock(id);
     }
 }

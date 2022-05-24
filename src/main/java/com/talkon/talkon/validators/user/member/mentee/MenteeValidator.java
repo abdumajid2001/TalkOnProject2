@@ -26,12 +26,7 @@ public class MenteeValidator extends AbstractValidator<
 
     @Override
     public void validateKey(String id) throws ValidationException {
-        if (Objects.isNull(id)) {
-            throw new NotFoundUserIdException("Not found user id");
-        }
-        if (!userRepository.existsByIdAndDeletedFalse(id)) {
-            throw new NotFoundUserException("Not found User");
-        }
+        existsUserByUserId(id);
     }
 
     @Override
@@ -39,6 +34,7 @@ public class MenteeValidator extends AbstractValidator<
         existsUserByUsername(dto.getUsername());
         existsUserByEmail(dto.getEmail());
     }
+
 
 
     @Override
@@ -49,7 +45,7 @@ public class MenteeValidator extends AbstractValidator<
 
     private void existsUserByEmail(String email) {
         if (Objects.nonNull(email)) {
-            if (!userRepository.existsByEmailAndDeletedFalse(email)) {
+            if (userRepository.existsByEmailAndDeletedFalse(email)) {
                 throw new AlreadyEmail("Already email");
             }
         }
@@ -57,9 +53,18 @@ public class MenteeValidator extends AbstractValidator<
 
     private void existsUserByUsername(String username) {
         if (Objects.nonNull(username)) {
-            if (!userRepository.existsByUsernameAndDeletedFalse(username)) {
+            if (userRepository.existsByUsernameAndDeletedFalse(username)) {
                 throw new AlreadyUsername("Already username");
             }
+        }
+    }
+
+    private void existsUserByUserId(String id) {
+        if (Objects.isNull(id)) {
+            throw new NotFoundUserIdException("Not found user id");
+        }
+        if (!userRepository.existsByIdAndDeletedFalse(id)) {
+            throw new NotFoundUserException("Not found User");
         }
     }
 
