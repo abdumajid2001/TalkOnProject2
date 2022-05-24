@@ -1,21 +1,19 @@
 package com.talkon.talkon.entities.user;
 
+import com.talkon.talkon.entities.base.Auditable;
 import com.talkon.talkon.entities.conversation.chat.message.Message;
 import com.talkon.talkon.enums.Role;
-import com.talkon.talkon.entities.base.Auditable;
-
-import javax.persistence.Table;
-
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TimeZone;
 
 @Entity(name = "users")
 @Getter
@@ -49,6 +47,11 @@ public class User extends Auditable {
     @Column(nullable = false)
     private Integer timeZone;
 
+    private boolean isOnline;
+
+    private LocalDateTime lastSeen;
+
+
     private String code;
     private int tryCount;
     private boolean firstTime;
@@ -56,11 +59,14 @@ public class User extends Auditable {
     private LocalDateTime expiry;
 
     @OneToMany(mappedBy = "from", cascade = CascadeType.ALL)
+
     List<Message> chatMessages = new ArrayList<>();
 
     @Builder(builderMethodName = "childBuilder")
-    public User(String id, LocalDateTime createdAt, LocalDateTime updatedAt, boolean deleted, short status, String firstName, String lastName, String password, String phoneNumber, String email, String username, LocalDate dataOfBirth, Role role, Integer timeZone, String code, int tryCount, boolean firstTime, LocalDateTime expiry, List<Message> chatMessages) {
-        super(id, createdAt, updatedAt, deleted, status);
+
+    public User(String id, LocalDateTime createdAt, LocalDateTime updatedAt, boolean deleted, short status, String firstName, String lastName, String password, String phoneNumber, String email, String username, LocalDate dataOfBirth, Role role, Integer timeZone,String createdBy, boolean isOnline, LocalDateTime lastSeen, String code, int tryCount, boolean firstTime, LocalDateTime expiry, List<Message> chatMessages) {
+        super(id, createdAt, updatedAt,createdBy, deleted, status);
+
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
@@ -75,5 +81,7 @@ public class User extends Auditable {
         this.firstTime = firstTime;
         this.expiry = expiry;
         this.chatMessages = chatMessages;
+        this.isOnline = isOnline;
+        this.lastSeen = lastSeen;
     }
 }

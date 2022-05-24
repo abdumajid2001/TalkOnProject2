@@ -32,6 +32,6 @@ public class Chat extends Auditable {
     Mentee mentee;
 
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "chat")
     List<Message> messages = new ArrayList<>();
 }
