@@ -50,20 +50,21 @@ public class UserServiceImp extends AbstractService<UserRepository, UserMapper, 
     private final PasswordEncoder passwordEncoder;
     private final ObjectMapper objectMapper;
     private final ServerProperties serverProperties;
-
-    private final UserSession userSession;
-
     private final int BLOCKED_TIME_SECOND = 3600;
-
     public static int EXPIRY_TIME_SECOND = 3600;
 
 
-    public UserServiceImp(UserMapper mapper, UserValidator validator, UserRepository repository, PasswordEncoder passwordEncoder, ObjectMapper objectMapper, ServerProperties serverProperties, UserSession userSession) {
+    public UserServiceImp(UserMapper mapper,
+                          UserValidator validator,
+                          UserRepository repository,
+                          PasswordEncoder passwordEncoder,
+                          ObjectMapper objectMapper,
+                          ServerProperties serverProperties
+    ) {
         super(mapper, validator, repository);
         this.passwordEncoder = passwordEncoder;
         this.objectMapper = objectMapper;
         this.serverProperties = serverProperties;
-        this.userSession = userSession;
     }
 
     @Override
@@ -75,35 +76,11 @@ public class UserServiceImp extends AbstractService<UserRepository, UserMapper, 
                     .phoneNumber(phoneNumber)
                     .status((short) 1)
                     .expiry(LocalDateTime.now())
-                    .timeZone(-1)
                     .build();
             repository.save(user);
             throw new UserNotFoundException("user Not found");
         });
         return new com.talkon.talkon.dtos.user.user.UserDetails(findUser);
-    }
-
-    @Override
-    public String create(UserCreateDto dto) {
-        return null;
-    }
-
-    @Override
-    public void delete(String id) {
-    }
-
-    @Override
-    public void update(UserUpdateDto dto) {
-    }
-
-    @Override
-    public UserDto get(String id) {
-        return null;
-    }
-
-    @Override
-    public List<UserDto> getAll(BaseGenericCriteria criteria) {
-        return null;
     }
 
     public ResponseEntity<DataDto<SessionDto>> getToken(LoginDto dto) {

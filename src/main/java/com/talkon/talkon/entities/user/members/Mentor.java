@@ -15,7 +15,10 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(schema = "users")
+@Table(schema = "users",indexes = {
+        @Index(name = "experience_index",columnList = "experience"),
+        @Index(name = "ratingValue_index",columnList = "ratingValue")
+})
 @Entity(name = "mentors")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Mentor extends Auditable {

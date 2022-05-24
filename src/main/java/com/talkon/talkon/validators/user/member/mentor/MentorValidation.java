@@ -1,7 +1,7 @@
-package com.talkon.talkon.validators.mentor;
+package com.talkon.talkon.validators.user.member.mentor;
 
-import com.talkon.talkon.dtos.mentor.MentorCreateDto;
-import com.talkon.talkon.dtos.mentor.MentorUpdateDto;
+import com.talkon.talkon.dtos.user.member.mentor.MentorCreateDto;
+import com.talkon.talkon.dtos.user.member.mentor.MentorUpdateDto;
 import com.talkon.talkon.exceptions.ValidationException;
 import com.talkon.talkon.validators.base.AbstractValidator;
 import org.springframework.stereotype.Component;

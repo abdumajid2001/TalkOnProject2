@@ -1,7 +1,7 @@
 package com.talkon.talkon.controllers.user;
 
 import com.talkon.talkon.controllers.AbstractController;
-import com.talkon.talkon.services.user.MentorService;
+import com.talkon.talkon.services.user.member.mentor.MentorService;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController

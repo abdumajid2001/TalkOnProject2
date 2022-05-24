@@ -19,7 +19,10 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(schema = "users")
+@Table(schema = "users",indexes = {
+        @Index(name = "level_index",columnList = "level"),
+        @Index(name = "conversationCount_index",columnList = "conversationCount")
+})
 @Entity(name = "mentees")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Mentee extends Auditable {

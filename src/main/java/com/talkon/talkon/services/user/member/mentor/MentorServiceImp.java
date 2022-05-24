@@ -1,13 +1,14 @@
-package com.talkon.talkon.services.user;
+package com.talkon.talkon.services.user.member.mentor;
 
 import com.talkon.talkon.criteria.base.BaseGenericCriteria;
-import com.talkon.talkon.dtos.mentor.MentorCreateDto;
-import com.talkon.talkon.dtos.mentor.MentorDto;
-import com.talkon.talkon.dtos.mentor.MentorUpdateDto;
-import com.talkon.talkon.mappers.mentor.MentorMapper;
-import com.talkon.talkon.repositories.mentor.MentorRepository;
+import com.talkon.talkon.criteria.base.GenericCriteria;
+import com.talkon.talkon.dtos.user.member.mentor.MentorCreateDto;
+import com.talkon.talkon.dtos.user.member.mentor.MentorDto;
+import com.talkon.talkon.dtos.user.member.mentor.MentorUpdateDto;
+import com.talkon.talkon.mappers.user.member.mentor.MentorMapper;
+import com.talkon.talkon.repositories.user.member.mentor.MentorRepository;
 import com.talkon.talkon.services.base.AbstractService;
-import com.talkon.talkon.validators.mentor.MentorValidation;
+import com.talkon.talkon.validators.user.member.mentor.MentorValidation;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,7 +41,7 @@ public class MentorServiceImp extends AbstractService<MentorRepository, MentorMa
     }
 
     @Override
-    public List<MentorDto> getAll(BaseGenericCriteria criteria) {
+    public List<MentorDto> getAll(GenericCriteria criteria) {
         return null;
     }
 }

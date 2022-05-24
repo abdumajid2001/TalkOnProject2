@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
+
 @Getter
 @Setter
 public class MenteeUpdateDto extends GenericDto {
@@ -21,6 +22,7 @@ public class MenteeUpdateDto extends GenericDto {
 
     private LocalDate dataOfBirth;
 
-    @NotBlank
-    private Integer timeZone;
+    private double longitude;
+
+    private double latitude;
 }

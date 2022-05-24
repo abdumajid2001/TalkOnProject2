@@ -23,6 +23,10 @@ public class MenteeCreateDto implements BaseGenericDto {
 
     private LocalDate dataOfBirth;
 
+    private double longitude;
+
+    private double latitude;
+
     @NotBlank
     private Integer timeZone;
 }

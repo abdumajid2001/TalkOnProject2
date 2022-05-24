@@ -8,7 +8,7 @@ import com.talkon.talkon.entities.conversation.chat.Chat;
 import com.talkon.talkon.entities.user.members.Mentee;
 import com.talkon.talkon.entities.user.members.Mentor;
 import com.talkon.talkon.repositories.chat.ChatRepository;
-import com.talkon.talkon.repositories.mentor.MentorRepository;
+import com.talkon.talkon.repositories.user.member.mentor.MentorRepository;
 import com.talkon.talkon.repositories.user.member.mentee.MenteeRepository;
 import com.talkon.talkon.repositories.user.user.UserRepository;
 import lombok.AllArgsConstructor;

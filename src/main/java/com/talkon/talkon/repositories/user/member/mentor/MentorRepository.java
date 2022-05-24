@@ -1,4 +1,4 @@
-package com.talkon.talkon.repositories.mentor;
+package com.talkon.talkon.repositories.user.member.mentor;
 
 import com.talkon.talkon.entities.user.members.Mentor;
 import com.talkon.talkon.repositories.base.AbstractRepository;
