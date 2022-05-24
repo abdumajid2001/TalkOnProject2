@@ -19,10 +19,12 @@ import com.talkon.talkon.services.base.AbstractService;
 import com.talkon.talkon.validators.user.member.mentor.MentorValidation;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
 
 @Service
+@Transactional
 public class MentorServiceImp extends AbstractService<MentorRepository, MentorMapper, MentorValidation> implements MentorService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
@@ -45,7 +47,7 @@ public class MentorServiceImp extends AbstractService<MentorRepository, MentorMa
         Mentor mentee = new Mentor(dto.getExperience());
         mentee.setUser(savedUser);
         Mentor savedMentor = repository.save(mentee);
-        return savedMentor.getId();
+        return dto.getId();
     }
 
     @Override
@@ -58,7 +60,9 @@ public class MentorServiceImp extends AbstractService<MentorRepository, MentorMa
     @Override
     public void update(MentorUpdateDto dto) {
         validator.validOnUpdate(dto);
-        User user = userMapper.fromUpdateDto(dto);
+        User user = mapper.fromUpdateDto(dto, userRepository.findById(dto.getId()).orElseThrow(() -> {
+            throw new UserNotFoundException("User no found");
+        }));
         userRepository.save(user);
 
         if (Objects.nonNull(dto.getAboutText())) {
@@ -77,12 +81,25 @@ public class MentorServiceImp extends AbstractService<MentorRepository, MentorMa
 
     @Override
     public MentorDto get(String id) {
-        return repository.getMentorById(id);
+        if (Objects.nonNull(repository.getMentorById(id))) {
+            return repository.getMentorById(id);
+        }
+        throw new MentorNotFoundException("Mentor not found");
     }
 
     @Override
     public List<MentorDto> getAll(GenericCriteria criteria) {
 
         return null;
+    }
+
+    @Override
+    public void block(String id) {
+        repository.block(id);
+    }
+
+    @Override
+    public void unBlock(String id) {
+        repository.unBlock(id);
     }
 }

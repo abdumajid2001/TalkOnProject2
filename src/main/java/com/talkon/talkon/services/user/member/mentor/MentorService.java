@@ -14,4 +14,7 @@ public interface MentorService extends GenericCrudService<
         String,
         GenericCriteria
         > {
+    void block(String id);
+
+    void unBlock(String id);
 }

@@ -49,7 +49,7 @@ public class MenteeServiceImpl extends AbstractService<
         Mentee mentee = new Mentee(dto.getLevel());
         mentee.setUser(savedUser);
         Mentee savedMentee = repository.save(mentee);
-        return savedMentee.getId();
+        return user.getId();
     }
 
     @Override
@@ -62,12 +62,15 @@ public class MenteeServiceImpl extends AbstractService<
     @Override
     public void update(MenteeUpdateDto dto) {
         validator.validOnUpdate(dto);
-        User user = userMapper.fromUpdateDto(dto);
+        User user = userMapper.fromUpdateDto(dto, userRepository.findById(dto.getId()).orElseThrow(() -> {
+            throw new UserNotFoundException("User not found");
+        }));
         userRepository.save(user);
     }
 
     @Override
     public MenteeDto get(String id) {
+        // TODO: 24/05/22 exception tashla yoq bolsa
         return repository.getMenteeById(id);
     }
 

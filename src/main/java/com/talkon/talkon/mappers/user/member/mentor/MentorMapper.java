@@ -14,4 +14,6 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 @Mapper(componentModel = "spring",nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface MentorMapper extends AbstractMapper<Mentor, MentorDto, MentorCreateDto, MentorUpdateDto> {
     User fromCreateDto(MentorCreateDto dto,@MappingTarget User user);
+
+    User fromUpdateDto(MentorUpdateDto dto,@MappingTarget User user);
 }

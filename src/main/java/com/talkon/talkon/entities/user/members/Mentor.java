@@ -1,8 +1,11 @@
 package com.talkon.talkon.entities.user.members;
+
 import com.talkon.talkon.entities.base.Auditable;
 import com.talkon.talkon.entities.schedule.Schedule;
 import com.talkon.talkon.entities.user.User;
+
 import javax.persistence.Table;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -16,9 +19,9 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(schema = "users",indexes = {
-        @Index(name = "experience_index",columnList = "experience"),
-        @Index(name = "ratingValue_index",columnList = "ratingValue")
+@Table(schema = "users", indexes = {
+        @Index(name = "experience_index", columnList = "experience"),
+        @Index(name = "ratingValue_index", columnList = "ratingValue")
 })
 @Entity(name = "mentors")
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -30,10 +33,8 @@ public class Mentor extends Auditable {
     @Column(nullable = false)
     int experience;
 
-    @Column(unique = true, nullable = false)
     String aboutMediaLink;
 
-    @Column(nullable = false)
     String aboutText;
 
     int ratingCount;

@@ -54,11 +54,12 @@ public class User extends Auditable {
     private LocalDateTime expiry;
     private double longitude;
     private double latitude;
+    private String photoPath;
     @OneToMany(mappedBy = "from", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     List<Message> chatMessages = new ArrayList<>();
 
     @Builder(builderMethodName = "childBuilder")
-    public User(String id, LocalDateTime createdAt, LocalDateTime updatedAt, String createdBy, boolean deleted, short status, String firstName, String lastName, String password, String phoneNumber, String email, String username, LocalDate dataOfBirth, Role role, boolean online, LocalDateTime lastSeen, String code, int tryCount, boolean firstTime, LocalDateTime expiry, double longitude, double latitude, List<Message> chatMessages) {
+    public User(String id, LocalDateTime createdAt, LocalDateTime updatedAt, String createdBy, boolean deleted, short status, String firstName, String lastName, String password, String phoneNumber, String email, String username, LocalDate dataOfBirth, Role role, boolean online, LocalDateTime lastSeen, String code, int tryCount, boolean firstTime, LocalDateTime expiry, double longitude, double latitude, String photoPath, List<Message> chatMessages) {
         super(id, createdAt, updatedAt, createdBy, deleted, status);
         this.firstName = firstName;
         this.lastName = lastName;
@@ -76,6 +77,7 @@ public class User extends Auditable {
         this.expiry = expiry;
         this.longitude = longitude;
         this.latitude = latitude;
+        this.photoPath = photoPath;
         this.chatMessages = chatMessages;
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -43,10 +44,23 @@ public class MentorController extends AbstractController<MentorService> {
     }
 
 
-    @PreAuthorize(value = "hasAnyRole('ADMIN', 'SUPER_ADMIN')")
     @RequestMapping(value = PATH + "/mentor", method = RequestMethod.PUT)
-    public ResponseEntity<Void> update(@RequestBody MentorUpdateDto updateDto) {
+    public ResponseEntity<Void> update(@Valid @RequestBody MentorUpdateDto updateDto) {
         service.update(updateDto);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PreAuthorize(value = "hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+    @RequestMapping(value = PATH + "/mentor/blocked/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Void> block(@PathVariable String id) {
+        service.block(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PreAuthorize(value = "hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+    @RequestMapping(value = PATH + "/mentor/unblocked/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Void> unBlock(@PathVariable String id) {
+        service.unBlock(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

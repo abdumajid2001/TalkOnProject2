@@ -25,6 +25,7 @@ public interface MenteeRepository extends AbstractRepository<Mentee, String> {
             ",u.latitude" +
             ",m.level" +
             ",m.conversationCount" +
+            ",u.photoPath" +
             ") from mentees m inner join users u on m.user.id = u.id where  m.deleted = false  and m.user.id = ?1"
     )
     MenteeDto getMenteeById(String id);

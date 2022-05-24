@@ -51,14 +51,14 @@ public class MenteeController extends AbstractController<MenteeService> {
     }
 
     @PreAuthorize(value = "hasAnyRole('ADMIN', 'SUPER_ADMIN')")
-    @RequestMapping(value = PATH + "/mentee/blocked/{id}")
+    @RequestMapping(value = PATH + "/mentee/blocked/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Void> block(@PathVariable String id) {
         service.block(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PreAuthorize(value = "hasAnyRole('ADMIN', 'SUPER_ADMIN')")
-    @RequestMapping(value = PATH + "/mentee/blocked/{id}")
+    @RequestMapping(value = PATH + "/mentee/unblocked/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Void> unBlock(@PathVariable String id) {
         service.unBlock(id);
         return new ResponseEntity<>(HttpStatus.OK);

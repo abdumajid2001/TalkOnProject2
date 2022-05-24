@@ -13,14 +13,14 @@ import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
 
-@Mapper(componentModel = "spring",nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+@Mapper(componentModel = "spring", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface UserMapper extends AbstractMapper<User, UserDto, UserCreateDto, UserUpdateDto> {
 
-    User fromUpdateDto(UserUpdateDto dto,@MappingTarget User user);
+    User fromUpdateDto(UserUpdateDto dto, @MappingTarget User user);
 
-    User fromCreateDto(MenteeCreateDto dto,@MappingTarget User user);
+    User fromCreateDto(MenteeCreateDto dto, @MappingTarget User user);
 
     User fromUpdateDto(MenteeUpdateDto dto);
 
-    User fromUpdateDto(MentorUpdateDto dto);
+    User fromUpdateDto(MenteeUpdateDto dto, @MappingTarget User user);
 }

@@ -1,5 +1,6 @@
 package com.talkon.talkon.dtos.user.member.mentee;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.talkon.talkon.dtos.base.GenericDto;
 import com.talkon.talkon.enums.Level;
 import lombok.Builder;
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class MenteeDto extends GenericDto {
     private String firstName;
 
@@ -28,10 +30,12 @@ public class MenteeDto extends GenericDto {
 
     Level level;
 
-    Integer conversationCount;
+    int conversationCount;
+
+    private String photoPath;
 
     @Builder(builderMethodName = "childBuilder")
-    public MenteeDto(String id, String firstName, String lastName, String email, String username, LocalDate dataOfBirth, double longitude, double latitude, Level level, Integer conversationCount) {
+    public MenteeDto(String id, String firstName, String lastName, String email, String username, LocalDate dataOfBirth, double longitude, double latitude, Level level, int conversationCount, String photoPath) {
         super(id);
         this.firstName = firstName;
         this.lastName = lastName;
@@ -42,5 +46,6 @@ public class MenteeDto extends GenericDto {
         this.latitude = latitude;
         this.level = level;
         this.conversationCount = conversationCount;
+        this.photoPath = photoPath;
     }
 }
