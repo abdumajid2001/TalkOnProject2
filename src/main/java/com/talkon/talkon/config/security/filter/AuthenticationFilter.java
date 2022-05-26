@@ -1,7 +1,7 @@
 package com.talkon.talkon.config.security.filter;
 
 import com.auth0.jwt.JWT;
-import com.talkon.talkon.config.security.utils.JWTUtils;
+import com.talkon.talkon.utils.JWTUtils;
 import com.talkon.talkon.dtos.responce.AppErrorDto;
 import com.talkon.talkon.dtos.responce.DataDto;
 import com.talkon.talkon.dtos.user.user.LoginDto;

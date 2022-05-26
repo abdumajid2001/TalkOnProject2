@@ -12,21 +12,30 @@ import lombok.experimental.FieldDefaults;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(schema = "users")
+@Table(schema = "users",indexes = {
+        @Index(name = "level_index",columnList = "level"),
+        @Index(name = "conversationCount_index",columnList = "conversationCount")
+})
 @Entity(name = "mentees")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Mentee extends Auditable {
 
+    public Mentee(Level level) {
+        this.setId(UUID.randomUUID().toString());
+        this.level = level;
+    }
+
     @Enumerated(EnumType.STRING)
     Level level;
 
-    Integer conversationCount;
+    int conversationCount;
 
     @OneToOne(optional = false)
     User user;

@@ -20,7 +20,7 @@ public interface ChatRepository extends AbstractRepository<Chat, String> {
                     from conversation.messages m
                     where m.chat_id = c.id
                       and not m.is_read)                                                                      as "newMessageCount",
-                   (select case when :currentId = u_mentor.id then u_mentee.image_link else u_mentor.image_link end) as "imageLink"
+                   (select case when :currentId = u_mentor.id then u_mentee.photo_path else u_mentor.photo_path end) as "photoPath"
             from conversation.chats c
                      join users.mentees on c.mentee_id = mentees.id
                      join users.mentors on c.mentor_id = mentors.id

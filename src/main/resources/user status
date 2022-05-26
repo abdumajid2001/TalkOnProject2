@@ -1,4 +1,4 @@
 user status
     221 => user bloklangan
-    222 -=>  user 1-marta kirishi bolmaydi
-    223 => user 1 -marta kirayotgan boladi
+    224 => status mentor new yaratilganini bildiradi
+    225 => inactive bolgan user

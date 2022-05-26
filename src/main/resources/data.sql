@@ -2,14 +2,19 @@
 drop table if exists public.chats_messages;
 drop table if exists public.messages_chats;
 
+create schema if not exists transaction;
+create schema if not exists conversation;
+create schema if not exists users;
+create schema if not exists notification;
+create schema if not exists schedule;
 
 ---------------<<<<<<<<<<<<<<<<<<<<<  users >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>---------------------
-insert into users.users values ('c45ab69a-057f-43ae-95b4-e8e7300c4e84','2022-02-05','c45ab69a-057f-43ae-95b4-e8e7300c4e84',0,0, now(), '158691','2003-10-25','islomjonisoqov@gmail.com','2025-02-03', 'Islomjon',true,'link', false, 'Isoqov' ,now(),'111','+998976990897','STUDENT',300,1,'i');
-insert into users.users values ('0a7c8fe5-1291-4043-855b-c937b9371889','2022-01-21','c45ab69a-057f-43ae-95b4-e8e7300c4e84',0,0, now(), '158692', '2001-09-13','abdumajidabdullatipov1@gmail.com','2025-02-03', 'Abdumajid',true,'link',false, 'Abdullatipov',now(),'111','+998900032869','ADMIN',300,1,'a');
-insert into users.users values ('f1a897aa-7ce0-4695-a3d6-977eaed981f0','2022-01-13','c45ab69a-057f-43ae-95b4-e8e7300c4e84',0,0, now(), '158693', '1999-03-07','bonu.shirinkulova@gmail.com', '2025-02-03', 'Madina',true,'link',false,'Shirinkulova' ,now(),'111','phoneNumber','TEACHER',300,1,'m');
-insert into users.users values ('66f4acdb-3e8c-4a83-8000-80dc1bb644db','2022-01-04','c45ab69a-057f-43ae-95b4-e8e7300c4e84',0,0, now(), '158694', '1998-04-12','muhammadhusanov98@gmail.com', '2025-02-03', 'Muhammad',true,'link',false,'Husanov',now(),'111','+998903501428','ADMIN',300,1,'muhammad');
-insert into users.users values ('6d47e929-fcca-4607-9601-9d5d2ff98a83','2022-02-07','c45ab69a-057f-43ae-95b4-e8e7300c4e84',0,0, now(), '158695', '2000-09-14','bobur1@gmail.com', '2025-02-03','Bobur',true,'link',false, 'Familya',now(),'111','+998330330613','SUPER_ADMIN',300,1,'b');
-insert into users.users values ('92a73cbb-7b5f-43a7-b45b-41ceb2aaad1e','2022-02-06','c45ab69a-057f-43ae-95b4-e8e7300c4e84',0,0, now(), '158696', '2001-09-10', 'avaz1@gmail.com', '2025-02-03','Avaz',true,'link',false, 'Absamatov',now(),'111','phoneNumber','TEACHER',300,1,'avaz');
+insert into users.users values ('c45ab69a-057f-43ae-95b4-e8e7300c4e84','2022-02-05','c45ab69a-057f-43ae-95b4-e8e7300c4e84',0,0, now(), '158691', '2003-10-25','islomjonisoqov@gmail.com','2025-02-03', 'Islomjon',true, false, 'Isoqov' ,now(),'111','+998976990897','link','STUDENT',300,1,'i');
+insert into users.users values ('0a7c8fe5-1291-4043-855b-c937b9371889','2022-01-21','c45ab69a-057f-43ae-95b4-e8e7300c4e84',0,0, now(), '158692', '2001-09-13','abdumajidabdullatipov1@gmail.com','2025-02-03', 'Abdumajid',true,false, 'Abdullatipov',now(),'111','+998900032869','link','ADMIN',300,1,'a');
+insert into users.users values ('f1a897aa-7ce0-4695-a3d6-977eaed981f0','2022-01-13','c45ab69a-057f-43ae-95b4-e8e7300c4e84',0,0, now(), '158693', '1999-03-07','bonu.shirinkulova@gmail.com', '2025-02-03', 'Madina',true,false,'Shirinkulova' ,now(),'111','+998903501429','link','TEACHER',300,1,'m');
+insert into users.users values ('66f4acdb-3e8c-4a83-8000-80dc1bb644db','2022-01-04','c45ab69a-057f-43ae-95b4-e8e7300c4e84',0,0, now(), '158694', '1998-04-12','muhammadhusanov98@gmail.com', '2025-02-03', 'Muhammad',true,false,'Husanov',now(),'111','+998903501428','link','ADMIN',300,1,'muhammad');
+insert into users.users values ('6d47e929-fcca-4607-9601-9d5d2ff98a83','2022-02-07','c45ab69a-057f-43ae-95b4-e8e7300c4e84',0,0, now(), '158695', '2000-09-14','bobur1@gmail.com', '2025-02-03','Bobur',true,false, 'Familya',now(),'111','+998330330613','link','SUPER_ADMIN',300,1,'b');
+insert into users.users values ('92a73cbb-7b5f-43a7-b45b-41ceb2aaad1e','2022-02-06','c45ab69a-057f-43ae-95b4-e8e7300c4e84',0,0, now(), '158696', '2001-09-10', 'avaz1@gmail.com', '2025-02-03','Avaz',true,false, 'Absamatov',now(),'111','phoneNumber','link','TEACHER',300,1,'avaz');
 
 ---------------<<<<<<<<<<<<<<<<<<<<<  mentee >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>---------------------
 insert into users.mentees values ('3bee766e-8351-4ac5-b9f7-1de3218eb9cb',now(),'c45ab69a-057f-43ae-95b4-e8e7300c4e84',0,0,now(),1, 'ELEMENTARY', 'c45ab69a-057f-43ae-95b4-e8e7300c4e84');

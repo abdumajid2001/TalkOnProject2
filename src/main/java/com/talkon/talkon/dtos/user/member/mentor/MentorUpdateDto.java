@@ -1,4 +1,4 @@
-package com.talkon.talkon.dtos.user.member.mentee;
+package com.talkon.talkon.dtos.user.member.mentor;
 
 import com.talkon.talkon.dtos.base.GenericDto;
 import lombok.Getter;
@@ -8,7 +8,9 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-public class MenteeUpdateDto extends GenericDto {
+public class MentorUpdateDto extends GenericDto {
+
+    private String mentorId;
 
     private String firstName;
 
@@ -21,4 +23,7 @@ public class MenteeUpdateDto extends GenericDto {
     private LocalDate dataOfBirth;
 
     private int timeZone;
+
+    private String aboutText;
+
 }

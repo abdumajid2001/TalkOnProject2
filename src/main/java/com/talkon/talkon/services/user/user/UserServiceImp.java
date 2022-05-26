@@ -50,20 +50,21 @@ public class UserServiceImp extends AbstractService<UserRepository, UserMapper, 
     private final PasswordEncoder passwordEncoder;
     private final ObjectMapper objectMapper;
     private final ServerProperties serverProperties;
-
-    private final UserSession userSession;
-
     private final int BLOCKED_TIME_SECOND = 3600;
-
     public static int EXPIRY_TIME_SECOND = 3600;
 
 
-    public UserServiceImp(UserMapper mapper, UserValidator validator, UserRepository repository, PasswordEncoder passwordEncoder, ObjectMapper objectMapper, ServerProperties serverProperties, UserSession userSession) {
+    public UserServiceImp(UserMapper mapper,
+                          UserValidator validator,
+                          UserRepository repository,
+                          PasswordEncoder passwordEncoder,
+                          ObjectMapper objectMapper,
+                          ServerProperties serverProperties
+    ) {
         super(mapper, validator, repository);
         this.passwordEncoder = passwordEncoder;
         this.objectMapper = objectMapper;
         this.serverProperties = serverProperties;
-        this.userSession = userSession;
     }
 
     @Override
@@ -75,48 +76,11 @@ public class UserServiceImp extends AbstractService<UserRepository, UserMapper, 
                     .phoneNumber(phoneNumber)
                     .status((short) 1)
                     .expiry(LocalDateTime.now())
-                    .timeZone(-1)
                     .build();
             repository.save(user);
             throw new UserNotFoundException("user Not found");
         });
         return new com.talkon.talkon.dtos.user.user.UserDetails(findUser);
-    }
-
-    @Override
-    public String create(UserCreateDto dto) {
-
-        return null;
-    }
-
-    @Override
-    public void delete(String id) {
-        repository.deleteByIdMy(id);
-    }
-
-    @Override
-    public void update(UserUpdateDto dto) {
-//        validator.validOnUpdate(dto);
-        User user = repository.findById(dto.getId()).orElseThrow(() -> {
-            throw new UserNotFoundException("User not found");
-        });
-        if (dto.getPhoneNumber() != null) {
-            repository.findByPhoneNumberAndDeletedFalse(dto.getPhoneNumber()).ifPresent((userByPhoneNumber) -> {
-                throw new PhoneNumberAlready("Phone Number Already");
-            });
-        }
-        User updateUser = mapper.fromUpdateDto(dto, user);
-        repository.save(updateUser);
-    }
-
-    @Override
-    public UserDto get(String id) {
-        return null;
-    }
-
-    @Override
-    public List<UserDto> getAll(BaseGenericCriteria criteria) {
-        return null;
     }
 
     public ResponseEntity<DataDto<SessionDto>> getToken(LoginDto dto) {
@@ -156,7 +120,18 @@ public class UserServiceImp extends AbstractService<UserRepository, UserMapper, 
         int code = new Random().nextInt(100000, 999999);
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
         Optional<User> userOptional = repository.findByPhoneNumberAndDeletedFalse(phoneNumber);
-        User user = null;
+        User user = checkUserToBlock(userOptional);
+        sendSmstoPhone(phoneNumber, code);
+        user.setTryCount(user.getTryCount() + 1);
+        user.setPhoneNumber(phoneNumber);
+        user.setCode(passwordEncoder.encode(code + ""));
+        user.setExpiry(LocalDateTime.now().plusSeconds(EXPIRY_TIME_SECOND));
+        repository.save(user);
+
+    }
+
+    private User checkUserToBlock(Optional<User> userOptional) {
+        User user;
         if (userOptional.isPresent()) {
             user = userOptional.get();
             if (user.getStatus() == 1) {
@@ -172,7 +147,10 @@ public class UserServiceImp extends AbstractService<UserRepository, UserMapper, 
                 throw new UserBlockedException("User blokcked");
             }
         } else user = new User();
+        return user;
+    }
 
+    private void sendSmstoPhone(String phoneNumber, int code) {
         Runnable runnable = () -> {
             Message message = Message.creator(
                             new PhoneNumber(phoneNumber),
@@ -182,12 +160,5 @@ public class UserServiceImp extends AbstractService<UserRepository, UserMapper, 
             System.out.println(message.getSid());
         };
         new Thread(runnable).start();
-
-        user.setTryCount(user.getTryCount() + 1);
-        user.setPhoneNumber(phoneNumber);
-        user.setCode(passwordEncoder.encode(code + ""));
-        user.setExpiry(LocalDateTime.now().plusSeconds(EXPIRY_TIME_SECOND));
-        repository.save(user);
-
     }
 }

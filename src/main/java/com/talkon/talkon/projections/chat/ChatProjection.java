@@ -14,7 +14,7 @@ public interface ChatProjection {
     LocalDateTime getLastSeen();
     boolean getIsOnline();
     int getNewMessageCount();
-    String getImageLink();
+    String getPhotoPath();
 
     @Value("#{@messageRepository.getLastMessage(target.chatId)}")
     LastMessageProjection getLastMessage();

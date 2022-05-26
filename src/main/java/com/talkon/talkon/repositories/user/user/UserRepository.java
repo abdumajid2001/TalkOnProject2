@@ -13,8 +13,7 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends AbstractRepository<User, String> {
 
-    @Query(value = "select u.* from users u where u.is_deleted = 0 and u.id = ?1", nativeQuery = true)
-    Optional<User> findById(String id);
+    Optional<User> findByIdAndDeletedFalse(String id);
 
     Optional<User> findByPhoneNumberAndDeletedFalse(String phoneNumber);
 
@@ -51,4 +50,10 @@ public interface UserRepository extends AbstractRepository<User, String> {
 
     @Query(nativeQuery = true, value = "select id, is_online as \"isOnline\" from users.users where username = :username")
     UserContactStatusProjection getUserContactStatus(String username);
+
+    boolean existsByUsernameAndDeletedFalse(String username);
+    boolean existsByEmailAndDeletedFalse(String email);
+
+    boolean existsByIdAndDeletedFalse(String id);
+
 }
