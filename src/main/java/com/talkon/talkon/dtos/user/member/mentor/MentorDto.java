@@ -2,13 +2,11 @@ package com.talkon.talkon.dtos.user.member.mentor;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.talkon.talkon.dtos.base.GenericDto;
-import com.talkon.talkon.enums.Level;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import java.time.LocalDate;
 
@@ -31,9 +29,7 @@ public class MentorDto extends GenericDto {
 
     private LocalDate dataOfBirth;
 
-    private double longitude;
-
-    private double latitude;
+    private int timeZone;
 
     String aboutMediaLink;
 
@@ -44,7 +40,7 @@ public class MentorDto extends GenericDto {
     String photoPath;
 
     @Builder(builderMethodName = "childBuilder")
-    public MentorDto(String id, int experience, String firstName, String lastName, String email, String username, LocalDate dataOfBirth, double longitude, double latitude, String aboutMediaLink, String aboutText, int ratingValue, String photoPath) {
+    public MentorDto(String id, int experience, String firstName, String lastName, String email, String username, LocalDate dataOfBirth, int timeZone, String aboutMediaLink, String aboutText, int ratingValue, String photoPath) {
         super(id);
         this.experience = experience;
         this.firstName = firstName;
@@ -52,8 +48,7 @@ public class MentorDto extends GenericDto {
         this.email = email;
         this.username = username;
         this.dataOfBirth = dataOfBirth;
-        this.longitude = longitude;
-        this.latitude = latitude;
+        this.timeZone = timeZone;
         this.aboutMediaLink = aboutMediaLink;
         this.aboutText = aboutText;
         this.ratingValue = ratingValue;

@@ -22,9 +22,7 @@ public class MentorUpdateDto extends GenericDto {
 
     private LocalDate dataOfBirth;
 
-    private double longitude;
-
-    private double latitude;
+    private int timeZone;
 
     private String aboutText;
 

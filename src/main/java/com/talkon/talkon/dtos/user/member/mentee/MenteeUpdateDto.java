@@ -1,11 +1,9 @@
 package com.talkon.talkon.dtos.user.member.mentee;
 
 import com.talkon.talkon.dtos.base.GenericDto;
-import com.talkon.talkon.enums.Level;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 @Getter
@@ -22,7 +20,5 @@ public class MenteeUpdateDto extends GenericDto {
 
     private LocalDate dataOfBirth;
 
-    private double longitude;
-
-    private double latitude;
+    private int timeZone;
 }

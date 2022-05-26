@@ -6,7 +6,6 @@ import com.talkon.talkon.repositories.base.AbstractRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
-import java.util.Optional;
 
 public interface MenteeRepository extends AbstractRepository<Mentee, String> {
 
@@ -21,8 +20,7 @@ public interface MenteeRepository extends AbstractRepository<Mentee, String> {
             ",u.email" +
             ",u.username" +
             ",u.dataOfBirth" +
-            ",u.longitude" +
-            ",u.latitude" +
+            ",u.timeZone" +
             ",m.level" +
             ",m.conversationCount" +
             ",u.photoPath" +

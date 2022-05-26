@@ -26,6 +26,7 @@ import java.util.UUID;
 @Entity(name = "mentees")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Mentee extends Auditable {
+
     public Mentee(Level level) {
         this.setId(UUID.randomUUID().toString());
         this.level = level;
