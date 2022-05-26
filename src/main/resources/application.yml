@@ -16,8 +16,8 @@ spring:
         format_sql: true
   sql:
     init:
-      mode: never
 #      mode: always
+      mode: never
 
 server:
   port: 9090
@@ -46,3 +46,9 @@ service:
     ip: localhost
     port: 9090
     url: boom.uz
+
+
+app:
+  base:
+    api: /api
+  version: /v1

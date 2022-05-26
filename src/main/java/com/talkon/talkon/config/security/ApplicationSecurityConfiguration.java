@@ -82,10 +82,13 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeRequests(expressionInterceptUrlRegistry -> expressionInterceptUrlRegistry
-                        .antMatchers(WHITE_LIST)
-                        .permitAll()
                         .anyRequest()
-                        .authenticated());
+                        .permitAll());
+
+//                        .antMatchers(WHITE_LIST)
+//                        .permitAll()
+//                        .anyRequest()
+//                        .authenticated());
 
         http.addFilter(new AuthenticationFilter(authenticationManager(),mapper,repository));
         http.addFilterBefore(authorizationFilter, UsernamePasswordAuthenticationFilter.class);

@@ -4,14 +4,20 @@ import com.talkon.talkon.criteria.base.BaseGenericCriteria;
 import com.talkon.talkon.dtos.chat.ChatCreateDto;
 import com.talkon.talkon.dtos.chat.ChatDto;
 import com.talkon.talkon.dtos.chat.ChatUpdateDto;
+import com.talkon.talkon.dtos.message.MessageCreateDto;
 import com.talkon.talkon.entities.conversation.chat.Chat;
 import com.talkon.talkon.entities.user.members.Mentee;
 import com.talkon.talkon.entities.user.members.Mentor;
+import com.talkon.talkon.projections.chat.ChatProjection;
+import com.talkon.talkon.projections.message.MessageProjection;
 import com.talkon.talkon.repositories.chat.ChatRepository;
 import com.talkon.talkon.repositories.mentor.MentorRepository;
+import com.talkon.talkon.repositories.message.MessageRepository;
 import com.talkon.talkon.repositories.user.member.mentee.MenteeRepository;
 import com.talkon.talkon.repositories.user.user.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -24,6 +30,7 @@ public class ChatServiceImpl implements ChatService {
     UserRepository userRepository;
     MentorRepository mentorRepository;
     MenteeRepository menteeRepository;
+    MessageRepository messageRepository;
 
 
     @Override
@@ -44,7 +51,7 @@ public class ChatServiceImpl implements ChatService {
                     chat.setMentee(mentee);
                     chat.setCreatedBy(mentee.getUser().getId());
                 }
-            }else return "user not found";
+            }else return "teacher or stuent not found";
 
             if(chat.getMentee()!=null && chat.getMentor()!=null){
                 chat.setCreatedAt(LocalDateTime.now());
@@ -61,7 +68,7 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public void delete(String id) {
-
+        chatRepository.deleteById(id);
     }
 
     @Override
@@ -78,4 +85,15 @@ public class ChatServiceImpl implements ChatService {
     public List<ChatDto> getAll(BaseGenericCriteria criteria) {
         return null;
     }
+
+
+    @Override
+    public HttpEntity<?> getAllContacts(String currentId) {
+        List<ChatProjection> allContacts = chatRepository.getAllContacts(currentId);
+        return ResponseEntity.ok(allContacts);
+    }
+
+
+
+
 }
