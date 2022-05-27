@@ -23,8 +23,6 @@ public class MentorCreateDto extends GenericDto {
 
     private LocalDate dataOfBirth;
 
-    private double longitude;
-
-    private double latitude;
+    private int timeZone;
 
 }

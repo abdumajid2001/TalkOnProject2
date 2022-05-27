@@ -7,7 +7,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 @Getter
@@ -24,9 +23,7 @@ public class MenteeDto extends GenericDto {
 
     private LocalDate dataOfBirth;
 
-    private double longitude;
-
-    private double latitude;
+    private int timeZone;
 
     Level level;
 
@@ -35,15 +32,14 @@ public class MenteeDto extends GenericDto {
     private String photoPath;
 
     @Builder(builderMethodName = "childBuilder")
-    public MenteeDto(String id, String firstName, String lastName, String email, String username, LocalDate dataOfBirth, double longitude, double latitude, Level level, int conversationCount, String photoPath) {
+    public MenteeDto(String id, String firstName, String lastName, String email, String username, LocalDate dataOfBirth, int timeZone, Level level, int conversationCount, String photoPath) {
         super(id);
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.username = username;
         this.dataOfBirth = dataOfBirth;
-        this.longitude = longitude;
-        this.latitude = latitude;
+        this.timeZone = timeZone;
         this.level = level;
         this.conversationCount = conversationCount;
         this.photoPath = photoPath;

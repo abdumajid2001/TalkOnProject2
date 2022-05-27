@@ -23,7 +23,7 @@ public class Message extends Auditable {
 
     String filePath;
 
-    Integer parent;
+    String parent;
 
     boolean isRead;
 

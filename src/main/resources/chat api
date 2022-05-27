@@ -1,0 +1,6 @@
+/api/v1/ws    - ws connect yo'li
+/api/v1/messages   - stomp client send message yo'li
+/api/v1/chat/{chatId}/messages  - subscribe qilinadi va shu yo'ldan yangi messagelar keladi
+/api/v1/chat/{userId}//contact/status  - subscribe qilinadigan yo'l contactlarini online yoki offline bo'lganda xabar yuboriladi
+/api/v1/{fromId}/{toId}/{isTyping}  - fromId toId ga yozib boshlasa yoki to'xtasa backend ga so'rov yuboriladi
+/api/v1/{toId}/{isTyping} - send toId when fromId start typing..

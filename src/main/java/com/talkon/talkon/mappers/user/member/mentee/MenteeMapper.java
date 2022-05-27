@@ -1,6 +1,5 @@
 package com.talkon.talkon.mappers.user.member.mentee;
 
-import com.talkon.talkon.dtos.base.BaseGenericDto;
 import com.talkon.talkon.dtos.user.member.mentee.MenteeCreateDto;
 import com.talkon.talkon.dtos.user.member.mentee.MenteeDto;
 import com.talkon.talkon.dtos.user.member.mentee.MenteeUpdateDto;

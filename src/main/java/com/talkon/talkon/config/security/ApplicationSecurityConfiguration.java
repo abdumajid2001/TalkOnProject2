@@ -85,7 +85,12 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                         .antMatchers("/**")
                         .permitAll()
                         .anyRequest()
-                        .authenticated());
+                        .permitAll());
+
+//                        .antMatchers(WHITE_LIST)
+//                        .permitAll()
+//                        .anyRequest()
+//                        .authenticated());
 
         http.addFilter(new AuthenticationFilter(authenticationManager(),mapper,repository));
         http.addFilterBefore(authorizationFilter, UsernamePasswordAuthenticationFilter.class);
