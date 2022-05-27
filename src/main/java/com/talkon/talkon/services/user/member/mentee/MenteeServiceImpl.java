@@ -84,7 +84,7 @@ public class MenteeServiceImpl extends AbstractService<
         repository.block(id);
     }
 
-    @Override
+
     public void unBlock(String id) {
         repository.unBlock(id);
     }

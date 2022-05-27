@@ -29,6 +29,4 @@ public class Transaction extends Auditable {
     @JoinColumn(name = "account_id")
     Account account;
 
-
-
 }
