@@ -3,7 +3,6 @@ package com.talkon.talkon.validators.base;
 import com.talkon.talkon.dtos.base.BaseGenericDto;
 import com.talkon.talkon.dtos.base.GenericDto;
 import com.talkon.talkon.exceptions.ValidationException;
-import test2.User;
 
 import java.io.Serializable;
 
