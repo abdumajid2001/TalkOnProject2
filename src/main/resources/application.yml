@@ -42,10 +42,10 @@ springdoc:
 
 service:
   prop:
-    protocol: http
-    ip: localhost
-    port: 9090
+    protocol: https
+    ip: tolkon-2022.herokuapp.com
     url: boom.uz
+    port: 2022
 
 
 app:
