@@ -13,6 +13,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.Collections;
 import java.util.List;
 
 @OpenAPIDefinition
@@ -44,7 +45,7 @@ public class OpenAPIConfigurer {
     private List<SecurityRequirement> getSecurityRequirements() {
         SecurityRequirement requirement = new SecurityRequirement();
         requirement.addList(SECURITY_SCHEMA_NAME);
-        return List.of(requirement);
+        return Collections.singletonList(requirement);
     }
 
     private Info info() {

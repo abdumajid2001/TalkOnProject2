@@ -42,9 +42,10 @@ public class MenteeServiceImpl extends AbstractService<
     @Override
     public String create(MenteeCreateDto dto) {
         validator.validOnCreate(dto);
-        User user = userMapper.fromCreateDto(dto, userRepository.findById(dto.getId()).orElseThrow(() -> {
-            throw new UserNotFoundException("User no found");
-        }));
+//        User user = userMapper.fromCreateDto(dto, userRepository.findById(dto.getId()).orElseThrow(() -> {
+//            throw new UserNotFoundException("User no found");
+//        }));
+        User user = null;
         User savedUser = userRepository.save(user);
 
         Mentee mentee = new Mentee(dto.getLevel());
@@ -63,9 +64,10 @@ public class MenteeServiceImpl extends AbstractService<
     @Override
     public void update(MenteeUpdateDto dto) {
         validator.validOnUpdate(dto);
-        User user = userMapper.fromUpdateDto(dto, userRepository.findById(dto.getId()).orElseThrow(() -> {
-            throw new UserNotFoundException("User not found");
-        }));
+//        User user = userMapper.fromUpdateDto(dto, userRepository.findById(dto.getId()).orElseThrow(() -> {
+//            throw new UserNotFoundException("User not found");
+//        }));
+        User user = null;
         userRepository.save(user);
     }
 
@@ -77,7 +79,7 @@ public class MenteeServiceImpl extends AbstractService<
 
     @Override
     public List<MenteeDto> getAll(GenericCriteria criteria) {
-        PageRequest pageRequest = PageRequest.of(criteria.getPage() - 1 , criteria.getSize());
+        PageRequest pageRequest = PageRequest.of(criteria.getPage() - 1, criteria.getSize());
         return repository.findAllMentee(pageRequest);
     }
 

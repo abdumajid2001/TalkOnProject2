@@ -38,7 +38,7 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public void update(MessageUpdateDto dto) {
         Optional<Message> byId = messageRepository.findById(dto.getId());
-        if (byId.isEmpty()) {
+        if (!byId.isPresent()) {
             throw new IllegalArgumentException("message not found");
         }
         Message message = byId.get();
