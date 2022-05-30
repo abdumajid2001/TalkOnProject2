@@ -7,9 +7,11 @@ import com.talkon.talkon.dtos.user.member.mentor.MentorCreateDto;
 import com.talkon.talkon.dtos.user.member.mentor.MentorDto;
 import com.talkon.talkon.dtos.user.member.mentor.MentorUpdateDto;
 import com.talkon.talkon.services.user.member.mentor.MentorService;
+import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -64,4 +66,10 @@ public class MentorController extends AbstractController<MentorService> {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @RequestMapping(value = PATH + "/mentor/history",method = RequestMethod.GET)
+    public ResponseEntity<?> seeHistories(@RequestParam(name = "page") int page,
+                                          @RequestParam(name = "size") int size,
+                                          @RequestParam(name = "id") String id){
+        return service.seeHistories(id,page,size);
+    }
 }

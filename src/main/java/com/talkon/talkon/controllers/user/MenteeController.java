@@ -64,5 +64,11 @@ public class MenteeController extends AbstractController<MenteeService> {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-
+    @GetMapping("/mentee/history")
+    public ResponseEntity<?> seeHistories(@RequestParam(name = "page") int page,
+                                          @RequestParam(name = "size") int size,
+                                          @RequestParam(name = "id") String id)
+    {
+        return service.seeHistories(page,size,id);
+    }
 }
