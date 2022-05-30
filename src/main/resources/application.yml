@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/talk_on
-    username: postgres
-    password: root123
+    url: jdbc:postgresql://ec2-34-227-120-79.compute-1.amazonaws.com:5432/df0bii2ia41le9
+    username: qjuahkeeozahhx
+    password: 9eb5b1af79728006b5ebc7da79ec6616609488c68e8e2e2026c5bb4a93be2cfc
     driver-class-name: org.postgresql.Driver
 
   jpa:
@@ -43,10 +43,10 @@ springdoc:
 
 service:
   prop:
-    protocol: http
-    ip: localhost
-    port: 9090
+    protocol: https
+    ip: tolkon-2022.herokuapp.com
     url: boom.uz
+    port: 2022
 
 
 app:

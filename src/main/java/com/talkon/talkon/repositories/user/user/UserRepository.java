@@ -30,13 +30,12 @@ public interface UserRepository extends AbstractRepository<User, String> {
     void changeStatusAndLastSeen(String username, boolean status);
 
 
-
-
     @Query(value = "select (case when t.user_id = (select id from users.users where username = :username) then s.user_id\n" +
             "                        else t.user_id end ) as userId\n" +
             "            from conversation.chats\n" +
             "                     join users.mentors t on chats.mentor_id = t.id\n" +
-            "                     join users.mentees s on chats.mentee_id = s.id",
+            "                     join users.mentees s on chats.mentee_id = s.id\n" +
+            "            ",
             nativeQuery = true)
     List<String> getAllContactId(String username);
 
@@ -44,6 +43,7 @@ public interface UserRepository extends AbstractRepository<User, String> {
     UserContactStatusProjection getUserContactStatus(String username);
 
     boolean existsByUsernameAndDeletedFalse(String username);
+
     boolean existsByEmailAndDeletedFalse(String email);
 
     boolean existsByIdAndDeletedFalse(String id);
