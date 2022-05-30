@@ -4,26 +4,30 @@ import lombok.*;
 import org.springdoc.api.annotations.ParameterObject;
 
 import java.io.Serializable;
+import java.util.Objects;
 
-@Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @EqualsAndHashCode
-@ParameterObject
 public class GenericCriteria implements BaseGenericCriteria, Serializable {
-
-    protected Long selfId;
 
     protected Integer page;
 
-    protected Integer perPage;
+    protected Integer size;
 
-    protected String sortBy;
-    protected String sortDirection;
+    public Integer getPage() {
+        if (this.page == null || this.page < 1) {
+            page = 1;
+        }
+        return page;
+    }
 
-    public String getSortDirection() {
-        return sortDirection == null || sortDirection.equals("") ? " ASC " : sortDirection;
+    public Integer getSize() {
+        if (Objects.isNull(this.size) || this.size < 1) {
+            size = 10;
+        }
+        return size;
     }
 }

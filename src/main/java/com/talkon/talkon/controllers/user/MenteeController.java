@@ -37,10 +37,10 @@ public class MenteeController extends AbstractController<MenteeService> {
         return new ResponseEntity<>(new DataDto<>(service.get(id)), HttpStatus.OK);
     }
 
-    @PreAuthorize(value = "hasAnyRole('ADMIN', 'SUPER_ADMIN')")
-    @RequestMapping(value = PATH + "/mentee/getAll", method = RequestMethod.GET)
-    public ResponseEntity<DataDto<List<MenteeDto>>> getAll() {
-        return new ResponseEntity<>(new DataDto<>(service.getAll(new GenericCriteria())), HttpStatus.OK);
+//    @PreAuthorize(value = "hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+    @RequestMapping(value = PATH + "/mentee/getAll", method = RequestMethod.POST)
+    public ResponseEntity<DataDto<List<MenteeDto>>> getAll(@RequestBody GenericCriteria criteria) {
+        return new ResponseEntity<>(new DataDto<>(service.getAll(criteria)), HttpStatus.OK);
     }
 
 

@@ -15,6 +15,7 @@ import com.talkon.talkon.repositories.user.member.mentee.MenteeRepository;
 import com.talkon.talkon.repositories.user.user.UserRepository;
 import com.talkon.talkon.services.base.AbstractService;
 import com.talkon.talkon.validators.user.member.mentee.MenteeValidator;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -41,9 +42,10 @@ public class MenteeServiceImpl extends AbstractService<
     @Override
     public String create(MenteeCreateDto dto) {
         validator.validOnCreate(dto);
-        User user = userMapper.fromCreateDto(dto, userRepository.findById(dto.getId()).orElseThrow(() -> {
-            throw new UserNotFoundException("User no found");
-        }));
+//        User user = userMapper.fromCreateDto(dto, userRepository.findById(dto.getId()).orElseThrow(() -> {
+//            throw new UserNotFoundException("User no found");
+//        }));
+        User user = null;
         User savedUser = userRepository.save(user);
 
         Mentee mentee = new Mentee(dto.getLevel());
@@ -62,9 +64,10 @@ public class MenteeServiceImpl extends AbstractService<
     @Override
     public void update(MenteeUpdateDto dto) {
         validator.validOnUpdate(dto);
-        User user = userMapper.fromUpdateDto(dto, userRepository.findById(dto.getId()).orElseThrow(() -> {
-            throw new UserNotFoundException("User not found");
-        }));
+//        User user = userMapper.fromUpdateDto(dto, userRepository.findById(dto.getId()).orElseThrow(() -> {
+//            throw new UserNotFoundException("User not found");
+//        }));
+        User user = null;
         userRepository.save(user);
     }
 
@@ -76,15 +79,21 @@ public class MenteeServiceImpl extends AbstractService<
 
     @Override
     public List<MenteeDto> getAll(GenericCriteria criteria) {
-
-        return null;
+        PageRequest pageRequest = PageRequest.of(criteria.getPage() - 1, criteria.getSize());
+        return repository.findAllMentee(pageRequest);
     }
 
-    public void block(String id){
+//    @Override
+//    public List<MenteeDto> getAll2(GenericCriteria criteria) {
+//        PageRequest pageRequest = PageRequest.of(criteria.getPage(), criteria.getSize());
+//        return repository.findAllMentee(pageRequest);
+//    }
+
+    public void block(String id) {
         repository.block(id);
     }
 
-    @Override
+
     public void unBlock(String id) {
         repository.unBlock(id);
     }

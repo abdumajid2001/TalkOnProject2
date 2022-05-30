@@ -70,7 +70,8 @@ public class UserServiceImp extends AbstractService<UserRepository, UserMapper, 
     @Override
     @Transactional(dontRollbackOn = {UserNotFoundException.class})
     public UserDetails loadUserByUsername(String phoneNumber) throws UsernameNotFoundException {
-        User findUser = repository.findByPhoneNumberAndDeletedFalse(phoneNumber).orElseThrow(() -> {
+        User findUser = repository.findByPhoneNumberAndDeletedFalse(phoneNumber).get();
+        /*orElseThrow(() -> {
             User user = User.childBuilder()
                     .id(UUID.randomUUID().toString())
                     .phoneNumber(phoneNumber)
@@ -79,7 +80,7 @@ public class UserServiceImp extends AbstractService<UserRepository, UserMapper, 
                     .build();
             repository.save(user);
             throw new UserNotFoundException("user Not found");
-        });
+        });*/
         return new com.talkon.talkon.dtos.user.user.UserDetails(findUser);
     }
 
@@ -117,7 +118,7 @@ public class UserServiceImp extends AbstractService<UserRepository, UserMapper, 
     @Transactional(dontRollbackOn = {UserBlockedException.class})
     @Override
     public void getCode(String phoneNumber) {
-        int code = new Random().nextInt(100000, 999999);
+        int code = new Random().nextInt(999999);
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
         Optional<User> userOptional = repository.findByPhoneNumberAndDeletedFalse(phoneNumber);
         User user = checkUserToBlock(userOptional);

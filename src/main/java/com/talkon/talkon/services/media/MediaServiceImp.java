@@ -55,7 +55,7 @@ public class MediaServiceImp implements MediaService {
         Credentials credentials = GoogleCredentials.fromStream(new FileInputStream(MediaUtils.FIREBASE_TOKEN_PATH));
         Storage storage = StorageOptions.newBuilder().setCredentials(credentials).build().getService();
         storage.create(blobInfo, Files.readAllBytes(file.toPath()));
-        return String.format(DOWNLOAD_URL, URLEncoder.encode(fileName, StandardCharsets.UTF_8));
+        return String.format(DOWNLOAD_URL, URLEncoder.encode(fileName, "UTF-8"));
     }
 
 

@@ -39,9 +39,7 @@ public class MentorServiceImp extends AbstractService<MentorRepository, MentorMa
     public String create(MentorCreateDto dto) {
         validator.validOnCreate(dto);
         validator.validOnCreate(dto);
-        User user = mapper.fromCreateDto(dto, userRepository.findById(dto.getId()).orElseThrow(() -> {
-            throw new UserNotFoundException("User no found");
-        }));
+        User user = mapper.fromCreateDto(dto, userRepository.findById(dto.getId()).get());
         User savedUser = userRepository.save(user);
 //
         Mentor mentee = new Mentor(dto.getExperience());
@@ -60,9 +58,7 @@ public class MentorServiceImp extends AbstractService<MentorRepository, MentorMa
     @Override
     public void update(MentorUpdateDto dto) {
         validator.validOnUpdate(dto);
-        User user = mapper.fromUpdateDto(dto, userRepository.findById(dto.getId()).orElseThrow(() -> {
-            throw new UserNotFoundException("User no found");
-        }));
+        User user = mapper.fromUpdateDto(dto, userRepository.findById(dto.getId()).get());
         userRepository.save(user);
 
         if (Objects.nonNull(dto.getAboutText())) {
@@ -70,9 +66,7 @@ public class MentorServiceImp extends AbstractService<MentorRepository, MentorMa
                 throw new MentorIdNotFoundException("MentorId Not Found Exception");
             }
 
-            Mentor mentor = repository.findByIdAndDeletedFalse(dto.getMentorId()).orElseThrow(() -> {
-                throw new MentorNotFoundException("Mentor not found exception");
-            });
+            Mentor mentor = repository.findByIdAndDeletedFalse(dto.getMentorId()).get();
 
             mentor.setAboutText(dto.getAboutText());
             repository.save(mentor);
