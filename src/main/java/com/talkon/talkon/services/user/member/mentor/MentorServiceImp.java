@@ -1,8 +1,7 @@
 package com.talkon.talkon.services.user.member.mentor;
 
-import com.talkon.talkon.criteria.base.BaseGenericCriteria;
 import com.talkon.talkon.criteria.base.GenericCriteria;
-import com.talkon.talkon.dtos.user.member.mentor.MentorCreateDto;
+import com.talkon.talkon.dtos.schedule.ScheduleDto;
 import com.talkon.talkon.dtos.user.member.mentor.MentorCreateDto;
 import com.talkon.talkon.dtos.user.member.mentor.MentorDto;
 import com.talkon.talkon.dtos.user.member.mentor.MentorUpdateDto;
@@ -17,6 +16,7 @@ import com.talkon.talkon.repositories.user.member.mentor.MentorRepository;
 import com.talkon.talkon.repositories.user.user.UserRepository;
 import com.talkon.talkon.services.base.AbstractService;
 import com.talkon.talkon.validators.user.member.mentor.MentorValidation;
+import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -95,5 +95,10 @@ public class MentorServiceImp extends AbstractService<MentorRepository, MentorMa
     @Override
     public void unBlock(String id) {
         repository.unBlock(id);
+    }
+
+    @Override
+    public HttpEntity<?> saveSchedule(ScheduleDto scheduleDto) {
+
     }
 }

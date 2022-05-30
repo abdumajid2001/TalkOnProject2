@@ -3,10 +3,12 @@ package com.talkon.talkon.controllers.user;
 import com.talkon.talkon.controllers.AbstractController;
 import com.talkon.talkon.criteria.base.GenericCriteria;
 import com.talkon.talkon.dtos.responce.DataDto;
+import com.talkon.talkon.dtos.schedule.ScheduleDto;
 import com.talkon.talkon.dtos.user.member.mentor.MentorCreateDto;
 import com.talkon.talkon.dtos.user.member.mentor.MentorDto;
 import com.talkon.talkon.dtos.user.member.mentor.MentorUpdateDto;
 import com.talkon.talkon.services.user.member.mentor.MentorService;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -64,4 +66,8 @@ public class MentorController extends AbstractController<MentorService> {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PostMapping(PATH+"/schedule")
+    public HttpEntity<?> saveSchedule(@RequestBody @Valid ScheduleDto scheduleDto){
+        return service.saveSchedule(scheduleDto);
+    }
 }
