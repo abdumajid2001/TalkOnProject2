@@ -66,10 +66,18 @@ public class MentorController extends AbstractController<MentorService> {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-//    @PreAuthorize(value = "hasRole('MENTOR')")
+    @PreAuthorize(value = "hasRole('MENTOR')")
     @PostMapping(PATH+"/schedule")
     public HttpEntity<?> saveSchedule(@RequestBody @Valid ScheduleDto scheduleDto){
         return service.saveSchedule(scheduleDto);
+    }
+
+    @RequestMapping(value = PATH + "/mentor/history",method = RequestMethod.GET)
+    public ResponseEntity<?> seeHistories(@RequestParam(name = "page") int page,
+                                          @RequestParam(name = "size") int size,
+                                          @RequestParam(name = "id") String id){
+        return service.seeHistories(id,page,size);
+
     }
 
     @GetMapping(PATH+"/schedule/all")

@@ -13,14 +13,19 @@ import com.talkon.talkon.entities.user.members.Mentor;
 import com.talkon.talkon.enums.ScheduleStatus;
 import com.talkon.talkon.exceptions.MentorIdNotFoundException;
 import com.talkon.talkon.exceptions.user.MentorNotFoundException;
+import com.talkon.talkon.exceptions.user.UserNotFoundException;
 import com.talkon.talkon.mappers.user.member.mentor.MentorMapper;
 import com.talkon.talkon.mappers.user.user.UserMapper;
+import com.talkon.talkon.projections.history.HistoryProjection;
 import com.talkon.talkon.projections.schedule.ScheduleProjection;
+import com.talkon.talkon.repositories.chat.VideoRepository;
 import com.talkon.talkon.repositories.schedule.ScheduleRepository;
 import com.talkon.talkon.repositories.user.member.mentor.MentorRepository;
 import com.talkon.talkon.repositories.user.user.UserRepository;
 import com.talkon.talkon.services.base.AbstractService;
 import com.talkon.talkon.validators.user.member.mentor.MentorValidation;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -40,21 +45,27 @@ public class MentorServiceImp extends AbstractService<MentorRepository, MentorMa
     private final UserSession userSession;
     private final MentorRepository mentorRepository;
     private final ScheduleRepository scheduleRepository;
+    private final VideoRepository videoRepository;
 
-    public MentorServiceImp(MentorMapper mapper, MentorValidation validator, MentorRepository repository, UserRepository userRepository, UserMapper userMapper, UserSession userSession, MentorRepository mentorRepository, ScheduleRepository scheduleRepository) {
+    public MentorServiceImp(MentorMapper mapper, MentorValidation validator, MentorRepository repository, UserRepository userRepository, UserMapper userMapper, UserSession userSession, MentorRepository mentorRepository, ScheduleRepository scheduleRepository, VideoRepository videoRepository) {
         super(mapper, validator, repository);
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.userSession = userSession;
         this.mentorRepository = mentorRepository;
         this.scheduleRepository = scheduleRepository;
+        this.videoRepository = videoRepository;
     }
 
     @Override
     public String create(MentorCreateDto dto) {
         validator.validOnCreate(dto);
         validator.validOnCreate(dto);
-        User user = mapper.fromCreateDto(dto, userRepository.findById(dto.getId()).get());
+        Optional<User> byId = userRepository.findById(dto.getId());
+        if (!byId.isPresent()) {
+            throw new UserNotFoundException("User no found");
+        }
+        User user = mapper.fromCreateDto(dto, byId.get());
         User savedUser = userRepository.save(user);
 //
         Mentor mentee = new Mentor(dto.getExperience());
@@ -73,7 +84,11 @@ public class MentorServiceImp extends AbstractService<MentorRepository, MentorMa
     @Override
     public void update(MentorUpdateDto dto) {
         validator.validOnUpdate(dto);
-        User user = mapper.fromUpdateDto(dto, userRepository.findById(dto.getId()).get());
+        Optional<User> byId = userRepository.findById(dto.getId());
+        if (!byId.isPresent()) {
+            throw new UserNotFoundException("User no found");
+        }
+        User user = mapper.fromUpdateDto(dto, byId.get());
         userRepository.save(user);
 
         if (Objects.nonNull(dto.getAboutText())) {
@@ -81,7 +96,11 @@ public class MentorServiceImp extends AbstractService<MentorRepository, MentorMa
                 throw new MentorIdNotFoundException("MentorId Not Found Exception");
             }
 
-            Mentor mentor = repository.findByIdAndDeletedFalse(dto.getMentorId()).get();
+            Optional<Mentor> byIdAndDeletedFalse = repository.findByIdAndDeletedFalse(dto.getMentorId());
+            if (!byIdAndDeletedFalse.isPresent()) {
+                throw new MentorNotFoundException("Mentor not found exception");
+            }
+            Mentor mentor = byIdAndDeletedFalse.get();
 
             mentor.setAboutText(dto.getAboutText());
             repository.save(mentor);
@@ -142,4 +161,12 @@ public class MentorServiceImp extends AbstractService<MentorRepository, MentorMa
         List<ScheduleProjection> allScheduleByMentorId = scheduleRepository.getAllScheduleByMentorId(mentorId);
         return ResponseEntity.ok(allScheduleByMentorId);
     }
+
+    public ResponseEntity<?> seeHistories(String id, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        List<HistoryProjection> historyProjections = videoRepository.seeHistories(id, pageable);
+        return ResponseEntity.ok(historyProjections);
+
+    }
+
 }
