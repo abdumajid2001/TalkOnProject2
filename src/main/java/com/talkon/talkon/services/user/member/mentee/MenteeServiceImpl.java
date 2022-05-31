@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -45,9 +46,11 @@ public class MenteeServiceImpl extends AbstractService<
     @Override
     public String create(MenteeCreateDto dto) {
         validator.validOnCreate(dto);
-        User user = userMapper.fromCreateDto(dto, userRepository.findById(dto.getId()).orElseThrow(() -> {
+        Optional<User> byId = userRepository.findById(dto.getId());
+        if (!byId.isPresent()) {
             throw new UserNotFoundException("User no found");
-        }));
+        }
+        User user = userMapper.fromCreateDto(dto, byId.get());
         User savedUser = userRepository.save(user);
 
         Mentee mentee = new Mentee(dto.getLevel());
@@ -66,9 +69,11 @@ public class MenteeServiceImpl extends AbstractService<
     @Override
     public void update(MenteeUpdateDto dto) {
         validator.validOnUpdate(dto);
-        User user = userMapper.fromUpdateDto(dto, userRepository.findById(dto.getId()).orElseThrow(() -> {
+        Optional<User> byId = userRepository.findById(dto.getId());
+        if (!byId.isPresent()) {
             throw new UserNotFoundException("User not found");
-        }));
+        }
+        User user = userMapper.fromUpdateDto(dto,byId.get());
         userRepository.save(user);
     }
 

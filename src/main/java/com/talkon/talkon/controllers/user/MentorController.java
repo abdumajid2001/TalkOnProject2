@@ -3,15 +3,15 @@ package com.talkon.talkon.controllers.user;
 import com.talkon.talkon.controllers.AbstractController;
 import com.talkon.talkon.criteria.base.GenericCriteria;
 import com.talkon.talkon.dtos.responce.DataDto;
+import com.talkon.talkon.dtos.schedule.ScheduleDto;
 import com.talkon.talkon.dtos.user.member.mentor.MentorCreateDto;
 import com.talkon.talkon.dtos.user.member.mentor.MentorDto;
 import com.talkon.talkon.dtos.user.member.mentor.MentorUpdateDto;
 import com.talkon.talkon.services.user.member.mentor.MentorService;
-import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -66,10 +66,22 @@ public class MentorController extends AbstractController<MentorService> {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PreAuthorize(value = "hasRole('MENTOR')")
+    @PostMapping(PATH+"/schedule")
+    public HttpEntity<?> saveSchedule(@RequestBody @Valid ScheduleDto scheduleDto){
+        return service.saveSchedule(scheduleDto);
+    }
+
     @RequestMapping(value = PATH + "/mentor/history",method = RequestMethod.GET)
     public ResponseEntity<?> seeHistories(@RequestParam(name = "page") int page,
                                           @RequestParam(name = "size") int size,
                                           @RequestParam(name = "id") String id){
         return service.seeHistories(id,page,size);
+
+    }
+
+    @GetMapping(PATH+"/schedule/all")
+    public HttpEntity<?> getAllScheduleByMentorId(@RequestParam String mentorId){
+        return service.getAllSchedule(mentorId);
     }
 }

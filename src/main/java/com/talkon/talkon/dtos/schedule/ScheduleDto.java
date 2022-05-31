@@ -1,15 +1,15 @@
 package com.talkon.talkon.dtos.schedule;
 
-import com.talkon.talkon.dtos.ScheduleTimeDto;
 import com.talkon.talkon.dtos.base.BaseGenericDto;
-
-import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
-import java.util.List;
-
-
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,8 +17,9 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ScheduleDto implements BaseGenericDto {
 
+
     @NotEmpty
-    List<@Valid ScheduleTimeDto> scheduleTimeDto;
+    private List<@NotNull ScheduleTimeDto> scheduleTimes;
 
 
 }
