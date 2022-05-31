@@ -2,16 +2,14 @@ package com.talkon.talkon.services.user.user;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.talkon.talkon.config.security.UserSession;
 import com.talkon.talkon.dtos.responce.AppErrorDto;
 import com.talkon.talkon.dtos.responce.DataDto;
 import com.talkon.talkon.dtos.user.user.*;
 import com.talkon.talkon.entities.user.User;
-import com.talkon.talkon.exceptions.user.PhoneNumberAlready;
 import com.talkon.talkon.exceptions.user.UserBlockedException;
 import com.talkon.talkon.properties.ServerProperties;
+import com.talkon.talkon.repositories.user.user.AccountRepository;
 import com.talkon.talkon.repositories.user.user.UserRepository;
-import com.talkon.talkon.criteria.base.BaseGenericCriteria;
 import com.talkon.talkon.exceptions.user.UserNotFoundException;
 import com.talkon.talkon.mappers.user.user.UserMapper;
 import com.talkon.talkon.services.base.AbstractService;
@@ -37,10 +35,8 @@ import javax.transaction.Transactional;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 import java.util.Random;
-import java.util.UUID;
 
 @Service
 @Transactional
@@ -52,19 +48,22 @@ public class UserServiceImp extends AbstractService<UserRepository, UserMapper, 
     private final ServerProperties serverProperties;
     private final int BLOCKED_TIME_SECOND = 3600;
     public static int EXPIRY_TIME_SECOND = 3600;
-
+    private final UserRepository userRepository;
+    private final AccountRepository accountRepository;
 
     public UserServiceImp(UserMapper mapper,
                           UserValidator validator,
                           UserRepository repository,
                           PasswordEncoder passwordEncoder,
                           ObjectMapper objectMapper,
-                          ServerProperties serverProperties
-    ) {
+                          ServerProperties serverProperties,
+                          UserRepository userRepository, AccountRepository accountRepository) {
         super(mapper, validator, repository);
         this.passwordEncoder = passwordEncoder;
         this.objectMapper = objectMapper;
         this.serverProperties = serverProperties;
+        this.userRepository = userRepository;
+        this.accountRepository = accountRepository;
     }
 
     @Override
@@ -130,6 +129,22 @@ public class UserServiceImp extends AbstractService<UserRepository, UserMapper, 
         user.setExpiry(LocalDateTime.now().plusSeconds(EXPIRY_TIME_SECOND));
         repository.save(user);
 
+    }
+
+    @Override
+    public void updateProfile(ProfileDto profileDto) {
+        var optionalUser = userRepository.findById(profileDto.getId());
+        User user = optionalUser.get();
+        user.setFirstName(profileDto.getFirstname());
+        user.setPhoneNumber(profileDto.getPhoneNumber());
+        user.setPhotoPath(profileDto.getPathPicture());
+        userRepository.save(user);
+    }
+
+    @Override
+    public ResponseEntity<?> seeBalance(String id) {
+        var coinsByUserId = accountRepository.getCoinsByUserId(id);
+        return ResponseEntity.ok(coinsByUserId);
     }
 
     private User checkUserToBlock(Optional<User> userOptional) {
