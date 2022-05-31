@@ -119,10 +119,11 @@ public class UserServiceImp extends AbstractService<UserRepository, UserMapper, 
     @Override
     public void getCode(String phoneNumber) {
         int code = new Random().nextInt(999999);
-        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+//        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
         Optional<User> userOptional = repository.findByPhoneNumberAndDeletedFalse(phoneNumber);
+        System.err.println(code);
         User user = checkUserToBlock(userOptional);
-        sendSmstoPhone(phoneNumber, code);
+//        sendSmstoPhone(phoneNumber, code);
         user.setTryCount(user.getTryCount() + 1);
         user.setPhoneNumber(phoneNumber);
         user.setCode(passwordEncoder.encode(code + ""));

@@ -20,4 +20,6 @@ public interface MentorService extends GenericCrudService<
     void unBlock(String id);
 
     HttpEntity<?> saveSchedule(ScheduleDto scheduleDto);
+
+    HttpEntity<?> getAllSchedule(String mentorId);
 }
