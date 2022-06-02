@@ -120,6 +120,7 @@ public class UserServiceImp extends AbstractService<UserRepository, UserMapper, 
     public void getCode(String phoneNumber) {
         int code = new Random().nextInt(999999);
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+        System.out.println("twilio code: "+code);
         Optional<User> userOptional = repository.findByPhoneNumberAndDeletedFalse(phoneNumber);
         User user = checkUserToBlock(userOptional);
         sendSmstoPhone(phoneNumber, code);
