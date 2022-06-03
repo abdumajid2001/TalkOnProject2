@@ -100,4 +100,13 @@ public class ReviewServiceImpl implements ReviewService {
             reviewRepository.updateReview(reviewId,dto.getBody());
         }
     }
+
+    @Override
+    public Integer getRatingByMentorId(String mentorId) {
+        Optional<Mentor> byId = rateRepository.findById(mentorId);
+        if (byId.isPresent()) {
+            return rateRepository.getRateByMentorId(mentorId);
+        }
+        return 0;
+    }
 }

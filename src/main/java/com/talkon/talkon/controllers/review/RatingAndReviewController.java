@@ -40,10 +40,13 @@ public class RatingAndReviewController extends AbstractController<ReviewService>
         service.countRating(dto);
         return ResponseEntity.ok("Successfully rated");
     }
+    @GetMapping(PATH+"/get-rating/{mentorId}")
+    public HttpEntity<?> getRatingByMentorId(@PathVariable String mentorId){
+        return ResponseEntity.ok(service.getRatingByMentorId(mentorId));
+    }
     @PostMapping(PATH+"/edit-review/{reviewId}")
     public HttpEntity<?> editReview(@RequestBody ReviewUpdateDto dto, @PathVariable String reviewId){
         service.editReview(dto,reviewId);
         return ResponseEntity.ok("Successfully edited");
-
     }
 }
