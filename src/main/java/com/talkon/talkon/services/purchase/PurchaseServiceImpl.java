@@ -11,7 +11,7 @@ import com.talkon.talkon.exceptions.purchase.CoinNotEnough;
 import com.talkon.talkon.exceptions.purchase.PayTypeNotFoundException;
 import com.talkon.talkon.exceptions.user.UserNotFoundException;
 import com.talkon.talkon.repositories.schedule.ScheduleRepository;
-import com.talkon.talkon.repositories.user.AccountRepository;
+import com.talkon.talkon.repositories.user.user.AccountRepository;
 import com.talkon.talkon.repositories.user.member.mentee.MenteeRepository;
 import com.talkon.talkon.repositories.user.user.UserRepository;
 import lombok.AllArgsConstructor;

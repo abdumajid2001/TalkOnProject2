@@ -17,6 +17,7 @@ import com.talkon.talkon.validators.user.user.UserValidator;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
+import lombok.var;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -118,6 +119,8 @@ public class UserServiceImp extends AbstractService<UserRepository, UserMapper, 
     @Override
     public void getCode(String phoneNumber) {
         int code = new Random().nextInt(999999);
+        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+        System.out.println("twilio code: "+code);
 //        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
         Optional<User> userOptional = repository.findByPhoneNumberAndDeletedFalse(phoneNumber);
         System.err.println(code);
