@@ -1,24 +1,36 @@
 package com.talkon.talkon.services.user.member.mentor;
 
-import com.talkon.talkon.criteria.base.BaseGenericCriteria;
 import com.talkon.talkon.criteria.base.GenericCriteria;
+import com.talkon.talkon.dtos.schedule.ScheduleDto;
+import com.talkon.talkon.dtos.schedule.ScheduleTimeDto;
 import com.talkon.talkon.dtos.user.member.mentor.*;
 import com.talkon.talkon.dtos.user.member.mentor.MentorCreateDto;
+import com.talkon.talkon.entities.schedule.Schedule;
 import com.talkon.talkon.entities.user.User;
 import com.talkon.talkon.entities.user.members.Mentor;
+import com.talkon.talkon.enums.ScheduleStatus;
 import com.talkon.talkon.exceptions.MentorIdNotFoundException;
 import com.talkon.talkon.exceptions.user.MentorNotFoundException;
 import com.talkon.talkon.exceptions.user.UserNotFoundException;
 import com.talkon.talkon.mappers.user.member.mentor.MentorMapper;
 import com.talkon.talkon.mappers.user.user.UserMapper;
+import com.talkon.talkon.projections.history.HistoryProjection;
+import com.talkon.talkon.projections.schedule.ScheduleProjection;
+import com.talkon.talkon.repositories.chat.VideoRepository;
+import com.talkon.talkon.repositories.schedule.ScheduleRepository;
 import com.talkon.talkon.repositories.user.member.mentor.MentorRepository;
 import com.talkon.talkon.repositories.user.user.UserRepository;
 import com.talkon.talkon.services.base.AbstractService;
 import com.talkon.talkon.validators.user.member.mentor.MentorValidation;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -29,10 +41,17 @@ public class MentorServiceImp extends AbstractService<MentorRepository, MentorMa
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
-    public MentorServiceImp(MentorMapper mapper, MentorValidation validator, MentorRepository repository, UserRepository userRepository, UserMapper userMapper) {
+    private final ScheduleRepository scheduleRepository;
+
+    private final VideoRepository videoRepository;
+
+
+    public MentorServiceImp(MentorMapper mapper, MentorValidation validator, MentorRepository repository, UserRepository userRepository, UserMapper userMapper, ScheduleRepository scheduleRepository, VideoRepository videoRepository) {
         super(mapper, validator, repository);
         this.userRepository = userRepository;
         this.userMapper = userMapper;
+        this.scheduleRepository = scheduleRepository;
+        this.videoRepository = videoRepository;
     }
 
     @Override
@@ -117,7 +136,7 @@ public class MentorServiceImp extends AbstractService<MentorRepository, MentorMa
 //        String id = userSession.getUser().getId();
         String id = "f1a897aa-7ce0-4695-a3d6-977eaed981f0";
 
-        Optional<Mentor> byUserId = mentorRepository.findByUserId(id);
+        Optional<Mentor> byUserId = repository.findByUserId(id);
         if (!byUserId.isPresent()) {
             throw new MentorNotFoundException("Mentor not found");
         }

@@ -38,7 +38,7 @@ public class TalkOnApplication {
     }
 
 
-    @Bean
+//    @Bean
     CommandLineRunner runner() {
         return (args -> {
             if (init.equals("always")) {

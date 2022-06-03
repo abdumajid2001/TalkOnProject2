@@ -1,6 +1,5 @@
 package com.talkon.talkon.services.user.member.mentee;
 
-import com.talkon.talkon.criteria.base.BaseGenericCriteria;
 import com.talkon.talkon.criteria.base.GenericCriteria;
 import com.talkon.talkon.dtos.user.member.mentee.MenteeCreateDto;
 import com.talkon.talkon.dtos.user.member.mentee.MenteeDto;
@@ -8,7 +7,6 @@ import com.talkon.talkon.dtos.user.member.mentee.MenteeDtoForGetAll;
 import com.talkon.talkon.dtos.user.member.mentee.MenteeUpdateDto;
 import com.talkon.talkon.entities.user.User;
 import com.talkon.talkon.entities.user.members.Mentee;
-import com.talkon.talkon.exceptions.user.NotFoundUserIdException;
 import com.talkon.talkon.exceptions.user.UserNotFoundException;
 import com.talkon.talkon.mappers.user.member.mentee.MenteeMapper;
 import com.talkon.talkon.mappers.user.user.UserMapper;
@@ -17,6 +15,7 @@ import com.talkon.talkon.repositories.user.user.UserRepository;
 import com.talkon.talkon.services.base.AbstractService;
 import com.talkon.talkon.validators.user.member.mentee.MenteeValidator;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -109,4 +108,11 @@ public class MenteeServiceImpl extends AbstractService<
     public void unBlock(String id) {
         repository.unBlock(id);
     }
+
+    @Override
+    public ResponseEntity<?> seeHistories(int page, int size, String id) {
+        return null;
+    }
+
+
 }

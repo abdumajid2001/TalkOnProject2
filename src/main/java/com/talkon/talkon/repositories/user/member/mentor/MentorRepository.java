@@ -1,12 +1,15 @@
 package com.talkon.talkon.repositories.user.member.mentor;
 
 import com.talkon.talkon.dtos.user.member.mentor.MentorDto;
+import com.talkon.talkon.dtos.user.member.mentor.MentorDtoForGetAll;
 import com.talkon.talkon.entities.user.members.Mentor;
 import com.talkon.talkon.repositories.base.AbstractRepository;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository

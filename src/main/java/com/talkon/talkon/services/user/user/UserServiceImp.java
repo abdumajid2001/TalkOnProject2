@@ -2,23 +2,21 @@ package com.talkon.talkon.services.user.user;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.talkon.talkon.config.security.UserSession;
 import com.talkon.talkon.dtos.responce.AppErrorDto;
 import com.talkon.talkon.dtos.responce.DataDto;
 import com.talkon.talkon.dtos.user.user.*;
 import com.talkon.talkon.entities.user.User;
-import com.talkon.talkon.exceptions.user.PhoneNumberAlready;
 import com.talkon.talkon.exceptions.user.UserBlockedException;
 import com.talkon.talkon.properties.ServerProperties;
+import com.talkon.talkon.repositories.user.user.AccountRepository;
 import com.talkon.talkon.repositories.user.user.UserRepository;
-import com.talkon.talkon.criteria.base.BaseGenericCriteria;
 import com.talkon.talkon.exceptions.user.UserNotFoundException;
 import com.talkon.talkon.mappers.user.user.UserMapper;
 import com.talkon.talkon.services.base.AbstractService;
 import com.talkon.talkon.validators.user.user.UserValidator;
-import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
+import lombok.var;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -37,7 +35,6 @@ import javax.transaction.Transactional;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
@@ -53,18 +50,20 @@ public class UserServiceImp extends AbstractService<UserRepository, UserMapper, 
     private final int BLOCKED_TIME_SECOND = 3600;
     public static int EXPIRY_TIME_SECOND = 3600;
 
+    private final AccountRepository accountRepository;
 
     public UserServiceImp(UserMapper mapper,
                           UserValidator validator,
                           UserRepository repository,
                           PasswordEncoder passwordEncoder,
                           ObjectMapper objectMapper,
-                          ServerProperties serverProperties
-    ) {
+                          ServerProperties serverProperties,
+                          AccountRepository accountRepository) {
         super(mapper, validator, repository);
         this.passwordEncoder = passwordEncoder;
         this.objectMapper = objectMapper;
         this.serverProperties = serverProperties;
+        this.accountRepository = accountRepository;
     }
 
     @Override
@@ -121,7 +120,7 @@ public class UserServiceImp extends AbstractService<UserRepository, UserMapper, 
     @Transactional(dontRollbackOn = {UserBlockedException.class})
     @Override
     public void getCode(String phoneNumber) {
-        int code = new Random().nextInt(999999);
+        int code = new Random().nextInt(1000)+999;
         System.out.println("code = " + code);
 //        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
         Optional<User> userOptional = repository.findByPhoneNumberAndDeletedFalse(phoneNumber);
@@ -134,6 +133,23 @@ public class UserServiceImp extends AbstractService<UserRepository, UserMapper, 
         repository.save(user);
 
     }
+
+    @Override
+    public void updateProfile(ProfileDto profileDto) {
+        var optionalUser = repository.findById(profileDto.getId());
+        User user = optionalUser.get();
+        user.setFirstName(profileDto.getFirstname());
+        user.setPhoneNumber(profileDto.getPhoneNumber());
+        user.setPhotoPath(profileDto.getPathPicture());
+        repository.save(user);
+    }
+
+    @Override
+    public ResponseEntity<?> seeBalance(String id) {
+        var coinsByUserId = accountRepository.getCoinsByUserId(id);
+        return ResponseEntity.ok(coinsByUserId);
+    }
+
 
     private User checkUserToBlock(Optional<User> userOptional) {
         User user;

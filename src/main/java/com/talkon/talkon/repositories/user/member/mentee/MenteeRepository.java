@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface MenteeRepository extends AbstractRepository<Mentee, String> {
@@ -47,4 +48,6 @@ public interface MenteeRepository extends AbstractRepository<Mentee, String> {
             ") from users u inner join mentees m on u.id=m.user.id where u.deleted = false "
     )
     List<MenteeDtoForGetAll> findAllMentee(PageRequest pageRequest);
+
+    Optional<Mentee> findByUserId(String id);
 }
