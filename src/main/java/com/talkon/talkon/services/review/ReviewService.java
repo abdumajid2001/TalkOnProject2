@@ -19,5 +19,5 @@ public interface ReviewService extends GenericCrudService<ReviewDto, ReviewCreat
 
     void countRating(RatingCreateDto dto);
 
-    void editReview(ReviewCreateDto dto,String reviewId);
+    void editReview(ReviewUpdateDto dto,String reviewId);
 }

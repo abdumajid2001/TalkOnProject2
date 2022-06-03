@@ -10,9 +10,9 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 import java.util.UUID;
 
-public interface ReviewRepository extends JpaRepository<Review, UUID> {
+public interface ReviewRepository extends JpaRepository<Review, String> {
 
-    @Query(nativeQuery = true,value =
+    @Query(nativeQuery = true, value =
             "select u.photo_path as photoPath,\n" +
                     "       m.id as menteeId,\n" +
                     "       u.username            as username,\n" +
@@ -24,4 +24,9 @@ public interface ReviewRepository extends JpaRepository<Review, UUID> {
                     "         join users.mentees m on r.mentee_id = m.id\n" +
                     "where mentor_id = :mentorId\n")
     List<ReviewProjection> getAllReviewByMentorId(Pageable pageable, String mentorId);
+
+
+    @Query(nativeQuery = true, value =
+            "update users.reviews set body=:bodyText where reviews.id=:reviewId")
+    void updateReview(String reviewId, String bodyText);
 }

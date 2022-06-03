@@ -5,6 +5,7 @@ import com.talkon.talkon.controllers.AbstractController;
 import com.talkon.talkon.dtos.review.RatingCreateDto;
 import com.talkon.talkon.dtos.review.ReviewCreateDto;
 import com.talkon.talkon.dtos.review.ReviewDto;
+import com.talkon.talkon.dtos.review.ReviewUpdateDto;
 import com.talkon.talkon.projections.review.ReviewProjection;
 import com.talkon.talkon.services.review.ReviewService;
 import com.talkon.talkon.services.review.ReviewServiceImpl;
@@ -40,7 +41,7 @@ public class RatingAndReviewController extends AbstractController<ReviewService>
         return ResponseEntity.ok("Successfully rated");
     }
     @PostMapping(PATH+"/edit-review/{reviewId}")
-    public HttpEntity<?> editReview(@RequestBody ReviewCreateDto dto,@PathVariable String reviewId){
+    public HttpEntity<?> editReview(@RequestBody ReviewUpdateDto dto, @PathVariable String reviewId){
         service.editReview(dto,reviewId);
         return ResponseEntity.ok("Successfully edited");
 

@@ -40,6 +40,8 @@ public interface MentorRepository extends AbstractRepository<Mentor, String> {
     @Query("update users  u set u.status = 0 where u.id = ?1")
     void unBlock(String id);
 
+    Optional<Mentor> findByUserId(String user_id);
+
 
 
 }

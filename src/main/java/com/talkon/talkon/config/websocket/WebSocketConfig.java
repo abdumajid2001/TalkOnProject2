@@ -19,13 +19,13 @@ public class WebSocketConfig extends AbstractController<ChatService> implements 
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker(PATH+"/chat");
-        config.setApplicationDestinationPrefixes(PATH);   //"/app"
-        config.setUserDestinationPrefix(PATH+"/chat");
+        config.enableSimpleBroker("/chat");
+        config.setApplicationDestinationPrefixes("/talkon");   //"/app"
+        config.setUserDestinationPrefix("/chat");
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint(PATH+"/ws").withSockJS();
+        registry.addEndpoint("/websocket");
     }
 }

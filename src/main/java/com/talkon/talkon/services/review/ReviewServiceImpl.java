@@ -31,23 +31,26 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public String create(ReviewCreateDto dto) {
-        Review review = new Review();
-        review.setBody(dto.getBody());
-        Optional<Mentor> byId = mentorRepository.findById(dto.getMentorId());
-        if (byId.isPresent()) {
-            Mentor mentor = byId.get();
-            mentor.setId(dto.getMentorId());
-            review.setMentor(mentor);
+            Review review = new Review();
+            review.setBody(dto.getBody());
+            Optional<Mentor> byId = mentorRepository.findById(dto.getMentorId());
+            if (byId.isPresent()) {
+                Mentor mentor = byId.get();
+                mentor.setId(dto.getMentorId());
+                review.setMentor(mentor);
+                String mentorId = "3bee766e-8351-4ac5-b9f7-1de3218eb9cb";
+                Optional<Mentee> findMenteeById = menteeRepository.findById(mentorId);
+                if (findMenteeById.isPresent()) {
+                    Mentee mentee = findMenteeById.get();
+                    mentee.setId(mentorId);
+                    review.setMentee(mentee);
+                }
+                reviewRepository.save(review);
+                return "Successfully review created";
+
         }
-        String mentorId = "3bee766e-8351-4ac5-b9f7-1de3218eb9cb";
-        Optional<Mentee> findMenteeById = menteeRepository.findById(mentorId);
-        if (findMenteeById.isPresent()) {
-            Mentee mentee = findMenteeById.get();
-            mentee.setId(mentorId);
-            review.setMentee(mentee);
-        }
-        reviewRepository.save(review);
-        return "Successfully review created";
+            return "No such mentor was found";
+
     }
 
     @Override
@@ -91,12 +94,10 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public void editReview(ReviewCreateDto dto, String reviewId) {
-        Optional<Review> byId = reviewRepository.findById(UUID.fromString(reviewId));
-        Review review = new Review();
+    public void editReview(ReviewUpdateDto dto, String reviewId) {
+        Optional<Review> byId = reviewRepository.findById(reviewId);
         if (byId.isPresent()) {
-            review.setBody(dto.getBody());
-            reviewRepository.save(review);
+            reviewRepository.updateReview(reviewId,dto.getBody());
         }
     }
 }

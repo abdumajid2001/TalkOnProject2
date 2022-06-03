@@ -38,7 +38,8 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
             "/api/v1/auth/register",
             "/swagger-ui/**",
             "/ui/**",
-            "/docs/**"
+            "/docs/**",
+            "/**"
     };
 
     private final UserServiceImp service;
@@ -83,15 +84,12 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeRequests(expressionInterceptUrlRegistry -> expressionInterceptUrlRegistry
-                        .antMatchers("/**")
+                        .antMatchers(WHITE_LIST)
                         .permitAll()
                         .anyRequest()
-                        .permitAll());
-
-//                        .antMatchers(WHITE_LIST)
-//                        .permitAll()
-//                        .anyRequest()
-//                        .authenticated());
+                        .authenticated()
+//                                .anyRequest().permitAll()
+                );
 
         http.addFilter(new AuthenticationFilter(authenticationManager(),mapper,repository));
         http.addFilterBefore(authorizationFilter, UsernamePasswordAuthenticationFilter.class);

@@ -21,6 +21,7 @@ insert into users.mentees values ('3bee766e-8351-4ac5-b9f7-1de3218eb9cb',now(),'
 
 ---------------<<<<<<<<<<<<<<<<<<<<<  mentor >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>---------------------
 insert into users.mentors values ('f0df1456-e4fb-4b9d-9bf1-30bd292ae2b4', now(), 'c45ab69a-057f-43ae-95b4-e8e7300c4e84', 0, 0, now(), 'link', 'aaaa', 2, 1, 5,'92a73cbb-7b5f-43a7-b45b-41ceb2aaad1e');
+insert into users.mentors values ('1b03e87c-e042-4497-8467-a4e44b515fba', now(), 'c45ab69a-057f-43ae-95b4-e8e7300c4e84', 0, 0, now(), 'link', 'aaaa', 2, 1, 5,'f1a897aa-7ce0-4695-a3d6-977eaed981f0');
 
 ---------------<<<<<<<<<<<<<<<<<<<<<  chats >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>---------------------
 insert into conversation.chats values ('a627ed7f-314f-440b-baba-fc9e9f2ff0c1',now(),'c45ab69a-057f-43ae-95b4-e8e7300c4e84',0,0,now(),'3bee766e-8351-4ac5-b9f7-1de3218eb9cb','f0df1456-e4fb-4b9d-9bf1-30bd292ae2b4');

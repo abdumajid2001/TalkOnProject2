@@ -8,6 +8,10 @@ spring:
     password: root123
     driver-class-name: org.postgresql.Driver
 
+#    url: jdbc:postgresql://localhost:5432/talk_on
+#    username: postgres
+#    password: root123
+
   jpa:
     show-sql: true
     defer-datasource-initialization: true
@@ -15,6 +19,7 @@ spring:
 #      ddl-auto: create
       ddl-auto: update
     properties:
+
       hibernate:
         format_sql: true
   sql:
