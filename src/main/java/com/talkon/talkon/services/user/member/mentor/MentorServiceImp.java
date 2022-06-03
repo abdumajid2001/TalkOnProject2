@@ -93,6 +93,7 @@ public class MentorServiceImp extends AbstractService<MentorRepository, MentorMa
 
     @Override
     public List<MentorDto> getAll(GenericCriteria criteria) {
+
         return null;
     }
 
@@ -110,4 +111,43 @@ public class MentorServiceImp extends AbstractService<MentorRepository, MentorMa
     public void unBlock(String id) {
         repository.unBlock(id);
     }
+
+    @Override
+    public HttpEntity<?> saveSchedule(ScheduleDto scheduleDto) {
+//        String id = userSession.getUser().getId();
+        String id = "f1a897aa-7ce0-4695-a3d6-977eaed981f0";
+
+        Optional<Mentor> byUserId = mentorRepository.findByUserId(id);
+        if (!byUserId.isPresent()) {
+            throw new MentorNotFoundException("Mentor not found");
+        }
+        List<Schedule> schedules = new ArrayList<>(scheduleDto.getScheduleTimes().size());
+        List<ScheduleTimeDto> scheduleTimeDto = scheduleDto.getScheduleTimes();
+        for (ScheduleTimeDto date : scheduleTimeDto) {
+            Schedule schedule = new Schedule();
+            schedule.setScheduleStatus(ScheduleStatus.NEW);
+            schedule.setMentor(byUserId.get());
+            schedule.setCreatedAt(LocalDateTime.now());
+            schedule.setCreatedBy(id);
+            schedule.setStartDateTime(date.getStartTime());
+            schedule.setDuration(20);
+            schedules.add(schedule);
+        }
+        scheduleRepository.saveAll(schedules);
+        return ResponseEntity.ok("successfully save");
+    }
+
+    @Override
+    public HttpEntity<?> getAllSchedule(String mentorId) {
+        List<ScheduleProjection> allScheduleByMentorId = scheduleRepository.getAllScheduleByMentorId(mentorId);
+        return ResponseEntity.ok(allScheduleByMentorId);
+    }
+
+    public ResponseEntity<?> seeHistories(String id, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        List<HistoryProjection> historyProjections = videoRepository.seeHistories(id, pageable);
+        return ResponseEntity.ok(historyProjections);
+
+    }
+
 }
