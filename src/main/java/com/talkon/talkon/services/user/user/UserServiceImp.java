@@ -120,7 +120,8 @@ public class UserServiceImp extends AbstractService<UserRepository, UserMapper, 
     @Transactional(dontRollbackOn = {UserBlockedException.class})
     @Override
     public void getCode(String phoneNumber) {
-        int code = new Random().nextInt(1000)+999;
+//        int code = new Random().nextInt(1000)+999;
+        int code = 6666;
         System.out.println("code = " + code);
 //        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
         Optional<User> userOptional = repository.findByPhoneNumberAndDeletedFalse(phoneNumber);
