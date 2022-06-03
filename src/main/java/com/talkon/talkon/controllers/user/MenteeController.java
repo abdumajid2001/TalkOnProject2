@@ -5,6 +5,7 @@ import com.talkon.talkon.criteria.base.GenericCriteria;
 import com.talkon.talkon.dtos.responce.DataDto;
 import com.talkon.talkon.dtos.user.member.mentee.MenteeCreateDto;
 import com.talkon.talkon.dtos.user.member.mentee.MenteeDto;
+import com.talkon.talkon.dtos.user.member.mentee.MenteeDtoForGetAll;
 import com.talkon.talkon.dtos.user.member.mentee.MenteeUpdateDto;
 import com.talkon.talkon.services.user.member.mentee.MenteeService;
 import org.springframework.http.HttpStatus;
@@ -39,8 +40,8 @@ public class MenteeController extends AbstractController<MenteeService> {
 
 //    @PreAuthorize(value = "hasAnyRole('ADMIN', 'SUPER_ADMIN')")
     @RequestMapping(value = PATH + "/mentee/getAll", method = RequestMethod.PUT)
-    public ResponseEntity<DataDto<List<MenteeDto>>> getAll(@RequestBody GenericCriteria criteria) {
-        return new ResponseEntity<>(new DataDto<>(service.getAll(criteria)), HttpStatus.OK);
+    public ResponseEntity<DataDto<List<MenteeDtoForGetAll>>> getAll(@RequestBody GenericCriteria criteria) {
+        return new ResponseEntity<>(new DataDto<>(service.getAllForAll(criteria)), HttpStatus.OK);
     }
 
 

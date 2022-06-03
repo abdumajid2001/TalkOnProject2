@@ -2,10 +2,8 @@ package com.talkon.talkon.services.user.member.mentor;
 
 import com.talkon.talkon.criteria.base.BaseGenericCriteria;
 import com.talkon.talkon.criteria.base.GenericCriteria;
+import com.talkon.talkon.dtos.user.member.mentor.*;
 import com.talkon.talkon.dtos.user.member.mentor.MentorCreateDto;
-import com.talkon.talkon.dtos.user.member.mentor.MentorCreateDto;
-import com.talkon.talkon.dtos.user.member.mentor.MentorDto;
-import com.talkon.talkon.dtos.user.member.mentor.MentorUpdateDto;
 import com.talkon.talkon.entities.user.User;
 import com.talkon.talkon.entities.user.members.Mentor;
 import com.talkon.talkon.exceptions.MentorIdNotFoundException;
@@ -95,9 +93,12 @@ public class MentorServiceImp extends AbstractService<MentorRepository, MentorMa
 
     @Override
     public List<MentorDto> getAll(GenericCriteria criteria) {
-        PageRequest pageRequest = PageRequest.of(criteria.getPage() - 1, criteria.getSize());
-        repository.getAll(pageRequest);
         return null;
+    }
+
+    public List<MentorDtoForGetAll> getAllForAll(GenericCriteria criteria) {
+        PageRequest pageRequest = PageRequest.of(criteria.getPage() - 1, criteria.getSize());
+        return repository.getAll(pageRequest);
     }
 
     @Override

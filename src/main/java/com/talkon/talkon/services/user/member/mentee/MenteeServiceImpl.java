@@ -4,6 +4,7 @@ import com.talkon.talkon.criteria.base.BaseGenericCriteria;
 import com.talkon.talkon.criteria.base.GenericCriteria;
 import com.talkon.talkon.dtos.user.member.mentee.MenteeCreateDto;
 import com.talkon.talkon.dtos.user.member.mentee.MenteeDto;
+import com.talkon.talkon.dtos.user.member.mentee.MenteeDtoForGetAll;
 import com.talkon.talkon.dtos.user.member.mentee.MenteeUpdateDto;
 import com.talkon.talkon.entities.user.User;
 import com.talkon.talkon.entities.user.members.Mentee;
@@ -92,6 +93,11 @@ public class MenteeServiceImpl extends AbstractService<
 
     @Override
     public List<MenteeDto> getAll(GenericCriteria criteria) {
+        return null;
+    }
+
+
+    public List<MenteeDtoForGetAll> getAllForAll(GenericCriteria criteria) {
         PageRequest pageRequest = PageRequest.of(criteria.getPage() - 1, criteria.getSize());
         return repository.findAllMentee(pageRequest);
     }
@@ -99,7 +105,6 @@ public class MenteeServiceImpl extends AbstractService<
     public void block(String id) {
         repository.block(id);
     }
-
 
     public void unBlock(String id) {
         repository.unBlock(id);

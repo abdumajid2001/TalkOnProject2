@@ -5,6 +5,7 @@ import com.talkon.talkon.criteria.base.GenericCriteria;
 import com.talkon.talkon.dtos.responce.DataDto;
 import com.talkon.talkon.dtos.user.member.mentor.MentorCreateDto;
 import com.talkon.talkon.dtos.user.member.mentor.MentorDto;
+import com.talkon.talkon.dtos.user.member.mentor.MentorDtoForGetAll;
 import com.talkon.talkon.dtos.user.member.mentor.MentorUpdateDto;
 import com.talkon.talkon.services.user.member.mentor.MentorService;
 import org.springframework.http.HttpStatus;
@@ -39,8 +40,8 @@ public class MentorController extends AbstractController<MentorService> {
 
 //    @PreAuthorize(value = "hasAnyRole('ADMIN', 'SUPER_ADMIN')")
     @RequestMapping(value = PATH + "/mentor/getAll", method = RequestMethod.PUT)
-    public ResponseEntity<DataDto<List<MentorDto>>> getAll(@RequestBody GenericCriteria criteria) {
-        return new ResponseEntity<>(new DataDto<>(service.getAll(criteria)), HttpStatus.OK);
+    public ResponseEntity<DataDto<List<MentorDtoForGetAll>>> getAll(@RequestBody GenericCriteria criteria) {
+        return new ResponseEntity<>(new DataDto<>(service.getAllForAll(criteria)), HttpStatus.OK);
     }
 
 

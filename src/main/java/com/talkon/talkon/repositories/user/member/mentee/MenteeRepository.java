@@ -1,6 +1,7 @@
 package com.talkon.talkon.repositories.user.member.mentee;
 
 import com.talkon.talkon.dtos.user.member.mentee.MenteeDto;
+import com.talkon.talkon.dtos.user.member.mentee.MenteeDtoForGetAll;
 import com.talkon.talkon.entities.user.members.Mentee;
 import com.talkon.talkon.repositories.base.AbstractRepository;
 import org.springframework.data.domain.PageRequest;
@@ -45,5 +46,5 @@ public interface MenteeRepository extends AbstractRepository<Mentee, String> {
             ",u.photoPath" +
             ") from users u inner join mentees m on u.id=m.user.id where u.deleted = false "
     )
-    List<MenteeDto> findAllMentee(PageRequest pageRequest);
+    List<MenteeDtoForGetAll> findAllMentee(PageRequest pageRequest);
 }
