@@ -17,6 +17,7 @@ public class ServerProperties {
     private String protocol;
 
     public String getServerUrl() {
-        return this.protocol + "://" + this.ip;
+//        return this.protocol + "://" + this.ip;
+        return this.protocol + "://" + this.ip + ":" + this.port;
     }
 }

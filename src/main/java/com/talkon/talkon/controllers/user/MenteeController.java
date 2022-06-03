@@ -38,7 +38,7 @@ public class MenteeController extends AbstractController<MenteeService> {
     }
 
 //    @PreAuthorize(value = "hasAnyRole('ADMIN', 'SUPER_ADMIN')")
-    @RequestMapping(value = PATH + "/mentee/getAll", method = RequestMethod.POST)
+    @RequestMapping(value = PATH + "/mentee/getAll", method = RequestMethod.PUT)
     public ResponseEntity<DataDto<List<MenteeDto>>> getAll(@RequestBody GenericCriteria criteria) {
         return new ResponseEntity<>(new DataDto<>(service.getAll(criteria)), HttpStatus.OK);
     }
@@ -50,14 +50,14 @@ public class MenteeController extends AbstractController<MenteeService> {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize(value = "hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+//    @PreAuthorize(value = "hasAnyRole('ADMIN', 'SUPER_ADMIN')")
     @RequestMapping(value = PATH + "/mentee/blocked/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Void> block(@PathVariable String id) {
         service.block(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize(value = "hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+//    @PreAuthorize(value = "hasAnyRole('ADMIN', 'SUPER_ADMIN')")
     @RequestMapping(value = PATH + "/mentee/unblocked/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Void> unBlock(@PathVariable String id) {
         service.unBlock(id);

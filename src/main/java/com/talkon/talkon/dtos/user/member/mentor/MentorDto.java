@@ -31,13 +31,13 @@ public class MentorDto extends GenericDto {
 
     private int timeZone;
 
-    String aboutMediaLink;
+    private String aboutMediaLink;
 
-    String aboutText;
+    private String aboutText;
 
-    int ratingValue;
+    private int ratingValue;
 
-    String photoPath;
+    private String photoPath;
 
     @Builder(builderMethodName = "childBuilder")
     public MentorDto(String id, int experience, String firstName, String lastName, String email, String username, LocalDate dataOfBirth, int timeZone, String aboutMediaLink, String aboutText, int ratingValue, String photoPath) {

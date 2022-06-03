@@ -70,17 +70,20 @@ public class UserServiceImp extends AbstractService<UserRepository, UserMapper, 
     @Override
     @Transactional(dontRollbackOn = {UserNotFoundException.class})
     public UserDetails loadUserByUsername(String phoneNumber) throws UsernameNotFoundException {
-        User findUser = repository.findByPhoneNumberAndDeletedFalse(phoneNumber).get();
-        /*orElseThrow(() -> {
+        Optional<User> userOptional = repository.findByPhoneNumberAndDeletedFalse(phoneNumber);
+        User findUser = null;
+        if (userOptional.isPresent()) {
+            findUser = userOptional.get();
+        } else {
             User user = User.childBuilder()
                     .id(UUID.randomUUID().toString())
                     .phoneNumber(phoneNumber)
-                    .status((short) 1)
+                    .status((short) 221)
                     .expiry(LocalDateTime.now())
                     .build();
             repository.save(user);
             throw new UserNotFoundException("user Not found");
-        });*/
+        }
         return new com.talkon.talkon.dtos.user.user.UserDetails(findUser);
     }
 
@@ -119,10 +122,11 @@ public class UserServiceImp extends AbstractService<UserRepository, UserMapper, 
     @Override
     public void getCode(String phoneNumber) {
         int code = new Random().nextInt(999999);
-        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+        System.out.println("code = " + code);
+//        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
         Optional<User> userOptional = repository.findByPhoneNumberAndDeletedFalse(phoneNumber);
         User user = checkUserToBlock(userOptional);
-        sendSmstoPhone(phoneNumber, code);
+//        sendSmstoPhone(phoneNumber, code);
         user.setTryCount(user.getTryCount() + 1);
         user.setPhoneNumber(phoneNumber);
         user.setCode(passwordEncoder.encode(code + ""));

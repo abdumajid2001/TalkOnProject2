@@ -17,11 +17,13 @@ import com.talkon.talkon.repositories.user.member.mentor.MentorRepository;
 import com.talkon.talkon.repositories.user.user.UserRepository;
 import com.talkon.talkon.services.base.AbstractService;
 import com.talkon.talkon.validators.user.member.mentor.MentorValidation;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -38,13 +40,18 @@ public class MentorServiceImp extends AbstractService<MentorRepository, MentorMa
     @Override
     public String create(MentorCreateDto dto) {
         validator.validOnCreate(dto);
-        validator.validOnCreate(dto);
-        User user = mapper.fromCreateDto(dto, userRepository.findById(dto.getId()).get());
+        User user = null;
+        Optional<User> userOptional = userRepository.findById(dto.getId());
+        if (userOptional.isPresent()) {
+            user = userOptional.get();
+        } else {
+            throw new UserNotFoundException("User not found");
+        }
+        user = mapper.fromCreateDto(dto, user);
         User savedUser = userRepository.save(user);
-//
         Mentor mentee = new Mentor(dto.getExperience());
         mentee.setUser(savedUser);
-        Mentor savedMentor = repository.save(mentee);
+        repository.save(mentee);
         return dto.getId();
     }
 
@@ -65,9 +72,13 @@ public class MentorServiceImp extends AbstractService<MentorRepository, MentorMa
             if (Objects.isNull(dto.getMentorId())) {
                 throw new MentorIdNotFoundException("MentorId Not Found Exception");
             }
-
-            Mentor mentor = repository.findByIdAndDeletedFalse(dto.getMentorId()).get();
-
+            Mentor mentor = null;
+            Optional<Mentor> mentorOptional = repository.findByIdAndDeletedFalse(dto.getMentorId());
+            if (mentorOptional.isPresent()) {
+                mentor = mentorOptional.get();
+            } else {
+                throw new MentorNotFoundException("Mentor Not Found Exception");
+            }
             mentor.setAboutText(dto.getAboutText());
             repository.save(mentor);
         }
@@ -75,15 +86,17 @@ public class MentorServiceImp extends AbstractService<MentorRepository, MentorMa
 
     @Override
     public MentorDto get(String id) {
-        if (Objects.nonNull(repository.getMentorById(id))) {
-            return repository.getMentorById(id);
+        MentorDto mentee = repository.getMentorById(id);
+        if (Objects.isNull(mentee)) {
+            throw new MentorNotFoundException("Mentor not found");
         }
-        throw new MentorNotFoundException("Mentor not found");
+        return mentee;
     }
 
     @Override
     public List<MentorDto> getAll(GenericCriteria criteria) {
-
+        PageRequest pageRequest = PageRequest.of(criteria.getPage() - 1, criteria.getSize());
+        repository.getAll(pageRequest);
         return null;
     }
 

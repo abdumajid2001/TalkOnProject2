@@ -39,18 +39,11 @@ public interface MenteeRepository extends AbstractRepository<Mentee, String> {
     @Query("update users  u set u.status = 0 where u.id = ?1")
     void unBlock(String id);
 
-    @Query("select new com.talkon.talkon.dtos.user.member.mentee.MenteeDto(" +
+    @Query("select new com.talkon.talkon.dtos.user.member.mentee.MenteeDtoForGetAll(" +
             "u.id" +
-            ",u.firstName" +
-            ",u.lastName" +
-            ",u.email" +
             ",u.username" +
-            ",u.dataOfBirth" +
-            ",u.timeZone" +
-            ",m.level" +
-            ",m.conversationCount" +
             ",u.photoPath" +
-            ") from mentees m inner join users u on m.user.id = u.id where m.deleted = false"
+            ") from users u inner join mentees m on u.id=m.user.id where u.deleted = false "
     )
     List<MenteeDto> findAllMentee(PageRequest pageRequest);
 }

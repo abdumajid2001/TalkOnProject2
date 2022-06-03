@@ -20,6 +20,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -42,15 +44,19 @@ public class MenteeServiceImpl extends AbstractService<
     @Override
     public String create(MenteeCreateDto dto) {
         validator.validOnCreate(dto);
-//        User user = userMapper.fromCreateDto(dto, userRepository.findById(dto.getId()).orElseThrow(() -> {
-//            throw new UserNotFoundException("User no found");
-//        }));
+        Optional<User> userOptional = userRepository.findById(dto.getId());
         User user = null;
+        if (userOptional.isPresent()) {
+            user = userOptional.get();
+        } else {
+            throw new UserNotFoundException("User not found");
+        }
+        user = userMapper.fromCreateDto(dto, user);
         User savedUser = userRepository.save(user);
 
         Mentee mentee = new Mentee(dto.getLevel());
         mentee.setUser(savedUser);
-        Mentee savedMentee = repository.save(mentee);
+        repository.save(mentee);
         return user.getId();
     }
 
@@ -64,17 +70,24 @@ public class MenteeServiceImpl extends AbstractService<
     @Override
     public void update(MenteeUpdateDto dto) {
         validator.validOnUpdate(dto);
-//        User user = userMapper.fromUpdateDto(dto, userRepository.findById(dto.getId()).orElseThrow(() -> {
-//            throw new UserNotFoundException("User not found");
-//        }));
         User user = null;
+        Optional<User> userOptional = userRepository.findById(dto.getId());
+        if (userOptional.isPresent()) {
+            user = userOptional.get();
+        } else {
+            throw new UserNotFoundException("User not found");
+        }
+        user = userMapper.fromUpdateDto(dto, user);
         userRepository.save(user);
     }
 
     @Override
     public MenteeDto get(String id) {
-        // TODO: 24/05/22 exception tashla yoq bolsa
-        return repository.getMenteeById(id);
+        MenteeDto mentee = repository.getMenteeById(id);
+        if (Objects.isNull(mentee)) {
+            throw new UserNotFoundException("User not found");
+        }
+        return mentee;
     }
 
     @Override
@@ -82,12 +95,6 @@ public class MenteeServiceImpl extends AbstractService<
         PageRequest pageRequest = PageRequest.of(criteria.getPage() - 1, criteria.getSize());
         return repository.findAllMentee(pageRequest);
     }
-
-//    @Override
-//    public List<MenteeDto> getAll2(GenericCriteria criteria) {
-//        PageRequest pageRequest = PageRequest.of(criteria.getPage(), criteria.getSize());
-//        return repository.findAllMentee(pageRequest);
-//    }
 
     public void block(String id) {
         repository.block(id);
