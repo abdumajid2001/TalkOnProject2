@@ -21,12 +21,12 @@ public class UserController extends AbstractController<UserService> {
     }
 
     @RequestMapping(value = PATH + "/auth/access/token",method = RequestMethod.POST)
-    public ResponseEntity<DataDto<SessionDto>> login(LoginDto dto) {
+    public ResponseEntity<DataDto<SessionDto>> login(@RequestBody LoginDto dto) {
         return service.getToken(dto);
     }
 
     @RequestMapping(value = PATH + "/auth/register",method = RequestMethod.POST)
-    public ResponseEntity<Void> getCode(String phoneNumber){
+    public ResponseEntity<Void> getCode(@RequestBody String phoneNumber){
         service.getCode(phoneNumber);
         return new ResponseEntity<>(HttpStatus.OK);
     }
