@@ -8,10 +8,7 @@ import com.talkon.talkon.services.user.user.UserService;
 import com.talkon.talkon.controllers.AbstractController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class UserController extends AbstractController<UserService> {
@@ -25,8 +22,8 @@ public class UserController extends AbstractController<UserService> {
         return service.getToken(dto);
     }
 
-    @RequestMapping(value = PATH + "/auth/register",method = RequestMethod.POST)
-    public ResponseEntity<Void> getCode(@RequestBody String phoneNumber){
+    @RequestMapping(value = PATH + "/auth/register/{phoneNumber}",method = RequestMethod.POST)
+    public ResponseEntity<Void> getCode(@PathVariable String phoneNumber){
         service.getCode(phoneNumber);
         return new ResponseEntity<>(HttpStatus.OK);
     }
