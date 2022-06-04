@@ -36,7 +36,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
             "/api/login",
             "/api/v1/auth/access/token",
             "/api/v1/auth/refresh/token",
-            "/api/v1/auth/register",
+            "/api/v1/auth/register/**",
             "/swagger-ui/**",
             "/ui/**",
             "/docs/**"
