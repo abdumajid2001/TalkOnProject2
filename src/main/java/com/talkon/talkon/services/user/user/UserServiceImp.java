@@ -5,18 +5,21 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.talkon.talkon.config.security.UserSession;
 import com.talkon.talkon.dtos.responce.AppErrorDto;
 import com.talkon.talkon.dtos.responce.DataDto;
-import com.talkon.talkon.dtos.user.user.*;
+import com.talkon.talkon.dtos.transaction.CoinTransferDto;
+import com.talkon.talkon.dtos.user.user.LoginDto;
+import com.talkon.talkon.dtos.user.user.SessionDto;
+import com.talkon.talkon.entities.conversation.video.VideoCall;
+import com.talkon.talkon.entities.transaction.InternalTransaction;
 import com.talkon.talkon.entities.user.User;
-import com.talkon.talkon.exceptions.user.PhoneNumberAlready;
 import com.talkon.talkon.exceptions.user.UserBlockedException;
-import com.talkon.talkon.properties.ServerProperties;
-import com.talkon.talkon.repositories.user.user.UserRepository;
-import com.talkon.talkon.criteria.base.BaseGenericCriteria;
 import com.talkon.talkon.exceptions.user.UserNotFoundException;
 import com.talkon.talkon.mappers.user.user.UserMapper;
+import com.talkon.talkon.properties.ServerProperties;
+import com.talkon.talkon.repositories.transaction.InternalTransactionRepository;
+import com.talkon.talkon.repositories.user.user.UserRepository;
+import com.talkon.talkon.repositories.videoCallRepository.VideoCallRepository;
 import com.talkon.talkon.services.base.AbstractService;
 import com.talkon.talkon.validators.user.user.UserValidator;
-import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
 import org.apache.http.HttpResponse;
@@ -25,6 +28,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -36,11 +40,10 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 import java.util.Random;
-import java.util.UUID;
 
 @Service
 @Transactional
@@ -52,6 +55,9 @@ public class UserServiceImp extends AbstractService<UserRepository, UserMapper, 
     private final ServerProperties serverProperties;
     private final int BLOCKED_TIME_SECOND = 3600;
     public static int EXPIRY_TIME_SECOND = 3600;
+    private final VideoCallRepository videoCallRepository;
+    private final UserSession userSession;
+    private final InternalTransactionRepository internalTransactionRepository;
 
 
     public UserServiceImp(UserMapper mapper,
@@ -59,12 +65,15 @@ public class UserServiceImp extends AbstractService<UserRepository, UserMapper, 
                           UserRepository repository,
                           PasswordEncoder passwordEncoder,
                           ObjectMapper objectMapper,
-                          ServerProperties serverProperties
-    ) {
+                          ServerProperties serverProperties,
+                          VideoCallRepository videoCallRepository, UserSession userSession, InternalTransactionRepository internalTransactionRepository) {
         super(mapper, validator, repository);
         this.passwordEncoder = passwordEncoder;
         this.objectMapper = objectMapper;
         this.serverProperties = serverProperties;
+        this.videoCallRepository = videoCallRepository;
+        this.userSession = userSession;
+        this.internalTransactionRepository = internalTransactionRepository;
     }
 
     @Override
@@ -162,5 +171,36 @@ public class UserServiceImp extends AbstractService<UserRepository, UserMapper, 
             System.out.println(message.getSid());
         };
         new Thread(runnable).start();
+    }
+
+
+    @Override
+    public HttpEntity<?> getAllTransactionByDate(LocalDate start, LocalDate end) {
+
+        return null;
+    }
+
+    @Transactional
+    @Override
+    public HttpEntity<?> transferCoins(CoinTransferDto coinTransferDto) {
+
+        if (coinTransferDto.getCommissionFee()==null) {
+            coinTransferDto.setCommissionFee(5.0);
+        }
+        Optional<VideoCall> byId = videoCallRepository.findById(coinTransferDto.getVideoCallId());
+        if (!byId.isPresent()) {
+            throw new IllegalArgumentException("video call not found");
+        }
+        VideoCall videoCall = byId.get();
+        Integer coins = videoCall.getCoins();
+        int commissionFee =(int) Math.round(coins* coinTransferDto.getCommissionFee()/100);
+        InternalTransaction internalTransaction = new InternalTransaction();
+        internalTransaction.setVideoCall(videoCall);
+        internalTransaction.setCommissionFee(commissionFee);
+        internalTransaction.setCreatedAt(LocalDateTime.now());
+
+        internalTransaction.setCreatedBy(userSession.getUser().getId());
+        internalTransactionRepository.save(internalTransaction);
+        return null;
     }
 }

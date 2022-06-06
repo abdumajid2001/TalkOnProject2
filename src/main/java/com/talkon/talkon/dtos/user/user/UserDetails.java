@@ -27,6 +27,10 @@ public class UserDetails implements org.springframework.security.core.userdetail
         return grantedAuthorities;
     }
 
+    public User getUser(){
+        return this.user;
+    }
+
     @Override
     public String getPassword() {
         return user.getCode();

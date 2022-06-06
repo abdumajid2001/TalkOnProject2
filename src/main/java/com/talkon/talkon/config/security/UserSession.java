@@ -2,6 +2,7 @@ package com.talkon.talkon.config.security;
 
 
 import com.talkon.talkon.dtos.user.user.UserDetails;
+import com.talkon.talkon.entities.user.User;
 import com.talkon.talkon.enums.Headers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,9 +21,9 @@ public class UserSession {
 
 
     public UserDetails getUser() {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder
+        UserDetails principal = (UserDetails) SecurityContextHolder
                 .getContext().getAuthentication().getPrincipal();
-        return userDetails;
+        return principal;
     }
 
     public Map<Headers, String> getHeadersInfo() {

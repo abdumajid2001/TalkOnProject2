@@ -7,6 +7,7 @@ import com.talkon.talkon.dtos.schedule.ScheduleTimeDto;
 import com.talkon.talkon.dtos.user.member.mentor.MentorCreateDto;
 import com.talkon.talkon.dtos.user.member.mentor.MentorDto;
 import com.talkon.talkon.dtos.user.member.mentor.MentorUpdateDto;
+import com.talkon.talkon.dtos.user.user.UserDetails;
 import com.talkon.talkon.entities.schedule.Schedule;
 import com.talkon.talkon.entities.user.User;
 import com.talkon.talkon.entities.user.members.Mentor;
@@ -133,13 +134,8 @@ public class MentorServiceImp extends AbstractService<MentorRepository, MentorMa
 
     @Override
     public HttpEntity<?> saveSchedule(ScheduleDto scheduleDto) {
-//        String id = userSession.getUser().getId();
-        String id = "f1a897aa-7ce0-4695-a3d6-977eaed981f0";
-
-        Optional<Mentor> byUserId = mentorRepository.findByUserId(id);
-        if (!byUserId.isPresent()) {
-            throw new MentorNotFoundException("Mentor not found");
-        }
+        User user = userSession.getUser().getUser();
+        Optional<Mentor> byUserId = mentorRepository.findByUserId(user.getId());
         List<Schedule> schedules = new ArrayList<>(scheduleDto.getScheduleTimes().size());
         List<ScheduleTimeDto> scheduleTimeDto = scheduleDto.getScheduleTimes();
         for (ScheduleTimeDto date : scheduleTimeDto) {
@@ -147,7 +143,7 @@ public class MentorServiceImp extends AbstractService<MentorRepository, MentorMa
             schedule.setScheduleStatus(ScheduleStatus.NEW);
             schedule.setMentor(byUserId.get());
             schedule.setCreatedAt(LocalDateTime.now());
-            schedule.setCreatedBy(id);
+            schedule.setCreatedBy(user.getId());
             schedule.setStartDateTime(date.getStartTime());
             schedule.setDuration(20);
             schedules.add(schedule);

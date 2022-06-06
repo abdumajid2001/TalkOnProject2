@@ -17,10 +17,12 @@ import com.talkon.talkon.services.base.AbstractService;
 import com.talkon.talkon.validators.user.member.mentee.MenteeValidator;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -104,4 +106,6 @@ public class MenteeServiceImpl extends AbstractService<
         List<HistoryProjection> historyProjections = videoRepository.seeMenteeVideoHistories(id,pageable);
         return ResponseEntity.ok(historyProjections);
     }
+
+
 }

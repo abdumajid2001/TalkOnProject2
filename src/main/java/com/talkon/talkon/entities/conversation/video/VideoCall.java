@@ -43,4 +43,7 @@ public class VideoCall extends Auditable {
     @ManyToOne
     @JoinColumn(name = "mentor_id")
     Mentor mentor;
+
+    @Column(nullable = false)
+    Integer coins;
 }

@@ -5,7 +5,10 @@ import com.talkon.talkon.dtos.user.member.mentee.MenteeCreateDto;
 import com.talkon.talkon.dtos.user.member.mentee.MenteeDto;
 import com.talkon.talkon.dtos.user.member.mentee.MenteeUpdateDto;
 import com.talkon.talkon.services.base.GenericCrudService;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
+
+import java.time.LocalDate;
 
 public interface MenteeService extends GenericCrudService<
         MenteeDto,
@@ -19,4 +22,6 @@ public interface MenteeService extends GenericCrudService<
     void unBlock(String id);
 
     ResponseEntity<?> seeHistories(int page, int size, String id);
+
+
 }
