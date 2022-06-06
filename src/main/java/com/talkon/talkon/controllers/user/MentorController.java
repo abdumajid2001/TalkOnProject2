@@ -6,6 +6,7 @@ import com.talkon.talkon.dtos.responce.DataDto;
 import com.talkon.talkon.dtos.schedule.ScheduleDto;
 import com.talkon.talkon.dtos.user.member.mentor.MentorCreateDto;
 import com.talkon.talkon.dtos.user.member.mentor.MentorDto;
+import com.talkon.talkon.dtos.user.member.mentor.MentorDtoForGetAll;
 import com.talkon.talkon.dtos.user.member.mentor.MentorUpdateDto;
 import com.talkon.talkon.services.user.member.mentor.MentorService;
 import org.springframework.http.HttpEntity;
@@ -39,10 +40,10 @@ public class MentorController extends AbstractController<MentorService> {
         return new ResponseEntity<>(new DataDto<>(service.get(id)), HttpStatus.OK);
     }
 
-    @PreAuthorize(value = "hasAnyRole('ADMIN', 'SUPER_ADMIN')")
-    @RequestMapping(value = PATH + "/mentor/getAll", method = RequestMethod.GET)
-    public ResponseEntity<DataDto<List<MentorDto>>> getAll() {
-        return new ResponseEntity<>(new DataDto<>(service.getAll(new GenericCriteria())), HttpStatus.OK);
+//    @PreAuthorize(value = "hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+    @RequestMapping(value = PATH + "/mentor/getAll", method = RequestMethod.PUT)
+    public ResponseEntity<DataDto<List<MentorDtoForGetAll>>> getAll(@RequestBody GenericCriteria criteria) {
+        return new ResponseEntity<>(new DataDto<>(service.getAllForAll(criteria)), HttpStatus.OK);
     }
 
 
@@ -52,14 +53,14 @@ public class MentorController extends AbstractController<MentorService> {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize(value = "hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+//    @PreAuthorize(value = "hasAnyRole('ADMIN', 'SUPER_ADMIN')")
     @RequestMapping(value = PATH + "/mentor/blocked/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Void> block(@PathVariable String id) {
         service.block(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize(value = "hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+//    @PreAuthorize(value = "hasAnyRole('ADMIN', 'SUPER_ADMIN')")
     @RequestMapping(value = PATH + "/mentor/unblocked/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Void> unBlock(@PathVariable String id) {
         service.unBlock(id);

@@ -4,10 +4,10 @@ import com.talkon.talkon.config.security.UserSession;
 import com.talkon.talkon.criteria.base.GenericCriteria;
 import com.talkon.talkon.dtos.schedule.ScheduleDto;
 import com.talkon.talkon.dtos.schedule.ScheduleTimeDto;
+import com.talkon.talkon.dtos.user.member.mentor.*;
 import com.talkon.talkon.dtos.user.member.mentor.MentorCreateDto;
 import com.talkon.talkon.dtos.user.member.mentor.MentorDto;
 import com.talkon.talkon.dtos.user.member.mentor.MentorUpdateDto;
-import com.talkon.talkon.dtos.user.user.UserDetails;
 import com.talkon.talkon.entities.schedule.Schedule;
 import com.talkon.talkon.entities.user.User;
 import com.talkon.talkon.entities.user.members.Mentor;
@@ -43,35 +43,38 @@ import java.util.Optional;
 public class MentorServiceImp extends AbstractService<MentorRepository, MentorMapper, MentorValidation> implements MentorService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
-    private final UserSession userSession;
-    private final MentorRepository mentorRepository;
+
     private final ScheduleRepository scheduleRepository;
+
     private final VideoRepository videoRepository;
 
-    public MentorServiceImp(MentorMapper mapper, MentorValidation validator, MentorRepository repository, UserRepository userRepository, UserMapper userMapper, UserSession userSession, MentorRepository mentorRepository, ScheduleRepository scheduleRepository, VideoRepository videoRepository) {
+    private final UserSession userSession;
+
+
+    public MentorServiceImp(MentorMapper mapper, MentorValidation validator, MentorRepository repository, UserRepository userRepository, UserMapper userMapper, ScheduleRepository scheduleRepository, VideoRepository videoRepository, UserSession userSession) {
         super(mapper, validator, repository);
         this.userRepository = userRepository;
         this.userMapper = userMapper;
-        this.userSession = userSession;
-        this.mentorRepository = mentorRepository;
         this.scheduleRepository = scheduleRepository;
         this.videoRepository = videoRepository;
+        this.userSession = userSession;
     }
 
     @Override
     public String create(MentorCreateDto dto) {
         validator.validOnCreate(dto);
-        validator.validOnCreate(dto);
-        Optional<User> byId = userRepository.findById(dto.getId());
-        if (!byId.isPresent()) {
-            throw new UserNotFoundException("User no found");
+        User user = null;
+        Optional<User> userOptional = userRepository.findById(dto.getId());
+        if (userOptional.isPresent()) {
+            user = userOptional.get();
+        } else {
+            throw new UserNotFoundException("User not found");
         }
-        User user = mapper.fromCreateDto(dto, byId.get());
+        user = mapper.fromCreateDto(dto, user);
         User savedUser = userRepository.save(user);
-//
         Mentor mentee = new Mentor(dto.getExperience());
         mentee.setUser(savedUser);
-        Mentor savedMentor = repository.save(mentee);
+        repository.save(mentee);
         return dto.getId();
     }
 
@@ -85,24 +88,20 @@ public class MentorServiceImp extends AbstractService<MentorRepository, MentorMa
     @Override
     public void update(MentorUpdateDto dto) {
         validator.validOnUpdate(dto);
-        Optional<User> byId = userRepository.findById(dto.getId());
-        if (!byId.isPresent()) {
-            throw new UserNotFoundException("User no found");
-        }
-        User user = mapper.fromUpdateDto(dto, byId.get());
+        User user = mapper.fromUpdateDto(dto, userRepository.findById(dto.getId()).get());
         userRepository.save(user);
 
         if (Objects.nonNull(dto.getAboutText())) {
             if (Objects.isNull(dto.getMentorId())) {
                 throw new MentorIdNotFoundException("MentorId Not Found Exception");
             }
-
-            Optional<Mentor> byIdAndDeletedFalse = repository.findByIdAndDeletedFalse(dto.getMentorId());
-            if (!byIdAndDeletedFalse.isPresent()) {
-                throw new MentorNotFoundException("Mentor not found exception");
+            Mentor mentor = null;
+            Optional<Mentor> mentorOptional = repository.findByIdAndDeletedFalse(dto.getMentorId());
+            if (mentorOptional.isPresent()) {
+                mentor = mentorOptional.get();
+            } else {
+                throw new MentorNotFoundException("Mentor Not Found Exception");
             }
-            Mentor mentor = byIdAndDeletedFalse.get();
-
             mentor.setAboutText(dto.getAboutText());
             repository.save(mentor);
         }
@@ -110,16 +109,22 @@ public class MentorServiceImp extends AbstractService<MentorRepository, MentorMa
 
     @Override
     public MentorDto get(String id) {
-        if (Objects.nonNull(repository.getMentorById(id))) {
-            return repository.getMentorById(id);
+        MentorDto mentee = repository.getMentorById(id);
+        if (Objects.isNull(mentee)) {
+            throw new MentorNotFoundException("Mentor not found");
         }
-        throw new MentorNotFoundException("Mentor not found");
+        return mentee;
     }
 
     @Override
     public List<MentorDto> getAll(GenericCriteria criteria) {
 
         return null;
+    }
+
+    public List<MentorDtoForGetAll> getAllForAll(GenericCriteria criteria) {
+        PageRequest pageRequest = PageRequest.of(criteria.getPage() - 1, criteria.getSize());
+        return repository.getAll(pageRequest);
     }
 
     @Override
@@ -135,7 +140,10 @@ public class MentorServiceImp extends AbstractService<MentorRepository, MentorMa
     @Override
     public HttpEntity<?> saveSchedule(ScheduleDto scheduleDto) {
         User user = userSession.getUser().getUser();
-        Optional<Mentor> byUserId = mentorRepository.findByUserId(user.getId());
+        Optional<Mentor> byUserId = repository.findByUserId(user.getId());
+        if (!byUserId.isPresent()) {
+            throw new MentorNotFoundException("Mentor not found");
+        }
         List<Schedule> schedules = new ArrayList<>(scheduleDto.getScheduleTimes().size());
         List<ScheduleTimeDto> scheduleTimeDto = scheduleDto.getScheduleTimes();
         for (ScheduleTimeDto date : scheduleTimeDto) {

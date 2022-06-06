@@ -7,6 +7,7 @@ import com.talkon.talkon.dtos.responce.AppErrorDto;
 import com.talkon.talkon.dtos.responce.DataDto;
 import com.talkon.talkon.dtos.transaction.CoinTransferDto;
 import com.talkon.talkon.dtos.user.user.LoginDto;
+import com.talkon.talkon.dtos.user.user.ProfileDto;
 import com.talkon.talkon.dtos.user.user.SessionDto;
 import com.talkon.talkon.entities.conversation.video.VideoCall;
 import com.talkon.talkon.entities.transaction.InternalTransaction;
@@ -16,12 +17,14 @@ import com.talkon.talkon.exceptions.user.UserNotFoundException;
 import com.talkon.talkon.mappers.user.user.UserMapper;
 import com.talkon.talkon.properties.ServerProperties;
 import com.talkon.talkon.repositories.transaction.InternalTransactionRepository;
+import com.talkon.talkon.repositories.user.user.AccountRepository;
 import com.talkon.talkon.repositories.user.user.UserRepository;
 import com.talkon.talkon.repositories.videoCallRepository.VideoCallRepository;
 import com.talkon.talkon.services.base.AbstractService;
 import com.talkon.talkon.validators.user.user.UserValidator;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
+import lombok.var;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -43,7 +46,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
-import java.util.Random;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -58,6 +61,7 @@ public class UserServiceImp extends AbstractService<UserRepository, UserMapper, 
     private final VideoCallRepository videoCallRepository;
     private final UserSession userSession;
     private final InternalTransactionRepository internalTransactionRepository;
+    private final AccountRepository accountRepository;
 
 
     public UserServiceImp(UserMapper mapper,
@@ -66,7 +70,10 @@ public class UserServiceImp extends AbstractService<UserRepository, UserMapper, 
                           PasswordEncoder passwordEncoder,
                           ObjectMapper objectMapper,
                           ServerProperties serverProperties,
-                          VideoCallRepository videoCallRepository, UserSession userSession, InternalTransactionRepository internalTransactionRepository) {
+                          VideoCallRepository videoCallRepository,
+                          UserSession userSession,
+                          InternalTransactionRepository internalTransactionRepository,
+                          AccountRepository accountRepository) {
         super(mapper, validator, repository);
         this.passwordEncoder = passwordEncoder;
         this.objectMapper = objectMapper;
@@ -74,22 +81,26 @@ public class UserServiceImp extends AbstractService<UserRepository, UserMapper, 
         this.videoCallRepository = videoCallRepository;
         this.userSession = userSession;
         this.internalTransactionRepository = internalTransactionRepository;
+        this.accountRepository = accountRepository;
     }
 
     @Override
     @Transactional(dontRollbackOn = {UserNotFoundException.class})
     public UserDetails loadUserByUsername(String phoneNumber) throws UsernameNotFoundException {
-        User findUser = repository.findByPhoneNumberAndDeletedFalse(phoneNumber).get();
-        /*orElseThrow(() -> {
+        Optional<User> userOptional = repository.findByPhoneNumberAndDeletedFalse(phoneNumber);
+        User findUser = null;
+        if (userOptional.isPresent()) {
+            findUser = userOptional.get();
+        } else {
             User user = User.childBuilder()
                     .id(UUID.randomUUID().toString())
                     .phoneNumber(phoneNumber)
-                    .status((short) 1)
+                    .status((short) 221)
                     .expiry(LocalDateTime.now())
                     .build();
             repository.save(user);
             throw new UserNotFoundException("user Not found");
-        });*/
+        }
         return new com.talkon.talkon.dtos.user.user.UserDetails(findUser);
     }
 
@@ -127,10 +138,11 @@ public class UserServiceImp extends AbstractService<UserRepository, UserMapper, 
     @Transactional(dontRollbackOn = {UserBlockedException.class})
     @Override
     public void getCode(String phoneNumber) {
-        int code = new Random().nextInt(999999);
+//        int code = new Random().nextInt(1000)+999;
+        int code = 6666;
+        System.out.println("code = " + code);
 //        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
         Optional<User> userOptional = repository.findByPhoneNumberAndDeletedFalse(phoneNumber);
-        System.err.println(code);
         User user = checkUserToBlock(userOptional);
 //        sendSmstoPhone(phoneNumber, code);
         user.setTryCount(user.getTryCount() + 1);
@@ -140,6 +152,23 @@ public class UserServiceImp extends AbstractService<UserRepository, UserMapper, 
         repository.save(user);
 
     }
+
+    @Override
+    public void updateProfile(ProfileDto profileDto) {
+        var optionalUser = repository.findById(profileDto.getId());
+        User user = optionalUser.get();
+        user.setFirstName(profileDto.getFirstname());
+        user.setPhoneNumber(profileDto.getPhoneNumber());
+        user.setPhotoPath(profileDto.getPathPicture());
+        repository.save(user);
+    }
+
+    @Override
+    public ResponseEntity<?> seeBalance(String id) {
+        var coinsByUserId = accountRepository.getCoinsByUserId(id);
+        return ResponseEntity.ok(coinsByUserId);
+    }
+
 
     private User checkUserToBlock(Optional<User> userOptional) {
         User user;

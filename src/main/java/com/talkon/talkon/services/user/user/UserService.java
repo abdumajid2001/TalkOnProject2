@@ -19,4 +19,8 @@ public interface UserService extends BaseGenericService {
     HttpEntity<?> getAllTransactionByDate(LocalDate start, LocalDate end);
 
     HttpEntity<?> transferCoins(CoinTransferDto coinTransferDto);
+
+    void updateProfile(ProfileDto profileDto);
+
+    ResponseEntity<?> seeBalance(String id);
 }

@@ -5,6 +5,7 @@ import com.talkon.talkon.criteria.base.GenericCriteria;
 import com.talkon.talkon.dtos.responce.DataDto;
 import com.talkon.talkon.dtos.user.member.mentee.MenteeCreateDto;
 import com.talkon.talkon.dtos.user.member.mentee.MenteeDto;
+import com.talkon.talkon.dtos.user.member.mentee.MenteeDtoForGetAll;
 import com.talkon.talkon.dtos.user.member.mentee.MenteeUpdateDto;
 import com.talkon.talkon.services.user.member.mentee.MenteeService;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -42,9 +43,9 @@ public class MenteeController extends AbstractController<MenteeService> {
     }
 
 //    @PreAuthorize(value = "hasAnyRole('ADMIN', 'SUPER_ADMIN')")
-    @RequestMapping(value = PATH + "/mentee/getAll", method = RequestMethod.POST)
-    public ResponseEntity<DataDto<List<MenteeDto>>> getAll(@RequestBody GenericCriteria criteria) {
-        return new ResponseEntity<>(new DataDto<>(service.getAll(criteria)), HttpStatus.OK);
+    @RequestMapping(value = PATH + "/mentee/getAll", method = RequestMethod.PUT)
+    public ResponseEntity<DataDto<List<MenteeDtoForGetAll>>> getAll(@RequestBody GenericCriteria criteria) {
+        return new ResponseEntity<>(new DataDto<>(service.getAllForAll(criteria)), HttpStatus.OK);
     }
 
 
@@ -54,14 +55,14 @@ public class MenteeController extends AbstractController<MenteeService> {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize(value = "hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+//    @PreAuthorize(value = "hasAnyRole('ADMIN', 'SUPER_ADMIN')")
     @RequestMapping(value = PATH + "/mentee/blocked/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Void> block(@PathVariable String id) {
         service.block(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize(value = "hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+//    @PreAuthorize(value = "hasAnyRole('ADMIN', 'SUPER_ADMIN')")
     @RequestMapping(value = PATH + "/mentee/unblocked/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Void> unBlock(@PathVariable String id) {
         service.unBlock(id);
