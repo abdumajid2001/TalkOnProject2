@@ -1,12 +1,12 @@
 spring:
   datasource:
-      url: jdbc:postgresql://ec2-52-206-182-219.compute-1.amazonaws.com:5432/d6ttdkb120qabe
-      username: ksesatralyugmi
-      driver-class-name: org.postgresql.Driver
-      password: 2977d8032df70478ca040195618f1fdb435309de961b3c95ce2a91b0bd3ee0b1
+    url: jdbc:postgresql://ec2-52-206-182-219.compute-1.amazonaws.com:5432/d6ttdkb120qabe
+    username: ksesatralyugmi
+    driver-class-name: org.postgresql.Driver
+    password: 2977d8032df70478ca040195618f1fdb435309de961b3c95ce2a91b0bd3ee0b1
 #    url: jdbc:postgresql://localhost:5432/talk_on
 #    username: postgres
-#    password: 123
+#    password: root123
 
   jpa:
     show-sql: true

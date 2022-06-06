@@ -1,10 +1,13 @@
 package com.talkon.talkon.services.user.member.mentor;
 
+import com.talkon.talkon.config.security.UserSession;
 import com.talkon.talkon.criteria.base.GenericCriteria;
 import com.talkon.talkon.dtos.schedule.ScheduleDto;
 import com.talkon.talkon.dtos.schedule.ScheduleTimeDto;
 import com.talkon.talkon.dtos.user.member.mentor.*;
 import com.talkon.talkon.dtos.user.member.mentor.MentorCreateDto;
+import com.talkon.talkon.dtos.user.member.mentor.MentorDto;
+import com.talkon.talkon.dtos.user.member.mentor.MentorUpdateDto;
 import com.talkon.talkon.entities.schedule.Schedule;
 import com.talkon.talkon.entities.user.User;
 import com.talkon.talkon.entities.user.members.Mentor;
@@ -45,13 +48,16 @@ public class MentorServiceImp extends AbstractService<MentorRepository, MentorMa
 
     private final VideoRepository videoRepository;
 
+    private final UserSession userSession;
 
-    public MentorServiceImp(MentorMapper mapper, MentorValidation validator, MentorRepository repository, UserRepository userRepository, UserMapper userMapper, ScheduleRepository scheduleRepository, VideoRepository videoRepository) {
+
+    public MentorServiceImp(MentorMapper mapper, MentorValidation validator, MentorRepository repository, UserRepository userRepository, UserMapper userMapper, ScheduleRepository scheduleRepository, VideoRepository videoRepository, UserSession userSession) {
         super(mapper, validator, repository);
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.scheduleRepository = scheduleRepository;
         this.videoRepository = videoRepository;
+        this.userSession = userSession;
     }
 
     @Override
@@ -133,10 +139,8 @@ public class MentorServiceImp extends AbstractService<MentorRepository, MentorMa
 
     @Override
     public HttpEntity<?> saveSchedule(ScheduleDto scheduleDto) {
-//        String id = userSession.getUser().getId();
-        String id = "f1a897aa-7ce0-4695-a3d6-977eaed981f0";
-
-        Optional<Mentor> byUserId = repository.findByUserId(id);
+        User user = userSession.getUser().getUser();
+        Optional<Mentor> byUserId = repository.findByUserId(user.getId());
         if (!byUserId.isPresent()) {
             throw new MentorNotFoundException("Mentor not found");
         }
@@ -147,7 +151,7 @@ public class MentorServiceImp extends AbstractService<MentorRepository, MentorMa
             schedule.setScheduleStatus(ScheduleStatus.NEW);
             schedule.setMentor(byUserId.get());
             schedule.setCreatedAt(LocalDateTime.now());
-            schedule.setCreatedBy(id);
+            schedule.setCreatedBy(user.getId());
             schedule.setStartDateTime(date.getStartTime());
             schedule.setDuration(20);
             schedules.add(schedule);
