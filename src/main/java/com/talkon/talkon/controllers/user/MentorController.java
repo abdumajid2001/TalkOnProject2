@@ -80,7 +80,7 @@ public class MentorController extends AbstractController<MentorService> {
         return service.seeHistories(id,page,size);
 
     }
-
+    @PreAuthorize(value = "hasAnyRole('MENTOR', 'USER', 'ADMIN', 'SUPER_ADMIN')")
     @GetMapping(PATH+"/schedule/all")
     public HttpEntity<?> getAllScheduleByMentorId(@RequestParam String mentorId){
         return service.getAllSchedule(mentorId);
