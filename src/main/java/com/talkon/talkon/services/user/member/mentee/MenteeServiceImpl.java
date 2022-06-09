@@ -22,7 +22,6 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @Transactional
@@ -113,6 +112,5 @@ public class MenteeServiceImpl extends AbstractService<
     public ResponseEntity<?> seeHistories(int page, int size, String id) {
         return null;
     }
-
 
 }

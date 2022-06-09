@@ -120,6 +120,7 @@ public class UserServiceImp extends AbstractService<UserRepository, UserMapper, 
     @Transactional(dontRollbackOn = {UserBlockedException.class})
     @Override
     public void getCode(String phoneNumber) {
+
 //        int code = new Random().nextInt(1000)+999;
         int code = 6666;
         System.out.println("code = " + code);
@@ -137,22 +138,27 @@ public class UserServiceImp extends AbstractService<UserRepository, UserMapper, 
 
     @Override
     public void updateProfile(ProfileDto profileDto) {
+
         var optionalUser = repository.findById(profileDto.getId());
         User user = optionalUser.get();
         user.setFirstName(profileDto.getFirstname());
         user.setPhoneNumber(profileDto.getPhoneNumber());
         user.setPhotoPath(profileDto.getPathPicture());
         repository.save(user);
+
     }
 
     @Override
     public ResponseEntity<?> seeBalance(String id) {
+
         var coinsByUserId = accountRepository.getCoinsByUserId(id);
         return ResponseEntity.ok(coinsByUserId);
+
     }
 
 
     private User checkUserToBlock(Optional<User> userOptional) {
+
         User user;
         if (userOptional.isPresent()) {
             user = userOptional.get();
@@ -170,9 +176,11 @@ public class UserServiceImp extends AbstractService<UserRepository, UserMapper, 
             }
         } else user = new User();
         return user;
+
     }
 
     private void sendSmstoPhone(String phoneNumber, int code) {
+
         Runnable runnable = () -> {
             Message message = Message.creator(
                             new PhoneNumber(phoneNumber),
@@ -182,5 +190,6 @@ public class UserServiceImp extends AbstractService<UserRepository, UserMapper, 
             System.out.println(message.getSid());
         };
         new Thread(runnable).start();
+
     }
 }

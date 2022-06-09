@@ -23,7 +23,6 @@ import java.time.LocalDateTime;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class VideoCall extends Auditable {
 
-
     @Column(nullable = false)
     String videoLink;
 

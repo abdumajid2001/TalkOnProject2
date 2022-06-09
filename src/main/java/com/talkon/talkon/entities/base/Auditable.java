@@ -26,6 +26,7 @@ import java.util.UUID;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public class Auditable implements BaseGenericEntity {
+
     @Id
     @Column(unique = true)
     private String id = UUID.randomUUID().toString();
